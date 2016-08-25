@@ -1,4 +1,4 @@
-from django.conf.urls import include, patterns, url
+from django.conf.urls import include, url
 from django.contrib import admin
 
 # from rest_framework.routers import DefaultRouter
@@ -22,8 +22,7 @@ from django.contrib import admin
 
 # router = DefaultRouter()
 
-urlpatterns = patterns(
-    '',
+urlpatterns = [
     url(r'', include('main.urls')),
     # url(r'^api/v1/', api_root),
     # url(r'^api/v1/', include(router.urls)),
@@ -40,15 +39,8 @@ urlpatterns = patterns(
 
     url(r'^admin/', include(admin.site.urls)),
     # url(r'^.*$', IndexView.as_view(), name='index'),
-)
-
-urlpatterns += [
     url(r'^api-auth/', include('rest_framework.urls',
-                               namespace='rest_framework'))
-]
+                               namespace='rest_framework')),
 
-# Redirect to webapp URL
-# TODO Server-side rendering
-urlpatterns += [
-    url(r'^.*$', include('main.urls')),
+    url(r'^.*', include('main.urls'))
 ]
