@@ -75,4 +75,3 @@ class CommentUpvoteSerializer(serializers.ModelSerializer):
         model = CommentUpvote
         fields = ('id', 'comment', 'voter', 'created_at')
         read_only_fields = ('id', 'created_at')
-

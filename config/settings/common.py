@@ -50,7 +50,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'snippod_starter_demo_app_server.urls'
+ROOT_URLCONF = 'config.urls'
 
 # TEMPLATES = [
 #     {
@@ -68,7 +68,7 @@ ROOT_URLCONF = 'snippod_starter_demo_app_server.urls'
 #         },
 #     ]
 
-WSGI_APPLICATION = 'snippod_starter_demo_app_server.wsgi.application'
+WSGI_APPLICATION = 'config.wsgi.application'
 
 
 # Internationalization
@@ -114,7 +114,7 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         # 'rest_framework.authentication.SessionAuthentication',
-        'snippod_starter_demo_app_server.csrf_handler.CsrfExemptSessionAuthentication',
+        'config.csrf_handler.CsrfExemptSessionAuthentication',
         'rest_framework.authentication.BasicAuthentication'
     ),
     'DEFAULT_RENDERER_CLASSES': (

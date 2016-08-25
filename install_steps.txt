@@ -1,0 +1,149 @@
+CONFIGURAR POSTGRESQL
+
+1. Instalar los siguientes comandos, en Ubuntu es con el siguiente comando:
+    . sudo apt-get install python-pip python-dev libpq-dev postgresql postgresql-contrib
+
+   En MAC seria algo como:
+    . brew install postgresql
+    . brew install postgis (es el postgresql-contrib para MAC)
+
+2. Entramos al virtualenv y nos posicionamos en el root del proyecto. Y entramos como usuario de PostgreSQL:
+    . sudo su - postgres
+    (nos va a pedir la contraseña de la maquina, no confundir con la contraseña de postgres)
+
+3. Entramos al shell de postgres con el usuario de postgres:
+    . psql
+
+   Nos va a pedir el password del superusuario de 'postgres'
+
+4. Si no existe la base de datos, la crearemos:
+
+    . CREATE DATABASE asanni_db;
+
+5. Creamos el usuario que va a administrar la base de datos:
+
+    . CREATE USER sergioruizdavila WITH PASSWORD 'admin';
+
+6. Le daremos algunas configuraciones a ese usuario para que tenga escritura UTF8, para que pueda hacer transacciones, establecer zona horaria.
+
+    . ALTER ROLE sergioruizdavila SET client_encoding TO 'utf8';
+    . ALTER ROLE sergioruizdavila SET default_transaction_isolation TO 'read committed';
+    . ALTER ROLE sergioruizdavila SET timezone TO 'UTC';
+
+7. Dar todos los privilegios al superusuario sobre la base de datos (agregar registros, eliminar registros, permisos, etc):
+
+    . GRANT ALL PRIVILEGES ON DATABASE asanni_db TO sergioruizdavila;
+
+8. Salimos del shell de postgres:
+
+    . \q
+    . exit
+
+9. Instalamos el paquete psycopg2, este nos servira para conectar postgres con python (recuerda estar en el root del proyecto, y dentro de virtualenv):
+
+    . pip install psycopg2
+
+10. Vamos al settings.py de nuestro proyecto para configurar la base de datos PostGres. Pegamos esto en config/settings/dev.py:
+
+    . # Database (POSTGRESQL CONFIG)
+
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.postgresql_psycopg2',
+                'NAME': 'asanni_db',
+                'USER': 'sergioruizdavila',
+                'PASSWORD': 'admin',
+                'HOST': 'localhost',
+                'PORT': '5432'
+            }
+        }
+
+11. Eliminamos en el root el archivo: db.sqlite3 (si lo tenemos) esto para que no de conflicto a la hora de hacer las migraciones.
+
+12. Realizamos las respectivamos migraciones (en el root del proyecto y dentro de virtualenv):
+
+    . python manage.py makemigrations (si tienes nuevas apps (models) agregar al comando al final el app_label)
+    . python manage.py migrate
+
+13. En este punto para saber si se realizaron con exito las migraciones, podemos entrar en 'pgAdmin 4', nos logueamos con el superuser que creamos (sergioruizdavila) y podremos ver la base de datos con sus respectivas tablas.
+
+14. Si queremos probar el REST API desde el browser, deberiamos primero crear un superuser através del comando:
+
+    . python manage.py createsuperuser
+    . python manage.py runserver
+
+    Con esto crearemos un superuser usando la function que extendimos en authentication. Corremos nuestro server y probamos.
+
+
+DESPLEGAR A HEROKU
+
+1. Antes que nada debemos instalar el Heroku toolbelt para Django (https://devcenter.heroku.com/articles/getting-started-with-python#set-up)
+
+2. Esto nos habilitara el comando 'heroku'. Asi que entramos a la terminal (root del proyecto y dentro de virtualenv), y nos logueamos en Heroku:
+
+    . heroku login
+
+    Este comando nos pedira usuario y contraseña de Heroku (tuvimos que haber creado una cuenta en Heroku anteriormente)
+
+3. Vamos a conectar nuestro git con Heroku ya que trabajan muy bien de la mano para commitear codigo.
+
+4. Aveces es necesario configurar nuestro git con nuestro username y password para que quede seteado en nuestra configuracion global;
+
+    . git config --global user.name "sergioruizdavila"
+    . git config --global user.email "sergioruizdavila@gmail.com"
+
+5. Vamos a instalar paquetes que se van a quedar en nuestro virtualenv ya que son necesarias para el despliegue a Heroku:
+
+    . pip install dj-database-url (este sera para configurar nuestra base de datos con Django)
+    . pip install gunicorn (sera nuestro servidor web)
+    . pip install whitenoise (servidor de archivos estaticos)
+
+6. Actualizaremos nuestro requirement.txt con los nuevos paquetes instalados. Este archivo es muy importante, ya que Heroku tomara este archivo para saber cuales son los paquetes que necesita nuestro server.
+
+    . pip freeze > requirements.txt
+
+7. Creamos un archivo al nivel de requirements.txt que se llame 'runtime.txt' para decirle a Heroku que version de Python vamos a usar, dentro escribiremos lo siguiente:
+
+    . python-3.5.2
+
+8. Es necesario hacer una modificaciones a los siguientes archivos: (NO ESTOY SEGURO SI ESTO ES NECESARIO, REMOVER SI NO ES NECESARIO)
+
+    - server/config/wsgi.py:
+
+        Deberia quedar algo parecido a esto
+
+            import os
+
+            os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.dev")
+
+            from django.core.wsgi import get_wsgi_application
+            from whitenoise.django import DjangoWhiteNoise
+
+            application = get_wsgi_application()
+            application = DjangoWhiteNoise(application)
+
+9. Creamos un archivo llamado: Procfile (al nivel de requirements.txt y runtime.txt) este archivo lo tomara Heroku y ejecutara los comandos que hayan dentro, en este caso solo agregamos lo siguiente:
+
+    . web: gunicorn server.config.wsgi --log-file -
+
+    Donde 'server' es el nombre de nuestro proyecto, 'config' la carpeta que contiene el archivo wsgi.py
+
+10. Por ultimo configuramos nuestra base de datos agregando en config/settings/dev.py las siguientes lineas:
+
+    . import dj_database_url
+
+      db_from_env = dj_database_url.config(conn_max_age=500)
+      DATABASES['default'] = dj_database_url.config()
+
+11. Creamos un local settings con el fin de
+
+  . try:
+        from .local_settings import *
+    except ImportError:
+        pass
+
+ 12.
+
+------------------
+
+referencias: https://www.youtube.com/watch?v=LVm8YwNTZzA

@@ -13,6 +13,7 @@ djangoapps/*/migrations
 
 # Python compiled byte code
 *.pyc
+__pycache__
 
 # SQLite3 database
 *.sqlite3
