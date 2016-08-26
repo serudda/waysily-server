@@ -106,43 +106,56 @@ DESPLEGAR A HEROKU
 
     . python-3.5.2
 
-8. Es necesario hacer una modificaciones a los siguientes archivos: (NO ESTOY SEGURO SI ESTO ES NECESARIO, REMOVER SI NO ES NECESARIO)
+8. Creamos un archivo llamado: Procfile (al nivel de requirements.txt y runtime.txt) este archivo lo tomara Heroku y ejecutara los comandos que hayan dentro, en este caso solo agregamos lo siguiente:
 
-    - server/config/wsgi.py:
+    . web: gunicorn config.wsgi --log-file -
 
-        Deberia quedar algo parecido a esto
+    Donde 'config' es la carpeta que contiene el archivo wsgi.py
 
-            import os
-
-            os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.dev")
-
-            from django.core.wsgi import get_wsgi_application
-            from whitenoise.django import DjangoWhiteNoise
-
-            application = get_wsgi_application()
-            application = DjangoWhiteNoise(application)
-
-9. Creamos un archivo llamado: Procfile (al nivel de requirements.txt y runtime.txt) este archivo lo tomara Heroku y ejecutara los comandos que hayan dentro, en este caso solo agregamos lo siguiente:
-
-    . web: gunicorn server.config.wsgi --log-file -
-
-    Donde 'server' es el nombre de nuestro proyecto, 'config' la carpeta que contiene el archivo wsgi.py
-
-10. Por ultimo configuramos nuestra base de datos agregando en config/settings/dev.py las siguientes lineas:
+9. Por ultimo configuramos nuestra base de datos agregando en config/settings/dev.py las siguientes lineas:
 
     . import dj_database_url
 
       db_from_env = dj_database_url.config(conn_max_age=500)
       DATABASES['default'] = dj_database_url.config()
 
-11. Creamos un local settings con el fin de
+      NOTA: Cuando se vaya a trabajar localmente, este bloque debe ser comentado por que sino lanza un error.
 
-  . try:
-        from .local_settings import *
-    except ImportError:
-        pass
+ 10. Para desplegar a Heroku lo primero que tenemos que hacer es inicializar un repositorio en git:
 
- 12.
+    . git init (en el root del proyecto y dentro de virtualenv)
+    . git status (para ver los archivos que tienen cambios y aun no se han subido)
+    . git diff <ruta y nombre del archivo> (nos mostrara las lineas que se modificaron)
+    . git add -A . (Agregamos todos los archivos que no tienen seguimiento aun en git)
+    . git commit -m "Mensaje del Commit" (con esto commiteamos en el repo local antes de hacer push)
+    . nos logueamos en heroku: heroku login (nos pide user y pass de heroku)
+    . heroku create <nombre de la app> (Con esto creamos la app en Heroku)
+    . git push heroku master (con esto hacemos push en Heroku de nuestra app)
+    . Si se subieron los archivos correctamente a Heroku, ya tendriamos la App desplegada
+
+ 11. Al subir la app en Heroku, la consola nos arrojara como seria la url para acceder, en este caso es: https://www.asanni.herokuapp.com
+ 12. Intentamos entrar a esa url y ver si el despliegue fue exitoso.
+ 13. Lo más seguro es que van a dar errores de que no existen algunas tablas o relaciones, esto pasa por que en Heroku tambien es necesario realizar migraciones.
+ 14. Para realizar migraciones lo primero que tenemos que hacer es generar las migraciones localmente con el comando:
+    . heroku run python manage.py createsuperuser (creamos un superusuario en Heroku para podernos loguear)
+    . python manage.py makemigrations (se agrega el app_label para generar cada migracion relacionada a las app).
+    . Subimos las migraciones generadas a Heroku:
+        git add -A .
+        git commit -m "Migraciones pendientes"
+        git push heroku master
+    . Despues de que subimos las migraciones podemos ejecutarlas directamente en Heroku:
+        heroku run python manage.py showmigrations (nos aseguramos que estan todas las nuevas migraciones)
+        heroku run python manage.py migrate (realizamos la migracion directamente en Heroku)
+    . Si la migracion es exitosa, podemos ir al browser y entrar a la url que nos provee Heroku: www.asanni.herokuapp.com, si el despliegue fue correcto podremos ver y crear registros.
+
+
+
+
+        NOTA: si obtenemos algun error en el despliegue podemos:
+        . heroku logs (muestra el log en consola)
+        . vamos a dashboard en heroku web, y al lado derecha hay un boton que dice: More -> View Logs
+
+
 
 ------------------
 
