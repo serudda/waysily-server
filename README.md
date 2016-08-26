@@ -18,7 +18,6 @@ Preliminaries :
 
 
 ## License
-This project is base on snippod starter demo app server for this reason it uses their license. This project is just to learn to use Django Rest Framework
-[MIT License](http://opensource.org/licenses/MIT).
+This project is base on snippod starter demo app server for this reason it uses their license [MIT License](http://opensource.org/licenses/MIT). This project is just to learn to use Django Rest Framework.
 
 Copyright 2016, [Snippod Inc.](http://www.snippod.com/)
