@@ -1,1 +1,1 @@
-web: gunicorn asanni.config.wsgi --log-file -
+web: gunicorn server.config.wsgi --log-file -
