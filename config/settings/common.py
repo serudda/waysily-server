@@ -36,6 +36,7 @@ INSTALLED_APPS = (
     'main',
     'authentication',
     'posts',
+    'early',
 )
 
 MIDDLEWARE_CLASSES = (
