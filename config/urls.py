@@ -1,5 +1,6 @@
 from django.conf.urls import include, url
 from django.contrib import admin
+admin.autodiscover()
 
 # from rest_framework.routers import DefaultRouter
 
@@ -28,6 +29,7 @@ urlpatterns = [
     # url(r'^api/v1/', include(router.urls)),
     url(r'^api/v1/', include('authentication.urls')),
     url(r'^api/v1/', include('posts.urls')),
+    url(r'^api/v1/', include('early.urls')),
 
 
     # url(r'^api/v1/', include(router.urls)),
