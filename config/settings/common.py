@@ -109,15 +109,36 @@ MEDIA_URL = '/media/'
 #     os.path.join(BASE_DIR, 'djangoapps/templates'),
 # )
 
+#############################################################################
+#   TODO: DESCOMENTAR CUANDO SE LANCE WAYSILY
+# (ELIMINAR LA OTRA COPIA MAS ABAJO QUE TIENE LA AUTENTICACION DESHABILITADA)
+#############################################################################
+# REST_FRAMEWORK = {
+#     'DEFAULT_PERMISSION_CLASSES': (
+#         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+#     ),
+#     'DEFAULT_AUTHENTICATION_CLASSES': (
+#         # 'rest_framework.authentication.SessionAuthentication',
+#         'config.csrf_handler.CsrfExemptSessionAuthentication',
+#         'rest_framework.authentication.BasicAuthentication'
+#     ),
+#     'DEFAULT_RENDERER_CLASSES': (
+#         'utils.api.renderers.CamelCaseJSONRenderer',
+#         'rest_framework.renderers.BrowsableAPIRenderer',
+#     ),
+#     'DEFAULT_PARSER_CLASSES': (
+#         'utils.api.parsers.CamelCaseJSONRenderer',
+#         'rest_framework.parsers.FormParser',
+#         'rest_framework.parsers.MultiPartParser'
+#     ),
+#     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+#     'PAGE_SIZE': 10
+# }
+##############################################################################
+
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
-    ),
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        # 'rest_framework.authentication.SessionAuthentication',
-        'config.csrf_handler.CsrfExemptSessionAuthentication',
-        'rest_framework.authentication.BasicAuthentication'
-    ),
+    'DEFAULT_PERMISSION_CLASSES': [],
+    'DEFAULT_AUTHENTICATION_CLASSES': [],
     'DEFAULT_RENDERER_CLASSES': (
         'utils.api.renderers.CamelCaseJSONRenderer',
         'rest_framework.renderers.BrowsableAPIRenderer',
