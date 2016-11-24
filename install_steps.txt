@@ -130,6 +130,7 @@ DESPLEGAR A HEROKU
     . git commit -m "Mensaje del Commit" (con esto commiteamos en el repo local antes de hacer push)
     . nos logueamos en heroku: heroku login (nos pide user y pass de heroku)
     . heroku create <nombre de la app> (Con esto creamos la app en Heroku)
+    . heroku git:remote -a <nombre de la app> (Cuando digamos: git push heroku master, se va a deploya automaticamente desde la consola, creo que esto es solo posible cuando se tiene el branch master, con develop, es necesario ir a heroku y hacer un deploy manual
     . git push heroku master (con esto hacemos push en Heroku de nuestra app)
     . Si se subieron los archivos correctamente a Heroku, ya tendriamos la App desplegada
 
@@ -154,6 +155,11 @@ DESPLEGAR A HEROKU
         NOTA: si obtenemos algun error en el despliegue podemos:
         . heroku logs (muestra el log en consola)
         . vamos a dashboard en heroku web, y al lado derecha hay un boton que dice: More -> View Logs
+
+        NOTAS IMPORTANTES PARA TENER EN CUENTA Y NO PERDER TIEMPO RESOLVIENDO:
+        . Nuestro proyecto tiene deshabilitado el LogIn del admin de Django Rest Framework. Si intentas loguearte
+          con las credenciales del superuser, refresca y no pasa nada, sigue el boton Log In. De todos modos los endpoint
+          me permiten crear nuevos registros, eliminar o actualizar.
 
 
 
