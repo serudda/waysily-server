@@ -16,6 +16,7 @@ class EarlyAdmin(admin.ModelAdmin):
     #     (None, {'fields': ('title', 'link')}),
     #     (_('Writer'), {'fields': ('author')}),
     # )
+    
     ordering = ('-created_at',)
 
 
