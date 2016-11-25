@@ -31,6 +31,12 @@ DEV:
 1. Commitear todos los nuevos cambios a git desde SourceTree.
     - Si estamos desde un feature branch u otro branch, hacemos un Pull Request a Develop.
     - Hacer el respectivo Push al branch remoto.
+    - Generar las respectivas migraciones localmente:
+        python manage.py makemigrations o python manage.py make migrations <app name>
     - En el root del proyecto correr este comando:
         git push heroku develop
-        Ir a Heroku, y hacer un Deploy Manual para asegurarse que el codigo esta desplegado.
+    - Verificamos si en Heroku hay migraciones pendientes:
+        heroku run python manage.py showmigrations
+        si hay migraciones pendientes: heroku run python manage.py migrate
+    - Ir a Heroku, y hacer un Deploy Manual para asegurarse que el codigo esta desplegado.
+    - Probar que all esta correcto: https://waysily-server-dev.herokuapp.com/api/v1/
