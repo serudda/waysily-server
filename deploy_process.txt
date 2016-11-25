@@ -40,3 +40,21 @@ DEV:
         si hay migraciones pendientes: heroku run python manage.py migrate
     - Ir a Heroku, y hacer un Deploy Manual para asegurarse que el codigo esta desplegado.
     - Probar que all esta correcto: https://waysily-server-dev.herokuapp.com/api/v1/
+
+
+/**********************************************************************************************
+
+
+PRD:
+
+1. Se debe testear y aprobar en el branch Develop.
+2. Se hace un Pull Request al branch Master (desde SourceTree).
+3. Se hace el respectivo merge en github.
+4. Se hace una ultima prueba de que all funcione perfecto.
+4. Se corre el comando en el root del proyecto:
+    git push heroku master
+5. Automaticamente deberia mostrar el estados del build en Heroku. Se prueba en
+    http://www.waysily.com que all este funcionando correctamente.
+
+
+/******************************************************************************/
