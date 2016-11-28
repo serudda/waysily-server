@@ -8,6 +8,7 @@ class Teacher(models.Model):
     GENDER_CHOICES = (
         ('M', 'Male'),
         ('F', 'Female'),
+        ('O', 'Other'),
     )
 
     email = models.EmailField(max_length=50)
