@@ -9,19 +9,14 @@ from teachers.models import Teacher
 class TeacherAdmin(admin.ModelAdmin):
 
     # The fields to be used in displaying the Post model.
-    list_display = ('first_name',
+    list_display = ('email',
+                    'phone_number',
+                    'first_name',
                     'last_name',
-                    'email',
-                    'phone',
-                    'country_birth',
-                    'city_birth',
-                    'state_birth',
-                    'country_live_in',
-                    'city_live_in',
-                    'state_live_in',
-                    'address_live_in',
-                    'native_languages',
-                    'languages_speak',
+                    'sex',
+                    'birth_date',
+                    'born',
+                    'about',
                     'created_at',)
 
     search_fields = ('email',)
