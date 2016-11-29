@@ -5,7 +5,8 @@ class TeacherSerializer(serializers.ModelSerializer):
     """ Serializer to represent the Teacher model """
     class Meta:
         model = Teacher
-        fields = ('email',
+        fields = ('id',
+                  'email',
                   'phone_number',
                   'first_name',
                   'last_name',

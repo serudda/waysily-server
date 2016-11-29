@@ -8,7 +8,7 @@ from teachers.models import Teacher
 # Register your models here.
 class TeacherAdmin(admin.ModelAdmin):
 
-    # The fields to be used in displaying the Post model.
+    # The fields to be used in displaying the Teacher model.
     list_display = ('email',
                     'phone_number',
                     'first_name',

@@ -5,7 +5,7 @@ from rest_framework.routers import DefaultRouter
 from early.views import EarlyViewSet
 
 
-router = DefaultRouter()
+router = DefaultRouter(trailing_slash=False)
 router.register(r'early', EarlyViewSet, base_name='early')
 
 
