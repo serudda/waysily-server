@@ -3,8 +3,8 @@ from django.db import models
 
 class Position(models.Model):
     """ Position Model """
-    lng = models.CharField(max_length=50)
-    lat = models.CharField(max_length=50)
+    lng = models.CharField(max_length=50, null=True, blank=True)
+    lat = models.CharField(max_length=50, null=True, blank=True)
 
 
 class Location(models.Model):

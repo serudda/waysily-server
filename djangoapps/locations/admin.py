@@ -9,7 +9,8 @@ from locations.models import Location
 class LocationAdmin(admin.ModelAdmin):
 
     # The fields to be used in displaying the Teacher model.
-    list_display = ('country',
+    list_display = ('id',
+                    'country',
                     'address',
                     'city',
                     'state',
