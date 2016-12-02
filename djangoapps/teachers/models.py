@@ -1,5 +1,6 @@
 from django.core.validators import RegexValidator
 from django.db import models
+from locations.models import Location
 from rest_framework.settings import api_settings
 
 
@@ -11,6 +12,9 @@ class Teacher(models.Model):
         ('O', 'Other'),
     )
 
+    """ Basic Information """
+    location = models.ForeignKey(Location, null=True, blank=True)
+
     email = models.EmailField(max_length=50)
     phone_number = models.CharField(max_length=20, blank=True, null=True)
     first_name = models.CharField(max_length=50)
@@ -21,3 +25,4 @@ class Teacher(models.Model):
     about = models.CharField(max_length=200, blank=True, null=True)
 
     created_at = models.DateTimeField(db_index=True, auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)

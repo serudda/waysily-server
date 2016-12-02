@@ -17,7 +17,8 @@ class TeacherAdmin(admin.ModelAdmin):
                     'birth_date',
                     'born',
                     'about',
-                    'created_at',)
+                    'created_at',
+                    'updated_at',)
 
     search_fields = ('email',)
 
