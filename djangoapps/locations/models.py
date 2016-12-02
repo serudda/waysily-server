@@ -17,11 +17,6 @@ class Location(models.Model):
     state = models.CharField(max_length=50, blank=True)
     zip_code = models.CharField(max_length=20, blank=True)
 
-    #position = models.OneToOneField(
-    #    Position,
-    #    on_delete=models.CASCADE
-    #)
-
     created_at = models.DateTimeField(db_index=True, auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

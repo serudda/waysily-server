@@ -7,7 +7,6 @@ from locations.serializers import LocationSerializer
 class TeacherSerializer(serializers.ModelSerializer):
     """ Serializer to represent the Teacher model """
     location = LocationSerializer()
-    #created_at = serializers.ModelField(model_field=Teacher()._meta.get_field('created_at'))
 
     class Meta:
         model = Teacher
@@ -27,7 +26,6 @@ class TeacherSerializer(serializers.ModelSerializer):
         read_only_fields = ('id', 'created_at',)
 
     def create(self, validated_data):
-        """Create and return a new `Teacher` instance, given the validated data."""
         # Get location object in order to save on DB
         location_data = validated_data.pop('location', None)
 
@@ -43,43 +41,6 @@ class TeacherSerializer(serializers.ModelSerializer):
             validated_data['location'] = location
         return Teacher.objects.create(**validated_data)
 
-    """def update(self, instance, validated_data):
-        # Update teacher instance
-        instance.first_name = validated_data['first_name']
-        instance.last_name = validated_data['last_name']
-        instance.email = validated_data['email']
-        instance.phone_number = validated_data['phone_number']
-        instance.sex = validated_data['sex']
-        instance.birth_date = validated_data['birth_date']
-        instance.born = validated_data['born']
-        instance.about = validated_data['about']
-
-        location = validated_data['location']
-        country = location['country']
-        address = location['address']
-        city = location['city']
-        state = location['state']
-        zip_code = location['zip_code']
-        location_instance = Location(country=country,
-                                     address=address,
-                                     city=city,
-                                     state=state,
-                                     zip_code=zip_code,)
-
-        position = location['position']
-        lng = position['lng']
-        lat = position['lat']
-        position_instance = Position(lng=lng,
-                                     lat=lat)
-
-        position_instance.save()
-
-        location_instance.save()
-
-        instance.save()
-
-        return instance"""
-
     def update(self, instance, validated_data):
         location_data = validated_data.pop('location')
         position_data = location_data.pop('position')
@@ -87,6 +48,7 @@ class TeacherSerializer(serializers.ModelSerializer):
         location = instance.location
         position = instance.location.position
 
+        # Create teacher instance in order to save on DB
         instance.first_name = validated_data.get('first_name', instance.first_name)
         instance.last_name = validated_data.get('last_name', instance.last_name)
         instance.email = validated_data.get('email', instance.email)
@@ -98,6 +60,7 @@ class TeacherSerializer(serializers.ModelSerializer):
         instance.save()
 
         if location_data:
+            # Create location instance in order to save on DB
             location.country = location_data.get('country', location.country)
             location.address = location_data.get('address', location.address)
             location.city = location_data.get('city', location.city)
@@ -106,6 +69,7 @@ class TeacherSerializer(serializers.ModelSerializer):
             location.save()
 
         if position_data:
+            # Create position instance in order to save on DB
             position.lng = position_data.get('lng', position.lng)
             position.lat = position_data.get('lat', position.lat)
             position.save()
