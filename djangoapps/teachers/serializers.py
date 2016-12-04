@@ -1,12 +1,26 @@
 from rest_framework import serializers
-from teachers.models import Teacher
+from teachers.models import Teacher, Language
 from locations.models import Location, Position
 from locations.serializers import LocationSerializer
+
+
+class LanguageSerializer(serializers.ModelSerializer):
+    """ Serializer to represent the Language model """
+
+    class Meta:
+        model = Language
+        field = ('id',
+                 'native',
+                 'teach',
+                 'learn',)
+
+        read_only_fields = ('id',)
 
 
 class TeacherSerializer(serializers.ModelSerializer):
     """ Serializer to represent the Teacher model """
     location = LocationSerializer()
+    languages = LanguageSerializer()
 
     class Meta:
         model = Teacher
@@ -20,6 +34,7 @@ class TeacherSerializer(serializers.ModelSerializer):
                   'birth_date',
                   'born',
                   'about',
+                  'languages',
                   'created_at',
                   'updated_at',)
 
@@ -32,6 +47,7 @@ class TeacherSerializer(serializers.ModelSerializer):
         if location_data:
             # Get position object in order to save on DB
             position_data = location_data.pop('position', None)
+
             if position_data:
                 position = Position.objects.get_or_create(**position_data)[0]
                 # This part is important to avoid error (Cannot assign "": "" must be a instance)
@@ -39,12 +55,21 @@ class TeacherSerializer(serializers.ModelSerializer):
             location = Location.objects.get_or_create(**location_data)[0]
             # This part is important to avoid error (Cannot assign "": "" must be a instance)
             validated_data['location'] = location
+
+        languages_data = validated_data.pop('languages', None)
+
+        if languages_data:
+            languages = Language.objects.get_or_create(**languages_data)[0]
+            validated_data['languages'] = languages
+
         return Teacher.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
         location_data = validated_data.pop('location')
         position_data = location_data.pop('position')
+        languages_data = validated_data.pop('languages')
 
+        languages = instance.languages
         location = instance.location
         position = instance.location.position
 
@@ -73,5 +98,12 @@ class TeacherSerializer(serializers.ModelSerializer):
             position.lng = position_data.get('lng', position.lng)
             position.lat = position_data.get('lat', position.lat)
             position.save()
+
+        if languages_data:
+            # Create languages instance in order to save on DB
+            languages.native = languages_data.get('native', languages.native)
+            languages.teach = languages_data.get('teach', languages.teach)
+            languages.learn = languages_data.get('learn', languages.learn)
+            languages.save()
 
         return instance
