@@ -2,11 +2,11 @@ from django.conf.urls import include, url
 from rest_framework.routers import DefaultRouter
 
 
-from early.views import EarlyViewSet
+from locations.views import LocationViewSet
 
 
 router = DefaultRouter(trailing_slash=False)
-router.register(r'early', EarlyViewSet, base_name='early')
+router.register(r'locations', LocationViewSet, base_name='locations')
 
 
 urlpatterns = [

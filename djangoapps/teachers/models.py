@@ -1,22 +1,37 @@
-from django.core.validators import RegexValidator
 from django.db import models
+from locations.models import Location
+from django.core.validators import validate_comma_separated_integer_list
+
+
+class Language(models.Model):
+    """ Language Model """
+
+    native = models.CharField(max_length=200, null=True, blank=True)
+    learn = models.CharField(max_length=200, null=True, blank=True)
+    teach = models.CharField(max_length=200, null=True, blank=True)
+
 
 class Teacher(models.Model):
     """ Teacher Model """
+    GENDER_CHOICES = (
+        ('M', 'Male'),
+        ('F', 'Female'),
+        ('O', 'Other'),
+    )
+
+    """ Basic Information """
+    location = models.ForeignKey(Location, null=True, blank=True)
+    languages = models.ForeignKey(Language, null=True, blank=True)
+
+    email = models.EmailField(max_length=50)
+    phone_number = models.CharField(max_length=20, blank=True, null=True)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-    email = models.EmailField(max_length=50)
-    phone = models.CharField(max_length=20)
-    country_birth = models.CharField(max_length=100)
-    city_birth = models.CharField(max_length=100)
-    state_birth = models.CharField(max_length=100)
-    country_live_in = models.CharField(max_length=100)
-    city_live_in = models.CharField(max_length=100)
-    state_live_in = models.CharField(max_length=100)
-    address_live_in = models.CharField(max_length=100)
-    native_languages_regex = RegexValidator(regex=r'^[1-8](,[1-8])*$', message="This field must be a integers list")
-    native_languages = models.CharField(validators=[native_languages_regex], max_length=200)
-    languages_speak_regex = RegexValidator(regex=r'^[1-8](,[1-8])*$', message="This field must be a integers list")
-    languages_speak = models.CharField(validators=[languages_speak_regex], max_length=200)
+    sex = models.CharField(max_length=1, choices=GENDER_CHOICES)
+    birth_date = models.DateField(max_length=50)
+    born = models.CharField(max_length=100)
+    about = models.CharField(max_length=200, blank=True, null=True)
 
     created_at = models.DateTimeField(db_index=True, auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
