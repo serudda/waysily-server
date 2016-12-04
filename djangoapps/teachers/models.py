@@ -1,6 +1,14 @@
-from django.core.validators import RegexValidator
 from django.db import models
-from rest_framework.settings import api_settings
+from locations.models import Location
+from django.core.validators import validate_comma_separated_integer_list
+
+
+class Language(models.Model):
+    """ Language Model """
+
+    native = models.CharField(max_length=200, null=True, blank=True)
+    learn = models.CharField(max_length=200, null=True, blank=True)
+    teach = models.CharField(max_length=200, null=True, blank=True)
 
 
 class Teacher(models.Model):
@@ -8,7 +16,12 @@ class Teacher(models.Model):
     GENDER_CHOICES = (
         ('M', 'Male'),
         ('F', 'Female'),
+        ('O', 'Other'),
     )
+
+    """ Basic Information """
+    location = models.ForeignKey(Location, null=True, blank=True)
+    languages = models.ForeignKey(Language, null=True, blank=True)
 
     email = models.EmailField(max_length=50)
     phone_number = models.CharField(max_length=20, blank=True, null=True)
@@ -20,3 +33,5 @@ class Teacher(models.Model):
     about = models.CharField(max_length=200, blank=True, null=True)
 
     created_at = models.DateTimeField(db_index=True, auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+

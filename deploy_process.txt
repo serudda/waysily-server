@@ -27,8 +27,9 @@ LOCAL:
 
 
 DEV:
-
-1. Commitear todos los nuevos cambios a git desde SourceTree.
+1. Tenemos que ir a: config/settings/dev y descomentar all lo que esta dentro de este bloque:
+            "TODO: Comment this block when you will work locally"
+2. Commitear todos los nuevos cambios a git desde SourceTree.
     - Si estamos desde un feature branch u otro branch, hacemos un Pull Request a Develop.
     - Hacer el respectivo Push al branch remoto.
     - Generar las respectivas migraciones localmente:

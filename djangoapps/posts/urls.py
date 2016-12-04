@@ -6,7 +6,7 @@ from posts.views import PostViewSet, UserPostViewSet, CommentViewSet, \
                         PostCommentViewSet, UserCommentViewSet
 
 
-router = DefaultRouter()
+router = DefaultRouter(trailing_slash=False)
 router.register(r'posts', PostViewSet, base_name='post')
 router.register(r'user/(?P<userid>[0-9]+)/posts', UserPostViewSet,
                                                 base_name='user-post-list')

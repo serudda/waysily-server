@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'posts',
     'early',
     'teachers',
+    'locations',
 )
 
 MIDDLEWARE_CLASSES = (
