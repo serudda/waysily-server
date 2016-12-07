@@ -1,7 +1,22 @@
 from rest_framework import serializers
-from teachers.models import Teacher, Language
+from teachers.models import Teacher, Language, Experience
 from locations.models import Location, Position
 from locations.serializers import LocationSerializer
+
+
+class ExperienceSerializer(serializers.ModelSerializer):
+    """ Serializer to represent the Experience model """
+
+    class Meta:
+        model = Experience
+        fields = ('id',
+                  'position',
+                  'company',
+                  'city',
+                  'country',
+                  'date_start',
+                  'date_finish',
+                  'description',)
 
 
 class LanguageSerializer(serializers.ModelSerializer):
@@ -21,6 +36,7 @@ class TeacherSerializer(serializers.ModelSerializer):
     """ Serializer to represent the Teacher model """
     location = LocationSerializer()
     languages = LanguageSerializer()
+    experiences = ExperienceSerializer(many=True, read_only=True, source='experience_set')
 
     class Meta:
         model = Teacher
@@ -35,10 +51,9 @@ class TeacherSerializer(serializers.ModelSerializer):
                   'born',
                   'about',
                   'languages',
+                  'experiences',
                   'created_at',
                   'updated_at',)
-
-        read_only_fields = ('id', 'created_at',)
 
     def create(self, validated_data):
         # Get location object in order to save on DB

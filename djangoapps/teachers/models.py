@@ -1,7 +1,5 @@
 from django.db import models
 from locations.models import Location
-from django.core.validators import validate_comma_separated_integer_list
-
 
 class Language(models.Model):
     """ Language Model """
@@ -19,6 +17,11 @@ class Teacher(models.Model):
         ('O', 'Other'),
     )
 
+    TYPE_CHOICES = (
+        ('H', 'Community Tutor'),
+        ('P', 'Professional Teacher'),
+    )
+
     """ Basic Information """
     location = models.ForeignKey(Location, null=True, blank=True)
     languages = models.ForeignKey(Language, null=True, blank=True)
@@ -32,6 +35,21 @@ class Teacher(models.Model):
     born = models.CharField(max_length=100)
     about = models.CharField(max_length=200, blank=True, null=True)
 
+    type = models.CharField(max_length=1, choices=TYPE_CHOICES)
+    teacher_since = models.CharField(max_length=4)
+
     created_at = models.DateTimeField(db_index=True, auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+
+class Experience(models.Model):
+    """ Experience Model """
+
+    teacher = models.ForeignKey(Teacher, null=True, blank=True)
+    position = models.CharField(max_length=50, null=True, blank=True)
+    company = models.CharField(max_length=50, null=True, blank=True)
+    city = models.CharField(max_length=50, null=True, blank=True)
+    country = models.CharField(max_length=2, blank=True)
+    date_start = models.CharField(max_length=4, blank=True)
+    date_finish = models.CharField(max_length=4, blank=True)
+    description = models.CharField(max_length=200, blank=True)
