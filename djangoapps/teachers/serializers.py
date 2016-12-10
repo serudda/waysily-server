@@ -18,6 +18,8 @@ class ExperienceSerializer(serializers.ModelSerializer):
                   'date_finish',
                   'description',)
 
+        read_only_fields = ('id',)
+
 
 class LanguageSerializer(serializers.ModelSerializer):
     """ Serializer to represent the Language model """

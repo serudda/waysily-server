@@ -1,6 +1,7 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
-from rest_framework.decorators import detail_route
+from django.shortcuts import get_object_or_404
+from rest_framework.decorators import detail_route, list_route
 
 from teachers.models import Teacher, Experience
 from teachers.serializers import TeacherSerializer, ExperienceSerializer
@@ -11,11 +12,28 @@ class ExperienceViewSet(viewsets.ModelViewSet):
     queryset = Experience.objects.all()
     serializer_class = ExperienceSerializer
 
+    """ SIRVE PARA SOBREESCRIBIR EL METODO GET (UN SOLO ELEMENTO)
+    @detail_route(methods=['get'])
+    def get_experience(self, request, pk=None):
+        queryset = Experience.objects.all()
+        experience = get_object_or_404(queryset, pk=pk)
+        serializer = ExperienceSerializer(experience)
+        return Response(serializer.data, status=status.HTTP_200_OK)"""
+
 
 class TeacherViewSet (viewsets.ModelViewSet):
     """ ViewSet for viewing and editing Teacher objects """
     queryset = Teacher.objects.all()
     serializer_class = TeacherSerializer
+
+    @list_route(methods=['get'])
+    def get_experience_list(self, request, pk=None):
+
+        # get experiences list
+        queryset = Experience.objects.all()
+        serializer = ExperienceSerializer(queryset, many=True)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     @detail_route(methods=['post'])
     def set_experience(self, request, pk=None):
