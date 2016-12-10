@@ -1,6 +1,7 @@
 from django.db import models
 from locations.models import Location
 
+
 class Language(models.Model):
     """ Language Model """
 
