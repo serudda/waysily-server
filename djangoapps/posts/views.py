@@ -103,7 +103,6 @@ class CommentViewSet(viewsets.ModelViewSet):
             return Response(serializer.errors,
                             status=status.HTTP_400_BAD_REQUEST)
 
-
     @detail_route(methods=['post'], permission_classes=[permissions.IsAuthenticated])
     def cancel_upvote(self, request, pk=None):
         try:
