@@ -34,10 +34,10 @@ class Teacher(models.Model):
     sex = models.CharField(max_length=1, choices=GENDER_CHOICES)
     birth_date = models.DateField(max_length=50)
     born = models.CharField(max_length=100)
-    about = models.CharField(max_length=200, blank=True, null=True)
+    about = models.CharField(max_length=500, blank=True, null=True)
 
-    type = models.CharField(max_length=1, choices=TYPE_CHOICES)
-    teacher_since = models.CharField(max_length=4)
+    type = models.CharField(max_length=1, choices=TYPE_CHOICES, blank=True, null=True)
+    teacher_since = models.CharField(max_length=4, blank=True, null=True)
 
     created_at = models.DateTimeField(db_index=True, auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -53,4 +53,4 @@ class Experience(models.Model):
     country = models.CharField(max_length=2, blank=True)
     date_start = models.CharField(max_length=4, blank=True)
     date_finish = models.CharField(max_length=4, blank=True)
-    description = models.CharField(max_length=200, blank=True)
+    description = models.CharField(max_length=500, blank=True)

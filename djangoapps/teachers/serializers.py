@@ -53,6 +53,8 @@ class TeacherSerializer(serializers.ModelSerializer):
                   'born',
                   'about',
                   'languages',
+                  'type',
+                  'teacher_since',
                   'experiences',
                   'created_at',
                   'updated_at',)
@@ -99,6 +101,8 @@ class TeacherSerializer(serializers.ModelSerializer):
         instance.birth_date = validated_data.get('birth_date', instance.birth_date)
         instance.born = validated_data.get('born', instance.born)
         instance.about = validated_data.get('about', instance.about)
+        instance.type = validated_data.get('type', instance.type)
+        instance.teacher_since = validated_data.get('teacher_since', instance.teacher_since)
         instance.save()
 
         if location_data:
