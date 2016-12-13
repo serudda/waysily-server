@@ -1,10 +1,21 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
-from django.shortcuts import get_object_or_404
 from rest_framework.decorators import detail_route, list_route
 
-from teachers.models import Teacher, Experience
-from teachers.serializers import TeacherSerializer, ExperienceSerializer
+from teachers.models import Teacher, Experience, Education, Certificate
+from teachers.serializers import TeacherSerializer, ExperienceSerializer, EducationSerializer, CertificateSerializer
+
+
+class CertificateViewSet(viewsets.ModelViewSet):
+    """ ViewSet for viewing and editing Certificate objects """
+    queryset = Certificate.objects.all()
+    serializer_class = CertificateSerializer
+
+
+class EducationViewSet(viewsets.ModelViewSet):
+    """ ViewSet for viewing and editing Education objects """
+    queryset = Education.objects.all()
+    serializer_class = EducationSerializer
 
 
 class ExperienceViewSet(viewsets.ModelViewSet):
@@ -41,6 +52,46 @@ class TeacherViewSet (viewsets.ModelViewSet):
         # get teacher object
         teacher = self.get_object()
         serializer = ExperienceSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(teacher=teacher)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    @list_route(methods=['get'])
+    def get_education_list(self, request, pk=None):
+        # get educations list
+        queryset = Education.objects.all()
+        serializer = EducationSerializer(queryset, many=True)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @detail_route(methods=['post'])
+    def set_education(self, request, pk=None):
+
+        # get teacher object
+        teacher = self.get_object()
+        serializer = EducationSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(teacher=teacher)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    @list_route(methods=['get'])
+    def get_certificate_list(self, request, pk=None):
+        # get certificates list
+        queryset = Certificate.objects.all()
+        serializer = CertificateSerializer(queryset, many=True)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @detail_route(methods=['post'])
+    def set_certificate(self, request, pk=None):
+
+        # get teacher object
+        teacher = self.get_object()
+        serializer = CertificateSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save(teacher=teacher)
             return Response(serializer.data, status=status.HTTP_201_CREATED)

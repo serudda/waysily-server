@@ -34,7 +34,7 @@ class Teacher(models.Model):
     sex = models.CharField(max_length=1, choices=GENDER_CHOICES)
     birth_date = models.DateField(max_length=50)
     born = models.CharField(max_length=100)
-    about = models.CharField(max_length=500, blank=True, null=True)
+    about = models.CharField(max_length=800, blank=True, null=True)
 
     type = models.CharField(max_length=1, choices=TYPE_CHOICES, blank=True, null=True)
     teacher_since = models.CharField(max_length=4, blank=True, null=True)
@@ -53,4 +53,27 @@ class Experience(models.Model):
     country = models.CharField(max_length=2, blank=True)
     date_start = models.CharField(max_length=4, blank=True)
     date_finish = models.CharField(max_length=4, blank=True)
-    description = models.CharField(max_length=500, blank=True)
+    description = models.CharField(max_length=800, blank=True)
+
+
+class Education(models.Model):
+    """ Education Model """
+
+    teacher = models.ForeignKey(Teacher, null=True, blank=True)
+    school = models.CharField(max_length=50, null=True, blank=True)
+    degree = models.CharField(max_length=50, null=True, blank=True)
+    field_study = models.CharField(max_length=50, null=True, blank=True)
+    date_start = models.CharField(max_length=4, blank=True)
+    date_finish = models.CharField(max_length=4, blank=True)
+    description = models.CharField(max_length=800, blank=True)
+
+
+class Certificate(models.Model):
+    """ Certificate Model """
+
+    teacher = models.ForeignKey(Teacher, null=True, blank=True)
+    name = models.CharField(max_length=50, null=True, blank=True)
+    institution = models.CharField(max_length=50, null=True, blank=True)
+    date_received = models.CharField(max_length=4, blank=True)
+    description = models.CharField(max_length=800, blank=True)
+

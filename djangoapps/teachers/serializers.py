@@ -1,7 +1,37 @@
 from rest_framework import serializers
-from teachers.models import Teacher, Language, Experience
+from teachers.models import Teacher, Language, Experience, Education, Certificate
 from locations.models import Location, Position
 from locations.serializers import LocationSerializer
+
+
+class CertificateSerializer(serializers.ModelSerializer):
+    """ Serializer to represent the Certificate model """
+
+    class Meta:
+        model = Certificate
+        fields = ('id',
+                  'name',
+                  'institution',
+                  'date_received',
+                  'description',)
+
+        read_only_fields = ('id',)
+
+
+class EducationSerializer(serializers.ModelSerializer):
+    """ Serializer to represent the Education model """
+
+    class Meta:
+        model = Education
+        fields = ('id',
+                  'school',
+                  'degree',
+                  'field_study',
+                  'date_start',
+                  'date_finish',
+                  'description',)
+
+        read_only_fields = ('id',)
 
 
 class ExperienceSerializer(serializers.ModelSerializer):
@@ -39,6 +69,8 @@ class TeacherSerializer(serializers.ModelSerializer):
     location = LocationSerializer()
     languages = LanguageSerializer()
     experiences = ExperienceSerializer(many=True, read_only=True, source='experience_set')
+    educations = EducationSerializer(many=True, read_only=True, source='education_set')
+    certificates = CertificateSerializer(many=True, read_only=True, source='certificate_set')
 
     class Meta:
         model = Teacher
@@ -56,6 +88,8 @@ class TeacherSerializer(serializers.ModelSerializer):
                   'type',
                   'teacher_since',
                   'experiences',
+                  'educations',
+                  'certificates',
                   'created_at',
                   'updated_at',)
 
