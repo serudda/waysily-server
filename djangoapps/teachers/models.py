@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.postgres.fields import ArrayField
 from locations.models import Location
 
 
@@ -8,6 +9,14 @@ class Language(models.Model):
     native = models.CharField(max_length=200, null=True, blank=True)
     learn = models.CharField(max_length=200, null=True, blank=True)
     teach = models.CharField(max_length=200, null=True, blank=True)
+
+
+class Immersion(models.Model):
+    """ Immersion Model """
+
+    active = models.BooleanField(default=False)
+    user_type = models.CharField(max_length=600, blank=True)
+    category = ArrayField(models.CharField(max_length=200), blank=True)
 
 
 class Teacher(models.Model):
@@ -26,6 +35,7 @@ class Teacher(models.Model):
     """ Basic Information """
     location = models.ForeignKey(Location, null=True, blank=True)
     languages = models.ForeignKey(Language, null=True, blank=True)
+    immersion = models.ForeignKey(Immersion, blank=True)
 
     email = models.EmailField(max_length=50)
     phone_number = models.CharField(max_length=20, blank=True, null=True)
@@ -34,10 +44,11 @@ class Teacher(models.Model):
     sex = models.CharField(max_length=1, choices=GENDER_CHOICES)
     birth_date = models.DateField(max_length=50)
     born = models.CharField(max_length=100)
-    about = models.CharField(max_length=800, blank=True, null=True)
+    about = models.CharField(max_length=1000, blank=True, null=True)
 
     type = models.CharField(max_length=1, choices=TYPE_CHOICES, blank=True, null=True)
     teacher_since = models.CharField(max_length=4, blank=True, null=True)
+    methodology = models.CharField(max_length=1000, blank=True)
 
     created_at = models.DateTimeField(db_index=True, auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -53,7 +64,7 @@ class Experience(models.Model):
     country = models.CharField(max_length=2, blank=True)
     date_start = models.CharField(max_length=4, blank=True)
     date_finish = models.CharField(max_length=4, blank=True)
-    description = models.CharField(max_length=800, blank=True)
+    description = models.CharField(max_length=1000, blank=True)
 
 
 class Education(models.Model):
@@ -65,7 +76,7 @@ class Education(models.Model):
     field_study = models.CharField(max_length=50, null=True, blank=True)
     date_start = models.CharField(max_length=4, blank=True)
     date_finish = models.CharField(max_length=4, blank=True)
-    description = models.CharField(max_length=800, blank=True)
+    description = models.CharField(max_length=1000, blank=True)
 
 
 class Certificate(models.Model):
@@ -75,5 +86,5 @@ class Certificate(models.Model):
     name = models.CharField(max_length=50, null=True, blank=True)
     institution = models.CharField(max_length=50, null=True, blank=True)
     date_received = models.CharField(max_length=4, blank=True)
-    description = models.CharField(max_length=800, blank=True)
+    description = models.CharField(max_length=1000, blank=True)
 

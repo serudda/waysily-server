@@ -1,7 +1,19 @@
 from rest_framework import serializers
-from teachers.models import Teacher, Language, Experience, Education, Certificate
+from teachers.models import Teacher, Language, Experience, Education, Certificate, Immersion
 from locations.models import Location, Position
 from locations.serializers import LocationSerializer
+
+
+class ImmersionSerializer(serializers.ModelSerializer):
+    """ Serializer to represent the Immersion model """
+
+    class Meta:
+        model = Immersion
+        fields = ('id',
+                  'active',
+                  'category',
+                  'user_type',)
+        read_only_fields = ('id',)
 
 
 class CertificateSerializer(serializers.ModelSerializer):
@@ -71,6 +83,7 @@ class TeacherSerializer(serializers.ModelSerializer):
     experiences = ExperienceSerializer(many=True, read_only=True, source='experience_set')
     educations = EducationSerializer(many=True, read_only=True, source='education_set')
     certificates = CertificateSerializer(many=True, read_only=True, source='certificate_set')
+    immersion = ImmersionSerializer()
 
     class Meta:
         model = Teacher
@@ -87,9 +100,11 @@ class TeacherSerializer(serializers.ModelSerializer):
                   'languages',
                   'type',
                   'teacher_since',
+                  'methodology',
                   'experiences',
                   'educations',
                   'certificates',
+                  'immersion',
                   'created_at',
                   'updated_at',)
 
@@ -115,14 +130,22 @@ class TeacherSerializer(serializers.ModelSerializer):
             languages = Language.objects.get_or_create(**languages_data)[0]
             validated_data['languages'] = languages
 
+        immersion_data = validated_data.pop('immersion', None)
+
+        if immersion_data:
+            immersion = Immersion.objects.get_or_create(**immersion_data)[0]
+            validated_data['immersion'] = immersion
+
         return Teacher.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
         location_data = validated_data.pop('location')
         position_data = location_data.pop('position')
         languages_data = validated_data.pop('languages')
+        immersion_data = validated_data.pop('immersion')
 
         languages = instance.languages
+        immersion = instance.immersion
         location = instance.location
         position = instance.location.position
 
@@ -137,6 +160,7 @@ class TeacherSerializer(serializers.ModelSerializer):
         instance.about = validated_data.get('about', instance.about)
         instance.type = validated_data.get('type', instance.type)
         instance.teacher_since = validated_data.get('teacher_since', instance.teacher_since)
+        instance.methodology = validated_data.get('methodology', instance.methodology)
         instance.save()
 
         if location_data:
@@ -160,5 +184,12 @@ class TeacherSerializer(serializers.ModelSerializer):
             languages.teach = languages_data.get('teach', languages.teach)
             languages.learn = languages_data.get('learn', languages.learn)
             languages.save()
+
+        if immersion_data:
+            # Create immersion instance in order to save on DB
+            immersion.active = immersion_data.get('active', immersion.active)
+            immersion.user_type = immersion_data.get('user_type', immersion.user_type)
+            immersion.category = immersion_data.get('category', immersion.category)
+            immersion.save()
 
         return instance

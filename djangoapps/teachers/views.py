@@ -2,8 +2,8 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import detail_route, list_route
 
-from teachers.models import Teacher, Experience, Education, Certificate
-from teachers.serializers import TeacherSerializer, ExperienceSerializer, EducationSerializer, CertificateSerializer
+from teachers.models import Teacher, Experience, Education, Certificate, Immersion
+from teachers.serializers import TeacherSerializer, ExperienceSerializer, EducationSerializer, CertificateSerializer, ImmersionSerializer
 
 
 class CertificateViewSet(viewsets.ModelViewSet):
@@ -97,3 +97,4 @@ class TeacherViewSet (viewsets.ModelViewSet):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
