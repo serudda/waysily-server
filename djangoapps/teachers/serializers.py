@@ -1,29 +1,17 @@
 from rest_framework import serializers
-from teachers.models import Teacher, Language, Experience, Education, Certificate, Immersion, Type
+from teachers.models import Teacher, Language, Experience, Education, Certificate, Immersion
 from locations.models import Location, Position
 from locations.serializers import LocationSerializer
 
 
-class TypeSerializer(serializers.ModelSerializer):
-    """ Serializer to represent the type of Immersion model """
-
-    class Meta:
-        model = Type
-        fields = ('id',
-                  'category',)
-
-        read_only_fields = ('id',)
-
-
 class ImmersionSerializer(serializers.ModelSerializer):
     """ Serializer to represent the Immersion model """
-    type = TypeSerializer(many=True, read_only=True, source='type_set')
 
     class Meta:
         model = Immersion
         fields = ('id',
                   'active',
-                  'type',
+                  'category',
                   'user_type',)
         read_only_fields = ('id',)
 
@@ -112,6 +100,7 @@ class TeacherSerializer(serializers.ModelSerializer):
                   'languages',
                   'type',
                   'teacher_since',
+                  'methodology',
                   'experiences',
                   'educations',
                   'certificates',
@@ -171,6 +160,7 @@ class TeacherSerializer(serializers.ModelSerializer):
         instance.about = validated_data.get('about', instance.about)
         instance.type = validated_data.get('type', instance.type)
         instance.teacher_since = validated_data.get('teacher_since', instance.teacher_since)
+        instance.methodology = validated_data.get('methodology', instance.methodology)
         instance.save()
 
         if location_data:
@@ -199,6 +189,7 @@ class TeacherSerializer(serializers.ModelSerializer):
             # Create immersion instance in order to save on DB
             immersion.active = immersion_data.get('active', immersion.active)
             immersion.user_type = immersion_data.get('user_type', immersion.user_type)
+            immersion.category = immersion_data.get('category', immersion.category)
             immersion.save()
 
         return instance

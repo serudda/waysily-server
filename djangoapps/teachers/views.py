@@ -2,40 +2,8 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import detail_route, list_route
 
-from teachers.models import Teacher, Experience, Education, Certificate, Immersion, Type
-from teachers.serializers import TeacherSerializer, ExperienceSerializer, EducationSerializer, CertificateSerializer, ImmersionSerializer, TypeSerializer
-
-
-class TypeViewSet(viewsets.ModelViewSet):
-    """ ViewSet for viewing and editing Category of Immersion objects """
-    queryset = Type.objects.all()
-    serializer_class = TypeSerializer
-
-
-class ImmersionViewSet(viewsets.ModelViewSet):
-    """ ViewSet for viewing and editing Immersion objects """
-    queryset = Immersion.objects.all()
-    serializer_class = ImmersionSerializer
-
-    @list_route(methods=['get'])
-    def get_immersion_type_list(self, request, pk=None):
-        # get type of immersion list
-        queryset = Type.objects.all()
-        serializer = TypeViewSet(queryset, many=True)
-
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-    @detail_route(methods=['post'])
-    def set_immersion_type(self, request, pk=None):
-
-        # get immersion object
-        immersion = self.get_object()
-        serializer = TypeSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save(immersion=immersion)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+from teachers.models import Teacher, Experience, Education, Certificate, Immersion
+from teachers.serializers import TeacherSerializer, ExperienceSerializer, EducationSerializer, CertificateSerializer, ImmersionSerializer
 
 
 class CertificateViewSet(viewsets.ModelViewSet):
