@@ -1,7 +1,7 @@
 from django.conf.urls import include, url
 from rest_framework.routers import DefaultRouter
 
-from teachers.views import TeacherViewSet, ExperienceViewSet, EducationViewSet, CertificateViewSet
+from teachers.views import TeacherViewSet, ExperienceViewSet, EducationViewSet, CertificateViewSet, TypeViewSet, ImmersionViewSet
 
 
 teacher_list = TeacherViewSet.as_view({
@@ -46,6 +46,21 @@ certificate_list = TeacherViewSet.as_view({
     'post': 'set_certificate'
 })
 
+immersion_list = ImmersionViewSet.as_view({
+    'get': 'list',
+    'post': 'create'
+})
+
+immersion_type_detail = TypeViewSet.as_view({
+    'get': 'retrieve',
+    'put': 'update'
+})
+
+immersion_type_list = ImmersionViewSet.as_view({
+    'get': 'get_immersion_type_list',
+    'post': 'set_immersion_type'
+})
+
 router = DefaultRouter(trailing_slash=False)
 
 urlpatterns = [
@@ -57,4 +72,9 @@ urlpatterns = [
     url(r'educations/(?P<pk>[0-9]+)$', education_detail, name='education_detail'),
     url(r'teachers/(?P<pk>[0-9]+)/certificates$', certificate_list, name='certificate_list'),
     url(r'certificates/(?P<pk>[0-9]+)$', certificate_detail, name='certificate_detail'),
+    url(r'teachers/(?P<pk>[0-9]+)/immersion$', immersion_list, name='immersion_list'),
+    url(r'immersion/(?P<pk>[0-9]+)/type$', immersion_type_list, name='immersion_type_list'),
+    url(r'type/(?P<pk>[0-9]+)$', immersion_type_detail, name='immersion_type_detail'),
+    #url(r'teachers/(?P<pk>[0-9]+)/immersion/(?P<pk_immersion>[0-9]+)/types$', immersion_type_list, name='immersion_type_list'),
+    #url(r'immersion/(?P<pk_immersion>[0-9]+)/types/(?P<pk>[0-9]+)$', immersion_type_detail, name='immersion_type_detail'),
 ]

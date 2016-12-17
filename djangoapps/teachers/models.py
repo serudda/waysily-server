@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.postgres.fields import ArrayField
 from locations.models import Location
 
 
@@ -8,6 +9,21 @@ class Language(models.Model):
     native = models.CharField(max_length=200, null=True, blank=True)
     learn = models.CharField(max_length=200, null=True, blank=True)
     teach = models.CharField(max_length=200, null=True, blank=True)
+
+
+class Immersion(models.Model):
+    """ Immersion Model """
+
+    active = models.BooleanField(default=False)
+    user_type = models.CharField(max_length=600, blank=True)
+
+
+class Type(models.Model):
+    """ Type of Immersion Model """
+
+    immersion = models.ForeignKey(Immersion, null=True, blank=True)
+    #immersion = models.ManyToManyField(Immersion)
+    category = ArrayField(models.CharField(max_length=200), blank=True)
 
 
 class Teacher(models.Model):
@@ -26,6 +42,7 @@ class Teacher(models.Model):
     """ Basic Information """
     location = models.ForeignKey(Location, null=True, blank=True)
     languages = models.ForeignKey(Language, null=True, blank=True)
+    immersion = models.ForeignKey(Immersion, blank=True)
 
     email = models.EmailField(max_length=50)
     phone_number = models.CharField(max_length=20, blank=True, null=True)
