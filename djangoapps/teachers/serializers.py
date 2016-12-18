@@ -12,7 +12,7 @@ class ImmersionSerializer(serializers.ModelSerializer):
         fields = ('id',
                   'active',
                   'category',
-                  'user_type',)
+                  'other_category',)
         read_only_fields = ('id',)
 
 
@@ -188,7 +188,7 @@ class TeacherSerializer(serializers.ModelSerializer):
         if immersion_data:
             # Create immersion instance in order to save on DB
             immersion.active = immersion_data.get('active', immersion.active)
-            immersion.user_type = immersion_data.get('user_type', immersion.user_type)
+            immersion.other_category = immersion_data.get('other_category', immersion.other_category)
             immersion.category = immersion_data.get('category', immersion.category)
             immersion.save()
 

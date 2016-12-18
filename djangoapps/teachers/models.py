@@ -15,7 +15,7 @@ class Immersion(models.Model):
     """ Immersion Model """
 
     active = models.BooleanField(default=False)
-    user_type = models.CharField(max_length=600, blank=True)
+    other_category = models.CharField(max_length=600, blank=True)
     category = ArrayField(models.CharField(max_length=200), blank=True)
 
 
