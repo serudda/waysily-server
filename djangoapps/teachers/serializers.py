@@ -1,7 +1,42 @@
 from rest_framework import serializers
-from teachers.models import Teacher, Language, Experience, Education, Certificate, Immersion
+from teachers.models import Teacher, Language, Experience, Education, Certificate, Immersion, Price, PrivatePriceDetail, GroupPriceDetail
 from locations.models import Location, Position
 from locations.serializers import LocationSerializer
+
+
+class PrivatePriceDetailSerializer(serializers.ModelSerializer):
+    """ Serializer to represent the Private Classes PriceDetail model """
+
+    class Meta:
+        model = PrivatePriceDetail
+        fields = ('id',
+                  'active',
+                  'hour_price',)
+        read_only_fields = ('id',)
+
+
+class GroupPriceDetailSerializer(serializers.ModelSerializer):
+    """ Serializer to represent the Group Classes PriceDetail model """
+
+    class Meta:
+        model = GroupPriceDetail
+        fields = ('id',
+                  'active',
+                  'hour_price',)
+        read_only_fields = ('id',)
+
+
+class PriceSerializer(serializers.ModelSerializer):
+    """ Serializer to represent the Price model """
+    private_class = PrivatePriceDetailSerializer()
+    group_class = GroupPriceDetailSerializer()
+
+    class Meta:
+        model = Price
+        fields = ('id',
+                  'private_class',
+                  'group_class',)
+        read_only_fields = ('id',)
 
 
 class ImmersionSerializer(serializers.ModelSerializer):
@@ -12,7 +47,7 @@ class ImmersionSerializer(serializers.ModelSerializer):
         fields = ('id',
                   'active',
                   'category',
-                  'user_type',)
+                  'other_category',)
         read_only_fields = ('id',)
 
 
@@ -84,6 +119,7 @@ class TeacherSerializer(serializers.ModelSerializer):
     educations = EducationSerializer(many=True, read_only=True, source='education_set')
     certificates = CertificateSerializer(many=True, read_only=True, source='certificate_set')
     immersion = ImmersionSerializer()
+    price = PriceSerializer()
 
     class Meta:
         model = Teacher
@@ -105,6 +141,7 @@ class TeacherSerializer(serializers.ModelSerializer):
                   'educations',
                   'certificates',
                   'immersion',
+                  'price',
                   'created_at',
                   'updated_at',)
 
@@ -136,6 +173,27 @@ class TeacherSerializer(serializers.ModelSerializer):
             immersion = Immersion.objects.get_or_create(**immersion_data)[0]
             validated_data['immersion'] = immersion
 
+        price_data = validated_data.pop('price', None)
+
+        if price_data:
+            # Get private class and group class object in order to save on DB
+            private_class_data = price_data.pop('private_class', None)
+            group_class_data = price_data.pop('group_class', None)
+
+            if private_class_data:
+                private_class = PrivatePriceDetail.objects.get_or_create(**private_class_data)[0]
+                # This part is important to avoid error (Cannot assign "": "" must be a instance)
+                price_data['private_class'] = private_class
+
+            if group_class_data:
+                group_class = GroupPriceDetail.objects.get_or_create(**group_class_data)[0]
+                # This part is important to avoid error (Cannot assign "": "" must be a instance)
+                price_data['group_class'] = group_class
+
+            price = Price.objects.get_or_create(**price_data)[0]
+            # This part is important to avoid error (Cannot assign "": "" must be a instance)
+            validated_data['price'] = price
+
         return Teacher.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
@@ -143,9 +201,14 @@ class TeacherSerializer(serializers.ModelSerializer):
         position_data = location_data.pop('position')
         languages_data = validated_data.pop('languages')
         immersion_data = validated_data.pop('immersion')
+        price_data = validated_data.pop('price')
+        private_class_data = price_data.pop('private_class')
+        group_class_data = price_data.pop('group_class')
 
         languages = instance.languages
         immersion = instance.immersion
+        private_class = instance.price.private_class
+        group_class = instance.price.group_class
         location = instance.location
         position = instance.location.position
 
@@ -188,8 +251,20 @@ class TeacherSerializer(serializers.ModelSerializer):
         if immersion_data:
             # Create immersion instance in order to save on DB
             immersion.active = immersion_data.get('active', immersion.active)
-            immersion.user_type = immersion_data.get('user_type', immersion.user_type)
+            immersion.other_category = immersion_data.get('other_category', immersion.other_category)
             immersion.category = immersion_data.get('category', immersion.category)
             immersion.save()
+
+        if private_class_data:
+            # Create private class instance in order to save on DB
+            private_class.active = private_class_data.get('active', private_class.active)
+            private_class.hour_price = private_class_data.get('hour_price', private_class.hour_price)
+            private_class.save()
+
+        if group_class_data:
+            # Create private class instance in order to save on DB
+            group_class.active = group_class_data.get('active', group_class.active)
+            group_class.hour_price = group_class_data.get('hour_price', group_class.hour_price)
+            group_class.save()
 
         return instance

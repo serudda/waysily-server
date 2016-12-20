@@ -3,6 +3,24 @@ from django.contrib.postgres.fields import ArrayField
 from locations.models import Location
 
 
+class PrivatePriceDetail(models.Model):
+    """ Private Classes Price Detail Model """
+    active = models.BooleanField(default=False)
+    hour_price = models.DecimalField(max_digits=6, decimal_places=2)
+
+
+class GroupPriceDetail(models.Model):
+    """ Group Classes Price Detail Model """
+    active = models.BooleanField(default=False)
+    hour_price = models.DecimalField(max_digits=6, decimal_places=2)
+
+
+class Price(models.Model):
+    """ Price Model """
+    private_class = models.ForeignKey(PrivatePriceDetail, related_name='private_class', null=True, blank=True)
+    group_class = models.ForeignKey(GroupPriceDetail, related_name='group_class', null=True, blank=True)
+
+
 class Language(models.Model):
     """ Language Model """
 
@@ -15,7 +33,7 @@ class Immersion(models.Model):
     """ Immersion Model """
 
     active = models.BooleanField(default=False)
-    user_type = models.CharField(max_length=600, blank=True)
+    other_category = models.CharField(max_length=600, blank=True)
     category = ArrayField(models.CharField(max_length=200), blank=True)
 
 
@@ -36,6 +54,7 @@ class Teacher(models.Model):
     location = models.ForeignKey(Location, null=True, blank=True)
     languages = models.ForeignKey(Language, null=True, blank=True)
     immersion = models.ForeignKey(Immersion, blank=True)
+    price = models.ForeignKey(Price, null=True, blank=True)
 
     email = models.EmailField(max_length=50)
     phone_number = models.CharField(max_length=20, blank=True, null=True)
