@@ -1,14 +1,25 @@
 from rest_framework import serializers
-from teachers.models import Teacher, Language, Experience, Education, Certificate, Immersion, Price, PriceDetail
+from teachers.models import Teacher, Language, Experience, Education, Certificate, Immersion, Price, PrivatePriceDetail, GroupPriceDetail
 from locations.models import Location, Position
 from locations.serializers import LocationSerializer
 
 
-class PriceDetailSerializer(serializers.ModelSerializer):
-    """ Serializer to represent the PriceDetail model """
+class PrivatePriceDetailSerializer(serializers.ModelSerializer):
+    """ Serializer to represent the Private Classes PriceDetail model """
 
     class Meta:
-        model = PriceDetail
+        model = PrivatePriceDetail
+        fields = ('id',
+                  'active',
+                  'hour_price',)
+        read_only_fields = ('id',)
+
+
+class GroupPriceDetailSerializer(serializers.ModelSerializer):
+    """ Serializer to represent the Group Classes PriceDetail model """
+
+    class Meta:
+        model = GroupPriceDetail
         fields = ('id',
                   'active',
                   'hour_price',)
@@ -17,8 +28,8 @@ class PriceDetailSerializer(serializers.ModelSerializer):
 
 class PriceSerializer(serializers.ModelSerializer):
     """ Serializer to represent the Price model """
-    private_class = PriceDetailSerializer()
-    group_class = PriceDetailSerializer()
+    private_class = PrivatePriceDetailSerializer()
+    group_class = GroupPriceDetailSerializer()
 
     class Meta:
         model = Price
@@ -170,17 +181,15 @@ class TeacherSerializer(serializers.ModelSerializer):
             group_class_data = price_data.pop('group_class', None)
 
             if private_class_data:
-                private_class = PriceDetail.objects.get_or_create(**private_class_data)[0]
+                private_class = PrivatePriceDetail.objects.get_or_create(**private_class_data)[0]
                 # This part is important to avoid error (Cannot assign "": "" must be a instance)
                 price_data['private_class'] = private_class
-            price = Price.objects.get_or_create(**price_data)[0]
-            # This part is important to avoid error (Cannot assign "": "" must be a instance)
-            validated_data['price'] = price
 
             if group_class_data:
-                group_class = PriceDetail.objects.get_or_create(**group_class_data)[0]
+                group_class = GroupPriceDetail.objects.get_or_create(**group_class_data)[0]
                 # This part is important to avoid error (Cannot assign "": "" must be a instance)
                 price_data['group_class'] = group_class
+
             price = Price.objects.get_or_create(**price_data)[0]
             # This part is important to avoid error (Cannot assign "": "" must be a instance)
             validated_data['price'] = price
@@ -249,13 +258,13 @@ class TeacherSerializer(serializers.ModelSerializer):
         if private_class_data:
             # Create private class instance in order to save on DB
             private_class.active = private_class_data.get('active', private_class.active)
-            private_class.active = private_class_data.get('hour_price', private_class.hour_price)
+            private_class.hour_price = private_class_data.get('hour_price', private_class.hour_price)
             private_class.save()
 
         if group_class_data:
             # Create private class instance in order to save on DB
             group_class.active = group_class_data.get('active', group_class.active)
-            group_class.active = group_class_data.get('hour_price', group_class.hour_price)
+            group_class.hour_price = group_class_data.get('hour_price', group_class.hour_price)
             group_class.save()
 
         return instance

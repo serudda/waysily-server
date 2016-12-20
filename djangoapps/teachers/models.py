@@ -3,16 +3,22 @@ from django.contrib.postgres.fields import ArrayField
 from locations.models import Location
 
 
-class PriceDetail(models.Model):
-    """ Price Detail Model """
+class PrivatePriceDetail(models.Model):
+    """ Private Classes Price Detail Model """
+    active = models.BooleanField(default=False)
+    hour_price = models.DecimalField(max_digits=6, decimal_places=2)
+
+
+class GroupPriceDetail(models.Model):
+    """ Group Classes Price Detail Model """
     active = models.BooleanField(default=False)
     hour_price = models.DecimalField(max_digits=6, decimal_places=2)
 
 
 class Price(models.Model):
     """ Price Model """
-    private_class = models.ForeignKey(PriceDetail, related_name='private_class', null=True, blank=True)
-    group_class = models.ForeignKey(PriceDetail, related_name='group_class', null=True, blank=True)
+    private_class = models.ForeignKey(PrivatePriceDetail, related_name='private_class', null=True, blank=True)
+    group_class = models.ForeignKey(GroupPriceDetail, related_name='group_class', null=True, blank=True)
 
 
 class Language(models.Model):
