@@ -133,6 +133,7 @@ class TeacherSerializer(serializers.ModelSerializer):
                   'birth_date',
                   'born',
                   'about',
+                  'avatar',
                   'languages',
                   'type',
                   'teacher_since',
@@ -221,6 +222,7 @@ class TeacherSerializer(serializers.ModelSerializer):
         instance.birth_date = validated_data.get('birth_date', instance.birth_date)
         instance.born = validated_data.get('born', instance.born)
         instance.about = validated_data.get('about', instance.about)
+        instance.avatar = validated_data.get('avatar', instance.avatar)
         instance.type = validated_data.get('type', instance.type)
         instance.teacher_since = validated_data.get('teacher_since', instance.teacher_since)
         instance.methodology = validated_data.get('methodology', instance.methodology)

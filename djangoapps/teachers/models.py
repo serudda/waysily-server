@@ -64,6 +64,7 @@ class Teacher(models.Model):
     birth_date = models.DateField(max_length=50)
     born = models.CharField(max_length=100)
     about = models.CharField(max_length=1000, blank=True, null=True)
+    avatar = models.CharField(max_length=5000, blank=True)
 
     type = models.CharField(max_length=1, choices=TYPE_CHOICES, blank=True, null=True)
     teacher_since = models.CharField(max_length=4, blank=True, null=True)
