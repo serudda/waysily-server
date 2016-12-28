@@ -24,9 +24,9 @@ class Price(models.Model):
 class Language(models.Model):
     """ Language Model """
 
-    native = models.CharField(max_length=200, null=True, blank=True)
-    learn = models.CharField(max_length=200, null=True, blank=True)
-    teach = models.CharField(max_length=200, null=True, blank=True)
+    native = ArrayField(models.CharField(max_length=200), blank=True)
+    learn = ArrayField(models.CharField(max_length=200), blank=True)
+    teach = ArrayField(models.CharField(max_length=200), blank=True)
 
 
 class Immersion(models.Model):
