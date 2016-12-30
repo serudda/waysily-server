@@ -10,6 +10,7 @@ class PrivatePriceDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = PrivatePriceDetail
         fields = ('id',
+                  'uid',
                   'active',
                   'hour_price',)
         read_only_fields = ('id',)
@@ -21,6 +22,7 @@ class GroupPriceDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = GroupPriceDetail
         fields = ('id',
+                  'uid',
                   'active',
                   'hour_price',)
         read_only_fields = ('id',)
@@ -34,6 +36,7 @@ class PriceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Price
         fields = ('id',
+                  'uid',
                   'private_class',
                   'group_class',)
         read_only_fields = ('id',)
@@ -45,6 +48,7 @@ class ImmersionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Immersion
         fields = ('id',
+                  'uid',
                   'active',
                   'category',
                   'other_category',)
@@ -252,6 +256,7 @@ class TeacherSerializer(serializers.ModelSerializer):
 
         if immersion_data:
             # Create immersion instance in order to save on DB
+            immersion.uid = immersion_data.get('uid', immersion.uid)
             immersion.active = immersion_data.get('active', immersion.active)
             immersion.other_category = immersion_data.get('other_category', immersion.other_category)
             immersion.category = immersion_data.get('category', immersion.category)
@@ -259,12 +264,14 @@ class TeacherSerializer(serializers.ModelSerializer):
 
         if private_class_data:
             # Create private class instance in order to save on DB
+            private_class.uid = private_class_data.get('uid', private_class.uid)
             private_class.active = private_class_data.get('active', private_class.active)
             private_class.hour_price = private_class_data.get('hour_price', private_class.hour_price)
             private_class.save()
 
         if group_class_data:
             # Create private class instance in order to save on DB
+            group_class.uid = group_class_data.get('uid', group_class.uid)
             group_class.active = group_class_data.get('active', group_class.active)
             group_class.hour_price = group_class_data.get('hour_price', group_class.hour_price)
             group_class.save()

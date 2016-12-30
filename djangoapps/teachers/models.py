@@ -5,18 +5,21 @@ from locations.models import Location
 
 class PrivatePriceDetail(models.Model):
     """ Private Classes Price Detail Model """
+    uid = models.CharField(max_length=200)
     active = models.BooleanField(default=False)
     hour_price = models.DecimalField(max_digits=6, decimal_places=2)
 
 
 class GroupPriceDetail(models.Model):
     """ Group Classes Price Detail Model """
+    uid = models.CharField(max_length=200)
     active = models.BooleanField(default=False)
     hour_price = models.DecimalField(max_digits=6, decimal_places=2)
 
 
 class Price(models.Model):
     """ Price Model """
+    uid = models.CharField(max_length=200)
     private_class = models.ForeignKey(PrivatePriceDetail, related_name='private_class', null=True, blank=True)
     group_class = models.ForeignKey(GroupPriceDetail, related_name='group_class', null=True, blank=True)
 
@@ -32,6 +35,7 @@ class Language(models.Model):
 class Immersion(models.Model):
     """ Immersion Model """
 
+    uid = models.CharField(max_length=200)
     active = models.BooleanField(default=False)
     other_category = models.CharField(max_length=600, blank=True)
     category = ArrayField(models.CharField(max_length=200), blank=True)
