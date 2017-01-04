@@ -39,6 +39,8 @@ INSTALLED_APPS = (
     'early',
     'teachers',
     'locations',
+    'countries',
+    'feedbacks',
 )
 
 MIDDLEWARE_CLASSES = (
