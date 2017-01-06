@@ -46,16 +46,24 @@ DEV:
 
 /**********************************************************************************************
 
+heroku run python manage.py migrate --remote heroku
 
 PRD:
+
+1. Tenemos que ir a: config/settings/dev y descomentar all lo que esta dentro de este bloque:
+            "TODO: Comment this block when you will work locally"
+2.
 
 1. Se debe testear y aprobar en el branch Develop.
 2. Se hace un Pull Request al branch Master (desde SourceTree).
 3. Se hace el respectivo merge en github.
 4. Se hace una ultima prueba de que all funcione perfecto.
-4. Se corre el comando en el root del proyecto:
+5. Se corre el comando en el root del proyecto:
     git push heroku master
-5. Automaticamente deberia mostrar el estados del build en Heroku. Se prueba en
+6. Verificamos si en Heroku hay migraciones pendientes:
+        heroku run python manage.py showmigrations --remote heroku
+        si hay migraciones pendientes: heroku run python manage.py migrate --remote heroku
+6. Automaticamente deberia mostrar el estados del build en Heroku. Se prueba en
     http://www.waysily.com que all este funcionando correctamente.
 
 
