@@ -36,6 +36,7 @@ DEV:
         python manage.py makemigrations o python manage.py make migrations <app name>
     - En el root del proyecto correr este comando:
         git push heroku develop
+    - De ser necesario, resetear la base de datos desde Heroku (ir a heroku y dar en la opcion: reset Database)
     - Verificamos si en Heroku hay migraciones pendientes:
         heroku run python manage.py showmigrations
         si hay migraciones pendientes: heroku run python manage.py migrate
