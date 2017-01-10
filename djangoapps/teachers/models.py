@@ -37,7 +37,7 @@ class Immersion(models.Model):
 
     uid = models.CharField(max_length=200)
     active = models.BooleanField(default=False)
-    other_category = models.CharField(max_length=3000, blank=True)
+    other_category = models.CharField(max_length=5000, blank=True)
     category = ArrayField(models.CharField(max_length=200), blank=True)
 
 
