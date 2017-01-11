@@ -61,12 +61,12 @@ class Teacher(models.Model):
     price = models.ForeignKey(Price, null=True, blank=True)
 
     email = models.EmailField(max_length=50)
-    phone_number = models.CharField(max_length=20, blank=True, null=True)
+    phone_number = models.CharField(max_length=30, blank=True, null=True)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     sex = models.CharField(max_length=1, choices=GENDER_CHOICES)
     birth_date = models.DateField(max_length=50)
-    born = models.CharField(max_length=100)
+    born = models.CharField(max_length=200)
     about = models.TextField(max_length=10000, blank=True, null=True)
     avatar = models.TextField(max_length=5000, blank=True)
 
@@ -82,9 +82,9 @@ class Experience(models.Model):
     """ Experience Model """
 
     teacher = models.ForeignKey(Teacher, null=True, blank=True)
-    position = models.CharField(max_length=500, null=True, blank=True)
-    company = models.CharField(max_length=500, null=True, blank=True)
-    city = models.CharField(max_length=50, null=True, blank=True)
+    position = models.CharField(max_length=510, null=True, blank=True)
+    company = models.CharField(max_length=510, null=True, blank=True)
+    city = models.CharField(max_length=100, null=True, blank=True)
     country = models.CharField(max_length=2, blank=True)
     date_start = models.CharField(max_length=4, blank=True)
     date_finish = models.CharField(max_length=4, blank=True)
@@ -95,9 +95,9 @@ class Education(models.Model):
     """ Education Model """
 
     teacher = models.ForeignKey(Teacher, null=True, blank=True)
-    school = models.CharField(max_length=500, null=True, blank=True)
+    school = models.CharField(max_length=510, null=True, blank=True)
     degree = models.CharField(max_length=50, null=True, blank=True)
-    field_study = models.CharField(max_length=500, null=True, blank=True)
+    field_study = models.CharField(max_length=510, null=True, blank=True)
     date_start = models.CharField(max_length=4, blank=True)
     date_finish = models.CharField(max_length=4, blank=True)
     description = models.TextField(max_length=10000, blank=True)
@@ -108,7 +108,7 @@ class Certificate(models.Model):
 
     teacher = models.ForeignKey(Teacher, null=True, blank=True)
     name = models.CharField(max_length=50, null=True, blank=True)
-    institution = models.CharField(max_length=500, null=True, blank=True)
+    institution = models.CharField(max_length=510, null=True, blank=True)
     date_received = models.CharField(max_length=4, blank=True)
     description = models.TextField(max_length=10000, blank=True)
 
