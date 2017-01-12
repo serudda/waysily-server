@@ -74,6 +74,8 @@ class Teacher(models.Model):
     teacher_since = models.CharField(max_length=4, blank=True, null=True)
     methodology = models.TextField(max_length=10000, blank=True)
 
+    validated = models.BooleanField(default=False)
+
     created_at = models.DateTimeField(db_index=True, auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

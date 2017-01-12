@@ -147,6 +147,7 @@ class TeacherSerializer(serializers.ModelSerializer):
                   'certificates',
                   'immersion',
                   'price',
+                  'validated',
                   'created_at',
                   'updated_at',)
 
@@ -230,6 +231,7 @@ class TeacherSerializer(serializers.ModelSerializer):
         instance.type = validated_data.get('type', instance.type)
         instance.teacher_since = validated_data.get('teacher_since', instance.teacher_since)
         instance.methodology = validated_data.get('methodology', instance.methodology)
+        instance.validated = validated_data.get('validated', instance.validated)
         instance.save()
 
         if location_data:

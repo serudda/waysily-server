@@ -37,6 +37,13 @@ class TeacherViewSet (viewsets.ModelViewSet):
     queryset = Teacher.objects.all()
     serializer_class = TeacherSerializer
 
+    def get_queryset(self):
+        """ allow rest api to filter by validated = true """
+        queryset = Teacher.objects.all()
+        queryset = queryset.filter(validated=True)
+
+        return queryset
+
     @list_route(methods=['get'])
     def get_experience_list(self, request, pk=None):
 
