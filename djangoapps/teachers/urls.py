@@ -1,7 +1,7 @@
 from django.conf.urls import include, url
 from rest_framework.routers import DefaultRouter
 
-from teachers.views import TeacherViewSet, ExperienceViewSet, EducationViewSet, CertificateViewSet
+from teachers.views import TeacherViewSet, ExperienceViewSet, EducationViewSet, CertificateViewSet, RatingViewSet
 
 
 teacher_list = TeacherViewSet.as_view({
@@ -46,6 +46,16 @@ certificate_list = TeacherViewSet.as_view({
     'post': 'set_certificate'
 })
 
+rating_detail = RatingViewSet.as_view({
+    'get': 'retrieve',
+    'put': 'update'
+})
+
+rating_list = TeacherViewSet.as_view({
+    'get': 'get_rating_list',
+    'post': 'set_rating'
+})
+
 router = DefaultRouter(trailing_slash=False)
 
 urlpatterns = [
@@ -57,4 +67,6 @@ urlpatterns = [
     url(r'educations/(?P<pk>[0-9]+)$', education_detail, name='education_detail'),
     url(r'teachers/(?P<pk>[0-9]+)/certificates$', certificate_list, name='certificate_list'),
     url(r'certificates/(?P<pk>[0-9]+)$', certificate_detail, name='certificate_detail'),
+    url(r'teachers/(?P<pk>[0-9]+)/ratings$', rating_list, name='rating_list'),
+    url(r'ratings/(?P<pk>[0-9]+)$', rating_detail, name='rating_detail'),
 ]
