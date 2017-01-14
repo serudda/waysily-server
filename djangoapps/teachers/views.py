@@ -2,8 +2,8 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import detail_route, list_route
 
-from teachers.models import Teacher, Experience, Education, Certificate, Immersion
-from teachers.serializers import TeacherSerializer, ExperienceSerializer, EducationSerializer, CertificateSerializer, ImmersionSerializer
+from teachers.models import Teacher, Experience, Education, Certificate, Immersion, Rating
+from teachers.serializers import TeacherSerializer, ExperienceSerializer, EducationSerializer, CertificateSerializer, ImmersionSerializer, RatingSerializer
 
 
 class CertificateViewSet(viewsets.ModelViewSet):
@@ -30,6 +30,12 @@ class ExperienceViewSet(viewsets.ModelViewSet):
         experience = get_object_or_404(queryset, pk=pk)
         serializer = ExperienceSerializer(experience)
         return Response(serializer.data, status=status.HTTP_200_OK)"""
+
+
+class RatingViewSet(viewsets.ModelViewSet):
+    """ ViewSet for viewing and editing Education objects """
+    queryset = Rating.objects.all()
+    serializer_class = RatingSerializer
 
 
 class TeacherViewSet (viewsets.ModelViewSet):
@@ -99,6 +105,26 @@ class TeacherViewSet (viewsets.ModelViewSet):
         # get teacher object
         teacher = self.get_object()
         serializer = CertificateSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(teacher=teacher)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    @list_route(methods=['get'])
+    def get_rating_list(self, request, pk=None):
+        # get ratings list
+        queryset = Rating.objects.all()
+        serializer = RatingSerializer(queryset, many=True)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @detail_route(methods=['post'])
+    def set_rating(self, request, pk=None):
+
+        # get teacher object
+        teacher = self.get_object()
+        serializer = RatingSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save(teacher=teacher)
             return Response(serializer.data, status=status.HTTP_201_CREATED)

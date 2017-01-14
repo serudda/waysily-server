@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
 from locations.models import Location
+from early.models import Early
 
 
 class PrivatePriceDetail(models.Model):
@@ -113,4 +114,19 @@ class Certificate(models.Model):
     institution = models.CharField(max_length=510, null=True, blank=True)
     date_received = models.CharField(max_length=4, blank=True)
     description = models.TextField(max_length=10000, blank=True)
+
+
+class Rating(models.Model):
+    """ Rating Model """
+
+    teacher = models.ForeignKey(Teacher)
+    author = models.ForeignKey(Early)
+    value = models.DecimalField(max_digits=2, decimal_places=2)
+    review = models.TextField(max_length=1000, blank=True)
+
+    created_at = models.DateTimeField(db_index=True, auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-created_at']
 

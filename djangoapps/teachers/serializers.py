@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from teachers.models import Teacher, Language, Experience, Education, Certificate, Immersion, Price, PrivatePriceDetail, GroupPriceDetail
+from teachers.models import Teacher, Language, Experience, Education, Certificate, Immersion, Price, PrivatePriceDetail, GroupPriceDetail, Rating
 from locations.models import Location, Position
 from locations.serializers import LocationSerializer
 
@@ -85,6 +85,21 @@ class EducationSerializer(serializers.ModelSerializer):
         read_only_fields = ('id',)
 
 
+class RatingSerializer(serializers.ModelSerializer):
+    """ Serializer to represent the Rating model """
+
+    class Meta:
+        model = Rating
+        fields = ('id',
+                  'author',
+                  'value',
+                  'review',
+                  'created_at',
+                  'updated_at',)
+
+        read_only_fields = ('id',)
+
+
 class ExperienceSerializer(serializers.ModelSerializer):
     """ Serializer to represent the Experience model """
 
@@ -122,6 +137,7 @@ class TeacherSerializer(serializers.ModelSerializer):
     experiences = ExperienceSerializer(many=True, read_only=True, source='experience_set')
     educations = EducationSerializer(many=True, read_only=True, source='education_set')
     certificates = CertificateSerializer(many=True, read_only=True, source='certificate_set')
+    ratings = RatingSerializer(many=True, read_only=True, source='rating_set')
     immersion = ImmersionSerializer()
     price = PriceSerializer()
 
@@ -148,6 +164,7 @@ class TeacherSerializer(serializers.ModelSerializer):
                   'immersion',
                   'price',
                   'validated',
+                  'ratings',
                   'created_at',
                   'updated_at',)
 
