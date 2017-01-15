@@ -58,6 +58,8 @@ rating_list = TeacherViewSet.as_view({
 
 router = DefaultRouter(trailing_slash=False)
 
+router.register(r'ratings', RatingViewSet, base_name='rating')
+
 urlpatterns = [
     url(r'teachers$', teacher_list, name='teacher_list'),
     url(r'teachers/(?P<pk>[0-9]+)$', teacher_detail, name='teacher_detail'),

@@ -8,3 +8,6 @@ class Early(models.Model):
 
     created_at = models.DateTimeField(db_index=True, auto_now_add=True)
 
+    def __str__(self):
+        return self.email
+

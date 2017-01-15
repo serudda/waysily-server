@@ -32,10 +32,20 @@ class ExperienceViewSet(viewsets.ModelViewSet):
         return Response(serializer.data, status=status.HTTP_200_OK)"""
 
 
+#class RatingViewSet(viewsets.ModelViewSet):
+    """ ViewSet for viewing and editing Rating objects """
+    #queryset = Rating.objects.all()
+    #serializer_class = RatingSerializer
+
+
 class RatingViewSet(viewsets.ModelViewSet):
-    """ ViewSet for viewing and editing Education objects """
-    queryset = Rating.objects.all()
+    """ ViewSet for viewing and editing Rating objects """
+
     serializer_class = RatingSerializer
+
+    def perform_create(self, serializer):
+        instance = serializer.save(author=self.request.user)
+        return super(RatingViewSet, self).perform_create(serializer)
 
 
 class TeacherViewSet (viewsets.ModelViewSet):
