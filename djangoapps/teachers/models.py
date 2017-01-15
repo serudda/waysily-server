@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
+from django.core.validators import MaxValueValidator
 from locations.models import Location
 from early.models import Early
 
@@ -130,9 +131,9 @@ class Rating(models.Model):
     """ Cada Rating se relaciona con un solo Teacher """
     teacher = models.ForeignKey(Teacher)
     author = models.ForeignKey(Early)
-    methodology_value = models.DecimalField(max_digits=2, decimal_places=1, default=0)
-    teaching_value = models.DecimalField(max_digits=2, decimal_places=1, default=0)
-    communication_value = models.DecimalField(max_digits=2, decimal_places=1, default=0)
+    methodology_value = models.PositiveIntegerField(validators=[MaxValueValidator(10)], default=0)
+    teaching_value = models.PositiveIntegerField(validators=[MaxValueValidator(10)], default=0)
+    communication_value = models.PositiveIntegerField(validators=[MaxValueValidator(10)], default=0)
     review = models.TextField(max_length=1000, blank=True)
 
     created_at = models.DateTimeField(db_index=True, auto_now_add=True)

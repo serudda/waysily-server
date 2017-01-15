@@ -92,7 +92,9 @@ class RatingSerializer(serializers.ModelSerializer):
         model = Rating
         fields = ('id',
                   'author',
-                  'value',
+                  'methodology_value',
+                  'teaching_value',
+                  'communication_value',
                   'review',
                   'created_at',
                   'updated_at',)
