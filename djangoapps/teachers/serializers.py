@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from teachers.models import Teacher, Language, Experience, Education, Certificate, Immersion, Price, PrivatePriceDetail, GroupPriceDetail
+from teachers.models import Teacher, Language, Experience, Education, Certificate, Immersion, Price, PrivatePriceDetail, GroupPriceDetail, Rating
 from locations.models import Location, Position
 from locations.serializers import LocationSerializer
 
@@ -85,6 +85,23 @@ class EducationSerializer(serializers.ModelSerializer):
         read_only_fields = ('id',)
 
 
+class RatingSerializer(serializers.ModelSerializer):
+    """ Serializer to represent the Rating model """
+
+    class Meta:
+        model = Rating
+        fields = ('id',
+                  'author',
+                  'methodology_value',
+                  'teaching_value',
+                  'communication_value',
+                  'review',
+                  'created_at',
+                  'updated_at',)
+
+        read_only_fields = ('id',)
+
+
 class ExperienceSerializer(serializers.ModelSerializer):
     """ Serializer to represent the Experience model """
 
@@ -122,6 +139,7 @@ class TeacherSerializer(serializers.ModelSerializer):
     experiences = ExperienceSerializer(many=True, read_only=True, source='experience_set')
     educations = EducationSerializer(many=True, read_only=True, source='education_set')
     certificates = CertificateSerializer(many=True, read_only=True, source='certificate_set')
+    ratings = RatingSerializer(many=True, read_only=True, source='rating_set')
     immersion = ImmersionSerializer()
     price = PriceSerializer()
 
@@ -147,6 +165,8 @@ class TeacherSerializer(serializers.ModelSerializer):
                   'certificates',
                   'immersion',
                   'price',
+                  'validated',
+                  'ratings',
                   'created_at',
                   'updated_at',)
 
@@ -230,6 +250,7 @@ class TeacherSerializer(serializers.ModelSerializer):
         instance.type = validated_data.get('type', instance.type)
         instance.teacher_since = validated_data.get('teacher_since', instance.teacher_since)
         instance.methodology = validated_data.get('methodology', instance.methodology)
+        instance.validated = validated_data.get('validated', instance.validated)
         instance.save()
 
         if location_data:

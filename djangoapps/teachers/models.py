@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
+from django.core.validators import MaxValueValidator
 from locations.models import Location
+from early.models import Early
 
 
 class PrivatePriceDetail(models.Model):
@@ -23,6 +25,9 @@ class Price(models.Model):
     private_class = models.ForeignKey(PrivatePriceDetail, related_name='private_class', null=True, blank=True)
     group_class = models.ForeignKey(GroupPriceDetail, related_name='group_class', null=True, blank=True)
 
+    def __str__(self):
+        return self.uid
+
 
 class Language(models.Model):
     """ Language Model """
@@ -39,6 +44,9 @@ class Immersion(models.Model):
     active = models.BooleanField(default=False)
     other_category = models.TextField(max_length=5000, blank=True)
     category = ArrayField(models.CharField(max_length=200), blank=True)
+
+    def __str__(self):
+        return self.uid
 
 
 class Teacher(models.Model):
@@ -74,8 +82,13 @@ class Teacher(models.Model):
     teacher_since = models.CharField(max_length=4, blank=True, null=True)
     methodology = models.TextField(max_length=10000, blank=True)
 
+    validated = models.BooleanField(default=False)
+
     created_at = models.DateTimeField(db_index=True, auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.first_name + ' ' + self.last_name
 
 
 class Experience(models.Model):
@@ -111,4 +124,24 @@ class Certificate(models.Model):
     institution = models.CharField(max_length=510, null=True, blank=True)
     date_received = models.CharField(max_length=4, blank=True)
     description = models.TextField(max_length=10000, blank=True)
+
+
+class Rating(models.Model):
+    """ Rating Model """
+    """ Cada Rating se relaciona con un solo Teacher """
+    teacher = models.ForeignKey(Teacher)
+    author = models.ForeignKey(Early)
+    methodology_value = models.PositiveIntegerField(validators=[MaxValueValidator(10)], default=0)
+    teaching_value = models.PositiveIntegerField(validators=[MaxValueValidator(10)], default=0)
+    communication_value = models.PositiveIntegerField(validators=[MaxValueValidator(10)], default=0)
+    review = models.TextField(max_length=1000, blank=True)
+
+    created_at = models.DateTimeField(db_index=True, auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.review
+
+    class Meta:
+        ordering = ['-created_at']
 
