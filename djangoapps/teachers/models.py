@@ -24,6 +24,9 @@ class Price(models.Model):
     private_class = models.ForeignKey(PrivatePriceDetail, related_name='private_class', null=True, blank=True)
     group_class = models.ForeignKey(GroupPriceDetail, related_name='group_class', null=True, blank=True)
 
+    def __str__(self):
+        return self.uid
+
 
 class Language(models.Model):
     """ Language Model """
@@ -40,6 +43,9 @@ class Immersion(models.Model):
     active = models.BooleanField(default=False)
     other_category = models.TextField(max_length=5000, blank=True)
     category = ArrayField(models.CharField(max_length=200), blank=True)
+
+    def __str__(self):
+        return self.uid
 
 
 class Teacher(models.Model):
@@ -80,6 +86,9 @@ class Teacher(models.Model):
     created_at = models.DateTimeField(db_index=True, auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return self.first_name + ' ' + self.last_name
+
 
 class Experience(models.Model):
     """ Experience Model """
@@ -118,14 +127,19 @@ class Certificate(models.Model):
 
 class Rating(models.Model):
     """ Rating Model """
-
+    """ Cada Rating se relaciona con un solo Teacher """
     teacher = models.ForeignKey(Teacher)
     author = models.ForeignKey(Early)
-    value = models.DecimalField(max_digits=2, decimal_places=2)
+    methodology_value = models.DecimalField(max_digits=2, decimal_places=1, default=0)
+    teaching_value = models.DecimalField(max_digits=2, decimal_places=1, default=0)
+    communication_value = models.DecimalField(max_digits=2, decimal_places=1, default=0)
     review = models.TextField(max_length=1000, blank=True)
 
     created_at = models.DateTimeField(db_index=True, auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.review
 
     class Meta:
         ordering = ['-created_at']

@@ -41,7 +41,7 @@ urlpatterns = [
     # url(r'^api/v1/auth/logout/$', LogoutView.as_view(), name='logout'),
 
     # url(r'^', include('myapp.urls')),
-
+    url(r'^grappelli/', include('grappelli.urls')), # grappelli URLS
     url(r'^admin/', include(admin.site.urls)),
     # url(r'^.*$', IndexView.as_view(), name='index'),
     url(r'^api-auth/', include('rest_framework.urls',

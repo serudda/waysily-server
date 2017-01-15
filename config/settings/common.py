@@ -23,6 +23,7 @@ sys.path.insert(0, APPS_ROOT)
 # Application definition
 
 INSTALLED_APPS = (
+    'grappelli',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
