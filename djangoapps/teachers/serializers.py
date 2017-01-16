@@ -2,6 +2,7 @@ from rest_framework import serializers
 from teachers.models import Teacher, Language, Experience, Education, Certificate, Immersion, Price, PrivatePriceDetail, GroupPriceDetail, Rating
 from locations.models import Location, Position
 from locations.serializers import LocationSerializer
+from early.serializers import EarlySerializer
 
 
 class PrivatePriceDetailSerializer(serializers.ModelSerializer):
@@ -87,6 +88,7 @@ class EducationSerializer(serializers.ModelSerializer):
 
 class RatingSerializer(serializers.ModelSerializer):
     """ Serializer to represent the Rating model """
+    author = EarlySerializer()
 
     class Meta:
         model = Rating
