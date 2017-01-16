@@ -140,7 +140,7 @@ class Rating(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.review
+        return self.author
 
     class Meta:
         ordering = ['-created_at']

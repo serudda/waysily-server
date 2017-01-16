@@ -9,7 +9,9 @@ from teachers.models import Teacher, Rating
 class TeacherAdmin(admin.ModelAdmin):
 
     # The fields to be used in displaying the Teacher model.
-    list_display = ('email',
+    list_display = ('id',
+                    'location',
+                    'email',
                     'phone_number',
                     'first_name',
                     'last_name',
@@ -17,6 +19,14 @@ class TeacherAdmin(admin.ModelAdmin):
                     'birth_date',
                     'born',
                     'about',
+                    'avatar',
+                    'languages',
+                    'type',
+                    'teacher_since',
+                    'methodology',
+                    'immersion',
+                    'price',
+                    'validated',
                     'created_at',
                     'updated_at',)
 
