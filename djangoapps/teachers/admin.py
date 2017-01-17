@@ -26,7 +26,7 @@ class TeacherAdmin(admin.ModelAdmin):
                     'methodology',
                     'immersion',
                     'price',
-                    'validated',
+                    'status',
                     'created_at',
                     'updated_at',)
 

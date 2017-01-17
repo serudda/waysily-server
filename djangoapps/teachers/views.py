@@ -54,11 +54,20 @@ class TeacherViewSet (viewsets.ModelViewSet):
     serializer_class = TeacherSerializer
 
     def get_queryset(self):
-        """ allow rest api to filter by validated = true """
+        """ allow rest api to filter by validated """
+        queryset = Teacher.objects.all()
+        status = self.request.query_params.get('status', None)
+        if status is not None:
+            queryset = queryset.filter(status=status)
+
+        return queryset
+
+    """ Sirve para sobre escribir el metodo get, si se quiere agregar un filtro general o algo asi """
+    """def get_queryset(self):
         queryset = Teacher.objects.all()
         queryset = queryset.filter(validated=True)
 
-        return queryset
+        return queryset"""
 
     @list_route(methods=['get'])
     def get_experience_list(self, request, pk=None):
