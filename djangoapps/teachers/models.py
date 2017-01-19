@@ -62,6 +62,18 @@ class Teacher(models.Model):
         ('P', 'Professional Teacher'),
     )
 
+    NEW = 'NW'
+    VALIDATED = 'VA'
+    VERIFIED = 'VE'
+
+    STATUSES_CHOICES = (
+        (NEW, 'new'),
+        (VALIDATED, 'validated'),
+        (VERIFIED, 'verified'),
+    )
+
+    status = models.CharField(max_length=2, choices=STATUSES_CHOICES, default=NEW)
+
     """ Basic Information """
     location = models.ForeignKey(Location, null=True, blank=True)
     languages = models.ForeignKey(Language, null=True, blank=True)
@@ -81,8 +93,6 @@ class Teacher(models.Model):
     type = models.CharField(max_length=1, choices=TYPE_CHOICES, blank=True, null=True)
     teacher_since = models.CharField(max_length=4, blank=True, null=True)
     methodology = models.TextField(max_length=10000, blank=True)
-
-    validated = models.BooleanField(default=False)
 
     created_at = models.DateTimeField(db_index=True, auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
