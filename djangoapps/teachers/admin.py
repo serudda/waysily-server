@@ -27,6 +27,7 @@ class TeacherAdmin(admin.ModelAdmin):
                     'immersion',
                     'price',
                     'status',
+                    'recommended',
                     'created_at',
                     'updated_at',)
 
@@ -38,7 +39,28 @@ class TeacherAdmin(admin.ModelAdmin):
     # )
     ordering = ('-created_at',)
 
+class RatingAdmin(admin.ModelAdmin):
+
+    # The fields to be used in displaying the Teacher model.
+    list_display = ('id',
+                    'teacher',
+                    'author',
+                    'methodology_value',
+                    'teaching_value',
+                    'communication_value',
+                    'review',
+                    'created_at',
+                    'updated_at',)
+
+    search_fields = ('review',)
+
+    # fieldsets = (
+    #     (None, {'fields': ('title', 'link')}),
+    #     (_('Writer'), {'fields': ('author')}),
+    # )
+    ordering = ('-created_at',)
+
 
 # Now register the new Admin...
 admin.site.register(Teacher, TeacherAdmin)
-admin.site.register(Rating)
+admin.site.register(Rating, RatingAdmin)

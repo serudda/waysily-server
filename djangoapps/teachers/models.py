@@ -73,6 +73,7 @@ class Teacher(models.Model):
     )
 
     status = models.CharField(max_length=2, choices=STATUSES_CHOICES, default=NEW)
+    recommended = models.IntegerField(null=True, default=0)
 
     """ Basic Information """
     location = models.ForeignKey(Location, null=True, blank=True)
