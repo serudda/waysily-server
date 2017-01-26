@@ -168,6 +168,7 @@ class TeacherSerializer(serializers.ModelSerializer):
                   'immersion',
                   'price',
                   'status',
+                  'recommended',
                   'ratings',
                   'created_at',
                   'updated_at',)
@@ -253,6 +254,7 @@ class TeacherSerializer(serializers.ModelSerializer):
         instance.teacher_since = validated_data.get('teacher_since', instance.teacher_since)
         instance.methodology = validated_data.get('methodology', instance.methodology)
         instance.status = validated_data.get('status', instance.status)
+        instance.recommended = validated_data.get('recommended', instance.recommended)
         instance.save()
 
         if location_data:

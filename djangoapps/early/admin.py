@@ -9,7 +9,7 @@ from early.models import Early
 class EarlyAdmin(admin.ModelAdmin):
 
     # The fields to be used in displaying the Post model.
-    list_display = ('first_name', 'last_name', 'email', 'comment', 'created_at')
+    list_display = ('id', 'first_name', 'last_name', 'email', 'comment', 'created_at')
     search_fields = ('email',)
 
     # fieldsets = (
