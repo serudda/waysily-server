@@ -40,7 +40,7 @@ class ExperienceViewSet(viewsets.ModelViewSet):
 
 class RatingViewSet(viewsets.ModelViewSet):
     """ ViewSet for viewing and editing Rating objects """
-
+    queryset = Rating.objects.all()
     serializer_class = RatingSerializer
 
     def perform_create(self, serializer):
