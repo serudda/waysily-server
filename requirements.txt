@@ -12,7 +12,19 @@ colorama==0.3.7
 defusedxml==0.4.1
 dj-database-url==0.4.1
 dj-static==0.0.6
-Django==1.10
+Django==1.10.3
+django-braces==1.10.0
+django-cors-middleware==1.3.1
+django-filter==1.0.0
+django-oauth-toolkit==0.10.0
+django-rest-framework-social-oauth2==1.0.4
+djangorestframework==3.5.3
+oauthlib==1.0.3
+PyJWT==1.4.2
+python-social-auth==0.2.21
+python3-openid==3.0.10
+requests==2.12.1
+requests-oauthlib==0.7.0
 django-appconf==1.0.1
 django-argonauts==1.1.3
 django-compressor==1.5
@@ -20,7 +32,6 @@ django-cors-headers==1.1.0
 django-debug-toolbar==1.4
 django-grappelli==2.9.1
 django-model-utils==2.5
-djangorestframework==3.4.0
 docker-py==1.7.2
 dockerpty==0.4.1
 docopt==0.6.2
@@ -39,7 +50,6 @@ pycrypto==2.6.1
 python-dateutil==2.5.3
 PyYAML==3.11
 rcssmin==1.0.6
-requests==2.9.1
 rjsmin==1.0.12
 rsa==3.1.4
 semantic-version==2.5.0
