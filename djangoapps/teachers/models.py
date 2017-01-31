@@ -11,12 +11,18 @@ class PrivatePriceDetail(models.Model):
     active = models.BooleanField(default=False)
     hour_price = models.DecimalField(max_digits=6, decimal_places=2)
 
+    def __str__(self):
+        return self.hour_price
+
 
 class GroupPriceDetail(models.Model):
     """ Group Classes Price Detail Model """
     uid = models.CharField(max_length=200)
     active = models.BooleanField(default=False)
     hour_price = models.DecimalField(max_digits=6, decimal_places=2)
+
+    def __str__(self):
+        return self.hour_price
 
 
 class Price(models.Model):
@@ -32,9 +38,13 @@ class Price(models.Model):
 class Language(models.Model):
     """ Language Model """
 
+    uid = models.CharField(max_length=200)
     native = ArrayField(models.CharField(max_length=200), blank=True)
     learn = ArrayField(models.CharField(max_length=200), blank=True)
     teach = ArrayField(models.CharField(max_length=200), blank=True)
+
+    def __str__(self):
+        return self.uid
 
 
 class Immersion(models.Model):
@@ -72,6 +82,7 @@ class Teacher(models.Model):
         (VERIFIED, 'verified'),
     )
 
+    uid = models.CharField(max_length=200)
     status = models.CharField(max_length=2, choices=STATUSES_CHOICES, default=NEW)
     recommended = models.IntegerField(null=True, default=0)
 
@@ -105,6 +116,7 @@ class Teacher(models.Model):
 class Experience(models.Model):
     """ Experience Model """
 
+    uid = models.CharField(max_length=200)
     teacher = models.ForeignKey(Teacher, null=True, blank=True)
     position = models.CharField(max_length=510, null=True, blank=True)
     company = models.CharField(max_length=510, null=True, blank=True)
@@ -114,10 +126,14 @@ class Experience(models.Model):
     date_finish = models.CharField(max_length=4, blank=True)
     description = models.TextField(max_length=10000, blank=True)
 
+    def __str__(self):
+        return self.uid
+
 
 class Education(models.Model):
     """ Education Model """
 
+    uid = models.CharField(max_length=200)
     teacher = models.ForeignKey(Teacher, null=True, blank=True)
     school = models.CharField(max_length=510, null=True, blank=True)
     degree = models.CharField(max_length=50, null=True, blank=True)
@@ -126,20 +142,28 @@ class Education(models.Model):
     date_finish = models.CharField(max_length=4, blank=True)
     description = models.TextField(max_length=10000, blank=True)
 
+    def __str__(self):
+        return self.uid
+
 
 class Certificate(models.Model):
     """ Certificate Model """
 
+    uid = models.CharField(max_length=200)
     teacher = models.ForeignKey(Teacher, null=True, blank=True)
     name = models.CharField(max_length=50, null=True, blank=True)
     institution = models.CharField(max_length=510, null=True, blank=True)
     date_received = models.CharField(max_length=4, blank=True)
     description = models.TextField(max_length=10000, blank=True)
 
+    def __str__(self):
+        return self.uid
+
 
 class Rating(models.Model):
     """ Rating Model """
     """ Cada Rating se relaciona con un solo Teacher """
+    uid = models.CharField(max_length=200)
     teacher = models.ForeignKey(Teacher)
     author = models.ForeignKey(Early)
     methodology_value = models.PositiveIntegerField(validators=[MaxValueValidator(10)], default=0)
