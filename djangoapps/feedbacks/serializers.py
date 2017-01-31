@@ -8,6 +8,7 @@ class FeedbackSerializer(serializers.ModelSerializer):
     class Meta:
         model = Feedback
         fields = ('id',
+                  'uid',
                   'next_country',
                   'created_at',
                   'updated_at',)
