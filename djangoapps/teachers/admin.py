@@ -69,13 +69,9 @@ class ImmersionAdmin(admin.ModelAdmin):
                     'uid',
                     'active',
                     'other_category',
-                    'category',
-                    'created_at',
-                    'updated_at',)
+                    'category',)
 
     search_fields = ('id',)
-
-    ordering = ('-created_at',)
 
 
 # Now register the new Admin...
