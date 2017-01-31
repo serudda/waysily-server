@@ -1,8 +1,7 @@
 from __future__ import unicode_literals
 from django.contrib import admin
-from django.utils.translation import ugettext, ugettext_lazy as _
 
-from teachers.models import Teacher, Rating
+from teachers.models import Teacher, Rating, Immersion
 
 
 # Register your models here.
@@ -64,6 +63,18 @@ class RatingAdmin(admin.ModelAdmin):
     ordering = ('-created_at',)
 
 
+class ImmersionAdmin(admin.ModelAdmin):
+
+    list_display = ('id',
+                    'uid',
+                    'active',
+                    'other_category',
+                    'category',)
+
+    search_fields = ('id',)
+
+
 # Now register the new Admin...
 admin.site.register(Teacher, TeacherAdmin)
+admin.site.register(Immersion, ImmersionAdmin)
 admin.site.register(Rating, RatingAdmin)

@@ -32,7 +32,7 @@ class Price(models.Model):
     group_class = models.ForeignKey(GroupPriceDetail, related_name='group_class', null=True, blank=True)
 
     def __str__(self):
-        return self.uid
+        return "Price " + str(self.id)
 
 
 class Language(models.Model):
@@ -44,7 +44,7 @@ class Language(models.Model):
     teach = ArrayField(models.CharField(max_length=200), blank=True)
 
     def __str__(self):
-        return self.uid
+        return "Language " + str(self.id)
 
 
 class Immersion(models.Model):
@@ -56,7 +56,7 @@ class Immersion(models.Model):
     category = ArrayField(models.CharField(max_length=200), blank=True)
 
     def __str__(self):
-        return self.uid
+        return "Immersion " + str(self.id)
 
 
 class Teacher(models.Model):
@@ -127,7 +127,7 @@ class Experience(models.Model):
     description = models.TextField(max_length=10000, blank=True)
 
     def __str__(self):
-        return self.uid
+        return "Experience " + str(self.id)
 
 
 class Education(models.Model):
@@ -143,7 +143,7 @@ class Education(models.Model):
     description = models.TextField(max_length=10000, blank=True)
 
     def __str__(self):
-        return self.uid
+        return "Education " + str(self.id)
 
 
 class Certificate(models.Model):
@@ -157,12 +157,13 @@ class Certificate(models.Model):
     description = models.TextField(max_length=10000, blank=True)
 
     def __str__(self):
-        return self.uid
+        return "Certificate " + str(self.id)
 
 
 class Rating(models.Model):
     """ Rating Model """
     """ Cada Rating se relaciona con un solo Teacher """
+
     uid = models.CharField(max_length=200)
     teacher = models.ForeignKey(Teacher)
     author = models.ForeignKey(Early)
