@@ -1,4 +1,3 @@
-import uuid
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
 from django.core.validators import MaxValueValidator
@@ -8,7 +7,7 @@ from early.models import Early
 
 class PrivatePriceDetail(models.Model):
     """ Private Classes Price Detail Model """
-    uid = models.UUIDField(default=uuid.uuid4, editable=False, unique=False)
+    uid = models.CharField(max_length=200)
     active = models.BooleanField(default=False)
     hour_price = models.DecimalField(max_digits=6, decimal_places=2)
 
@@ -18,7 +17,7 @@ class PrivatePriceDetail(models.Model):
 
 class GroupPriceDetail(models.Model):
     """ Group Classes Price Detail Model """
-    uid = models.UUIDField(default=uuid.uuid4, editable=False, unique=False)
+    uid = models.CharField(max_length=200)
     active = models.BooleanField(default=False)
     hour_price = models.DecimalField(max_digits=6, decimal_places=2)
 
@@ -28,7 +27,7 @@ class GroupPriceDetail(models.Model):
 
 class Price(models.Model):
     """ Price Model """
-    uid = models.UUIDField(default=uuid.uuid4, editable=False, unique=False)
+    uid = models.CharField(max_length=200)
     private_class = models.ForeignKey(PrivatePriceDetail, related_name='private_class', null=True, blank=True)
     group_class = models.ForeignKey(GroupPriceDetail, related_name='group_class', null=True, blank=True)
 
@@ -39,7 +38,7 @@ class Price(models.Model):
 class Language(models.Model):
     """ Language Model """
 
-    uid = models.UUIDField(default=uuid.uuid4, editable=False, unique=False)
+    uid = models.CharField(max_length=200)
     native = ArrayField(models.CharField(max_length=200), blank=True)
     learn = ArrayField(models.CharField(max_length=200), blank=True)
     teach = ArrayField(models.CharField(max_length=200), blank=True)
@@ -51,7 +50,7 @@ class Language(models.Model):
 class Immersion(models.Model):
     """ Immersion Model """
 
-    uid = models.UUIDField(default=uuid.uuid4, editable=False, unique=False)
+    uid = models.CharField(max_length=200)
     active = models.BooleanField(default=False)
     other_category = models.TextField(max_length=5000, blank=True)
     category = ArrayField(models.CharField(max_length=200), blank=True)
@@ -83,7 +82,7 @@ class Teacher(models.Model):
         (VERIFIED, 'verified'),
     )
 
-    uid = models.UUIDField(default=uuid.uuid4, editable=False, unique=False)
+    uid = models.CharField(max_length=200)
     status = models.CharField(max_length=2, choices=STATUSES_CHOICES, default=NEW)
     recommended = models.IntegerField(null=True, default=0)
 
@@ -117,7 +116,7 @@ class Teacher(models.Model):
 class Experience(models.Model):
     """ Experience Model """
 
-    uid = models.UUIDField(default=uuid.uuid4, editable=False, unique=False)
+    uid = models.CharField(max_length=200)
     teacher = models.ForeignKey(Teacher, null=True, blank=True)
     position = models.CharField(max_length=510, null=True, blank=True)
     company = models.CharField(max_length=510, null=True, blank=True)
@@ -134,7 +133,7 @@ class Experience(models.Model):
 class Education(models.Model):
     """ Education Model """
 
-    uid = models.UUIDField(default=uuid.uuid4, editable=False, unique=False)
+    uid = models.CharField(max_length=200)
     teacher = models.ForeignKey(Teacher, null=True, blank=True)
     school = models.CharField(max_length=510, null=True, blank=True)
     degree = models.CharField(max_length=50, null=True, blank=True)
@@ -150,7 +149,7 @@ class Education(models.Model):
 class Certificate(models.Model):
     """ Certificate Model """
 
-    uid = models.UUIDField(default=uuid.uuid4, editable=False, unique=False)
+    uid = models.CharField(max_length=200)
     teacher = models.ForeignKey(Teacher, null=True, blank=True)
     name = models.CharField(max_length=50, null=True, blank=True)
     institution = models.CharField(max_length=510, null=True, blank=True)
@@ -164,7 +163,8 @@ class Certificate(models.Model):
 class Rating(models.Model):
     """ Rating Model """
     """ Cada Rating se relaciona con un solo Teacher """
-    uid = models.UUIDField(default=uuid.uuid4, editable=False, unique=False)
+
+    uid = models.CharField(max_length=200)
     teacher = models.ForeignKey(Teacher)
     author = models.ForeignKey(Early)
     methodology_value = models.PositiveIntegerField(validators=[MaxValueValidator(10)], default=0)

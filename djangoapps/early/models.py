@@ -1,11 +1,9 @@
-import uuid
-
 from django.db import models
 
 
 class Early(models.Model):
     """ Early Adopter Model """
-    uid = models.UUIDField(default=uuid.uuid4, editable=False, unique=False)
+    uid = models.CharField(max_length=200)
     first_name = models.CharField(max_length=100, default='*')
     last_name = models.CharField(max_length=100, default='*')
     email = models.EmailField(max_length=50)
