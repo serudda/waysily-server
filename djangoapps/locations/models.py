@@ -1,9 +1,11 @@
+import uuid
+
 from django.db import models
 
 
 class Position(models.Model):
     """ Position Model """
-    uid = models.CharField(max_length=200)
+    uid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     lng = models.CharField(max_length=60, null=True, blank=True)
     lat = models.CharField(max_length=60, null=True, blank=True)
 
@@ -15,7 +17,7 @@ class Location(models.Model):
     """ Location Model """
     position = models.ForeignKey(Position, null=True, blank=True)
 
-    uid = models.CharField(max_length=200)
+    uid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     country = models.CharField(max_length=2, blank=True)
     address = models.CharField(max_length=100, blank=True)
     city = models.CharField(max_length=110, blank=True)
