@@ -16,52 +16,52 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='certificate',
             name='uid',
-            field=models.UUIDField(default=uuid.uuid4, editable=False, unique=True),
+            field=models.UUIDField(default=uuid.uuid4, editable=False),
         ),
         migrations.AddField(
             model_name='education',
             name='uid',
-            field=models.UUIDField(default=uuid.uuid4, editable=False, unique=True),
+            field=models.UUIDField(default=uuid.uuid4, editable=False),
         ),
         migrations.AddField(
             model_name='experience',
             name='uid',
-            field=models.UUIDField(default=uuid.uuid4, editable=False, unique=True),
+            field=models.UUIDField(default=uuid.uuid4, editable=False),
         ),
         migrations.AddField(
             model_name='language',
             name='uid',
-            field=models.UUIDField(default=uuid.uuid4, editable=False, unique=True),
+            field=models.UUIDField(default=uuid.uuid4, editable=False),
         ),
         migrations.AddField(
             model_name='rating',
             name='uid',
-            field=models.UUIDField(default=uuid.uuid4, editable=False, unique=True),
+            field=models.UUIDField(default=uuid.uuid4, editable=False),
         ),
         migrations.AddField(
             model_name='teacher',
             name='uid',
-            field=models.UUIDField(default=uuid.uuid4, editable=False, unique=True),
+            field=models.UUIDField(default=uuid.uuid4, editable=False),
         ),
         migrations.AlterField(
             model_name='grouppricedetail',
             name='uid',
-            field=models.UUIDField(default=uuid.uuid4, editable=False, unique=True),
+            field=models.UUIDField(default=uuid.uuid4, editable=False),
         ),
         migrations.AlterField(
             model_name='immersion',
             name='uid',
-            field=models.UUIDField(default=uuid.uuid4, editable=False, unique=True),
+            field=models.UUIDField(default=uuid.uuid4, editable=False),
         ),
         migrations.AlterField(
             model_name='price',
             name='uid',
-            field=models.UUIDField(default=uuid.uuid4, editable=False, unique=True),
+            field=models.UUIDField(default=uuid.uuid4, editable=False),
         ),
         migrations.AlterField(
             model_name='privatepricedetail',
             name='uid',
-            field=models.UUIDField(default=uuid.uuid4, editable=False, unique=True),
+            field=models.UUIDField(default=uuid.uuid4, editable=False),
         ),
         migrations.AlterField(
             model_name='teacher',
