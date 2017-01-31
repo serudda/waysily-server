@@ -10,6 +10,7 @@ class TeacherAdmin(admin.ModelAdmin):
 
     # The fields to be used in displaying the Teacher model.
     list_display = ('id',
+                    'uid',
                     'location',
                     'email',
                     'phone_number',
@@ -39,10 +40,12 @@ class TeacherAdmin(admin.ModelAdmin):
     # )
     ordering = ('-created_at',)
 
+
 class RatingAdmin(admin.ModelAdmin):
 
     # The fields to be used in displaying the Teacher model.
     list_display = ('id',
+                    'uid',
                     'teacher',
                     'author',
                     'methodology_value',

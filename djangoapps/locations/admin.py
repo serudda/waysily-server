@@ -9,6 +9,7 @@ class LocationAdmin(admin.ModelAdmin):
 
     # The fields to be used in displaying the Teacher model.
     list_display = ('id',
+                    'uid',
                     'country',
                     'address',
                     'city',

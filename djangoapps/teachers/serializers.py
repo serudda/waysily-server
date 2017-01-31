@@ -62,6 +62,7 @@ class CertificateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Certificate
         fields = ('id',
+                  'uid',
                   'name',
                   'institution',
                   'date_received',
@@ -76,6 +77,7 @@ class EducationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Education
         fields = ('id',
+                  'uid',
                   'school',
                   'degree',
                   'field_study',
@@ -93,6 +95,7 @@ class RatingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rating
         fields = ('id',
+                  'uid',
                   'author',
                   'methodology_value',
                   'teaching_value',
@@ -110,6 +113,7 @@ class ExperienceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Experience
         fields = ('id',
+                  'uid',
                   'position',
                   'company',
                   'city',
@@ -127,6 +131,7 @@ class LanguageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Language
         field = ('id',
+                 'uid',
                  'native',
                  'teach',
                  'learn',)
@@ -148,6 +153,7 @@ class TeacherSerializer(serializers.ModelSerializer):
     class Meta:
         model = Teacher
         fields = ('id',
+                  'uid',
                   'location',
                   'email',
                   'phone_number',
@@ -241,6 +247,7 @@ class TeacherSerializer(serializers.ModelSerializer):
         position = instance.location.position
 
         # Create teacher instance in order to save on DB
+        instance.uid = validated_data.get('uid', instance.uid)
         instance.first_name = validated_data.get('first_name', instance.first_name)
         instance.last_name = validated_data.get('last_name', instance.last_name)
         instance.email = validated_data.get('email', instance.email)
@@ -259,6 +266,7 @@ class TeacherSerializer(serializers.ModelSerializer):
 
         if location_data:
             # Create location instance in order to save on DB
+            location.uid = location_data.get('uid', location.uid)
             location.country = location_data.get('country', location.country)
             location.address = location_data.get('address', location.address)
             location.city = location_data.get('city', location.city)
@@ -268,12 +276,14 @@ class TeacherSerializer(serializers.ModelSerializer):
 
         if position_data:
             # Create position instance in order to save on DB
+            position.uid = position_data.get('uid', position.uid)
             position.lng = position_data.get('lng', position.lng)
             position.lat = position_data.get('lat', position.lat)
             position.save()
 
         if languages_data:
             # Create languages instance in order to save on DB
+            languages.uid = languages_data.get('uid', languages.uid)
             languages.native = languages_data.get('native', languages.native)
             languages.teach = languages_data.get('teach', languages.teach)
             languages.learn = languages_data.get('learn', languages.learn)
