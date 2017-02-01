@@ -8,6 +8,7 @@ class PositionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Position
         field = ('id',
+                 'uid',
                  'lng',
                  'lat',)
 
@@ -21,6 +22,7 @@ class LocationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Location
         fields = ('id',
+                  'uid',
                   'country',
                   'address',
                   'city',
