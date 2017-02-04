@@ -7,10 +7,10 @@ class PositionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Position
-        field = ('id',
-                 'uid',
-                 'lng',
-                 'lat',)
+        fields = ('id',
+                  'uid',
+                  'lng',
+                  'lat',)
 
         read_only_fields = ('id',)
 

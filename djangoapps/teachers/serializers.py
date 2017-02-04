@@ -130,11 +130,11 @@ class LanguageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Language
-        field = ('id',
-                 'uid',
-                 'native',
-                 'teach',
-                 'learn',)
+        fields = ('id',
+                  'uid',
+                  'native',
+                  'teach',
+                  'learn',)
 
         read_only_fields = ('id',)
 
