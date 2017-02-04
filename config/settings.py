@@ -105,6 +105,15 @@ REST_FRAMEWORK = {
         'rest_framework_social_oauth2.authentication.SocialAuthentication',
     ),
 
+    'DEFAULT_RENDERER_CLASSES': (
+        'utils.api.renderers.CamelCaseJSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ),
+
+    'DEFAULT_PARSER_CLASSES': (
+        'utils.api.parsers.CamelCaseJSONRenderer',
+    ),
+
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
     ),
@@ -138,7 +147,7 @@ INSTALLED_APPS = [
     'usersystem',
     'oauth2_provider',
     'social.apps.django_app.default',
-    'rest_framework_social_oauth2',  
+    'rest_framework_social_oauth2',
     'early',
     'teachers',
     'locations',
