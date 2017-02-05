@@ -151,7 +151,7 @@ class RegisterCheckEmailView(APIView):
             return Response({"message": "'email' field is missing"}, status=HTTP_400_BAD_REQUEST)
 
         if User.objects.filter(email=email):
-            return Response(status=HTTP_400_BAD_REQUEST)
+            return Response({"emailExist": True}, status=HTTP_400_BAD_REQUEST)
 
         return Response(status=HTTP_200_OK)
 
