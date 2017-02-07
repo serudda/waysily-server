@@ -31,7 +31,7 @@ DEBUG = False
 
 TEMPLATE_DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # A list of origin hostnames that are authorized to make a cross-site HTTP
 # request
