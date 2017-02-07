@@ -212,6 +212,12 @@ DATABASES = {
     }
 }
 
+# TODO: Comment this block when you will work locally
+import dj_database_url
+
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'] = dj_database_url.config()
+
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
