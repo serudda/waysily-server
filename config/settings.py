@@ -29,7 +29,7 @@ SECRET_KEY = '$6(x*g_2g9l_*g8peb-@anl5^*8q!1w)k&e&2!i)t6$s8kia93'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ("https://waysily-server-dev.herokuapp.com",)
+ALLOWED_HOSTS = []
 
 # A list of origin hostnames that are authorized to make a cross-site HTTP
 # request
@@ -42,8 +42,6 @@ CORS_ORIGIN_WHITELIST = (
     'http://www.waysily.com',
     'https://waysily-server-dev.herokuapp.com',
     'https://waysily-server.herokuapp.com',
-    'waysily-server-dev.herokuapp.com',
-    'waysily-server.herokuapp.com',
 )
 
 OAUTH2_PROVIDER = {
