@@ -30,7 +30,7 @@ SECRET_KEY = '$6(x*g_2g9l_*g8peb-@anl5^*8q!1w)k&e&2!i)t6$s8kia93'
 DEBUG = False
 
 TEMPLATE_DEBUG = False
-
+#TODO: Probar quitando * y colocando mi host: www.waysily.com
 ALLOWED_HOSTS = ['*']
 
 # A list of origin hostnames that are authorized to make a cross-site HTTP
