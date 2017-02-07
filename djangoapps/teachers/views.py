@@ -1,4 +1,5 @@
 from rest_framework import viewsets, status
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework.decorators import detail_route, list_route
 
@@ -52,6 +53,7 @@ class TeacherViewSet (viewsets.ModelViewSet):
     """ ViewSet for viewing and editing Teacher objects """
     queryset = Teacher.objects.all()
     serializer_class = TeacherSerializer
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
     def get_queryset(self):
         """ allow rest api to filter by validated """
