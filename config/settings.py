@@ -42,6 +42,8 @@ CORS_ORIGIN_WHITELIST = (
     'http://www.waysily.com',
     'https://waysily-server-dev.herokuapp.com',
     'https://waysily-server.herokuapp.com',
+    'waysily-server-dev.herokuapp.com',
+    'waysily-server.herokuapp.com',
 )
 
 OAUTH2_PROVIDER = {
