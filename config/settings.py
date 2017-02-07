@@ -41,6 +41,7 @@ CORS_ORIGIN_WHITELIST = (
     'localhost:8080',
     '127.0.0.1:8080',
     'http://waysily-client-dev.herokuapp.com',
+    'waysily-client-dev.herokuapp.com',
     'http://www.waysily.com',
     'https://waysily-server-dev.herokuapp.com',
     'https://waysily-server.herokuapp.com',
