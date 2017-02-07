@@ -57,6 +57,30 @@ class AccountView(APIView):
         return Response(status=HTTP_200_OK)
 
 
+class AccountUsernameView(APIView):
+    """
+    A simple API endpoint for getting an username with a given email.
+
+    POST must contain 'email' field. Server returns 400 if email is already used or 200 otherwise.
+    """
+    permission_classes = (AllowAny,)
+
+    def post(self, request):
+        email = request.data.get('email', None)
+        if email is None:
+            return Response({"message": "'email' field is missing"}, status=HTTP_400_BAD_REQUEST)
+
+        try:
+            data = User.objects.get(email=email)
+        except User.DoesNotExist:
+            data = None
+
+        if data:
+            return Response({"userExist": True, "username": data.username}, status=HTTP_200_OK)
+
+        return Response({"userExist": False}, status=HTTP_200_OK)
+
+
 class AccountPasswordView(APIView):
     """
     An API endpoint for password management (for the current user)

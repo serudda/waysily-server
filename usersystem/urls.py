@@ -2,6 +2,7 @@ from django.conf.urls import url, include
 from usersystem import views
 
 urlpatterns = [
+    url(r'account/username$', views.AccountUsernameView.as_view()),
     url(r'account/password$', views.AccountPasswordView.as_view()),
     url(r'account/social$', views.AccountSocialView.as_view()),
     url(r'account$', views.AccountView.as_view()),
