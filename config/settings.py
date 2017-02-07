@@ -157,7 +157,7 @@ INSTALLED_APPS = [
     'feedbacks',
 ]
 
-MIDDLEWARE = (
+MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
