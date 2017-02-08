@@ -12,7 +12,7 @@ class PrivatePriceDetail(models.Model):
     hour_price = models.DecimalField(max_digits=6, decimal_places=2)
 
     def __str__(self):
-        return str(self.hour_price)
+        return "Private price " + str(self.id)
 
 
 class GroupPriceDetail(models.Model):
@@ -22,7 +22,7 @@ class GroupPriceDetail(models.Model):
     hour_price = models.DecimalField(max_digits=6, decimal_places=2)
 
     def __str__(self):
-        return str(self.hour_price)
+        return "Group price " + str(self.id)
 
 
 class Price(models.Model):
