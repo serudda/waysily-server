@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 from django.contrib import admin
 
-from teachers.models import Teacher, Rating, Immersion, Experience, Education, Certificate
+from teachers.models import Teacher, Rating, Immersion, Experience, Education, Certificate, Price
 
 
 # Register your models here.
@@ -115,6 +115,16 @@ class CertificateAdmin(admin.ModelAdmin):
     search_fields = ('id',)
 
 
+class PriceAdmin(admin.ModelAdmin):
+
+    list_display = ('id',
+                    'uid',
+                    'private_class',
+                    'group_class',)
+
+    search_fields = ('id',)
+
+
 # Now register the new Admin...
 admin.site.register(Teacher, TeacherAdmin)
 admin.site.register(Immersion, ImmersionAdmin)
@@ -122,3 +132,4 @@ admin.site.register(Experience, ExperienceAdmin)
 admin.site.register(Education, EducationAdmin)
 admin.site.register(Certificate, CertificateAdmin)
 admin.site.register(Rating, RatingAdmin)
+admin.site.register(Price, PriceAdmin)
