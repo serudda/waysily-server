@@ -148,7 +148,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'rest_framework',
+    'rest_framework.authtoken',
+    'rest_auth',
+    'allauth',
+    'allauth.account',
+    'rest_auth.registration',
     'corsheaders',
     'argonauts',
     'usersystem',
@@ -218,10 +224,10 @@ DATABASES = {
 }
 
 # TODO: Comment this block when you will work locally
-import dj_database_url
+#import dj_database_url
 
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'] = dj_database_url.config()
+#db_from_env = dj_database_url.config(conn_max_age=500)
+#DATABASES['default'] = dj_database_url.config()
 
 
 # Password validation
@@ -263,6 +269,16 @@ USE_TZ = True
 STATIC_ROOT = 'static'
 STATIC_URL = '/static/'
 
+SITE_ID = 1
+
+# Show in console when you send a email through app
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'sergioruizdavila@gmail.com'
+EMAIL_HOST_PASSWORD = '.$Gratos2016$.'
+EMAIL_PORT = 587
 
 #LOG
 LOGGING = {
