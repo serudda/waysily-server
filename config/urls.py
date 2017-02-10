@@ -32,11 +32,11 @@ urlpatterns = [
     url(r'^', include('usersystem.urls')),
 
     # user password reset urls
-    url(r'^password-reset/confirm/$',
+    url(r'^page/users/password/edit$',
         TemplateView.as_view(template_name="password_reset_confirm.html"),
         name='password-reset-confirm'),
-    url(r'^password-reset/confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+    url(r'^page/users/password/edit/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})$',
         TemplateView.as_view(template_name="password_reset_confirm.html"),
         name='password_reset_confirm'),
-    url(r'^rest-auth/', include('rest_auth.urls')),
+    url(r'^api/v1/rest-auth/', include('rest_auth.urls')),
 ]
