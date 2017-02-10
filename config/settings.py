@@ -148,7 +148,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'rest_framework',
+    'rest_framework.authtoken',
+    'rest_auth',
+    'allauth',
+    'allauth.account',
+    'rest_auth.registration',
     'corsheaders',
     'argonauts',
     'usersystem',
@@ -223,6 +229,8 @@ import dj_database_url
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'] = dj_database_url.config()
 
+# NOTE: To allow user resets password is necessary create a new 'Site' on Admin
+SITE_ID = 1
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
@@ -263,6 +271,14 @@ USE_TZ = True
 STATIC_ROOT = 'static'
 STATIC_URL = '/static/'
 
+# Show in console when you send a email through app
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'sergioruizdavila@gmail.com'
+EMAIL_HOST_PASSWORD = '.$Gratos2016$.'
+EMAIL_PORT = 587
 
 #LOG
 LOGGING = {

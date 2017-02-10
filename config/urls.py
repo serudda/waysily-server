@@ -14,14 +14,29 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url, include
+from django.views.generic import TemplateView
 from django.contrib import admin
 
 urlpatterns = [
+    # admin site urls
     url(r'^admin/', admin.site.urls),
+    url(r'^grappelli/', include('grappelli.urls')),
+
+    # api urls
     url(r'^api/v1/', include('early.urls')),
     url(r'^api/v1/', include('teachers.urls')),
     url(r'^api/v1/', include('locations.urls')),
     url(r'^api/v1/', include('feedbacks.urls')),
-    url(r'^grappelli/', include('grappelli.urls')), # grappelli URLS
+
+    # user account and auth urls
     url(r'^', include('usersystem.urls')),
+
+    # user password reset urls
+    url(r'^page/users/password/edit$',
+        TemplateView.as_view(template_name="password_reset_confirm.html"),
+        name='password-reset-confirm'),
+    url(r'^page/users/password/edit/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})$',
+        TemplateView.as_view(template_name="password_reset_confirm.html"),
+        name='password_reset_confirm'),
+    url(r'^api/v1/rest-auth/', include('rest_auth.urls')),
 ]
