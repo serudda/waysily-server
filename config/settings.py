@@ -230,6 +230,12 @@ DATABASES = {
 #db_from_env = dj_database_url.config(conn_max_age=500)
 #DATABASES['default'] = dj_database_url.config()
 
+# TODO: WARNING - Change environment
+LOCAL = 'http://localhost:8080'
+DEV = 'http://waysily-client-dev.herokuapp.com'
+PRD = 'http://www.waysily.com'
+DOMAIN = LOCAL
+
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
 
@@ -297,6 +303,13 @@ ACCOUNT_EMAIL_VERIFICATION = 'optional'
 
 # The default protocol used for when generating URLs
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'http'
+
+# Allow verify email after user press link only with a GET request in order to avoid more steps to the user.
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+
+# After user clicked 'confirmation email link', it redirect to main page.
+ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = DOMAIN
+ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = DOMAIN
 
 # That adapters is to avoid a exception: add_message() argument must be an HttpRequest object
 # reference: http://tech.agilitynerd.com/django-rest-registration-with-django-rest-auth.html

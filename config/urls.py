@@ -13,6 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
+from allauth.account.views import confirm_email
 from django.conf.urls import url, include
 from django.views.generic import TemplateView
 from django.contrib import admin
@@ -31,12 +32,17 @@ urlpatterns = [
     # user account and auth urls
     url(r'^', include('usersystem.urls')),
 
+    # urls to send verify email address
     url(r'^api/v1/rest-auth/registration/', include('rest_auth.registration.urls')),
+    url(r'^accounts/', include('allauth.account.urls')),
+    url(r'^account-confirm-email/(?P<key>[-:\w]+)/$', confirm_email,
+        name='account_confirm_email'),
 
     # user password reset urls
     url(r'^page/users/password/edit$',
         TemplateView.as_view(template_name="password_reset_confirm.html"),
         name='password-reset-confirm'),
+    # url to build reset password link
     url(r'^page/users/password/edit/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})$',
         TemplateView.as_view(template_name="password_reset_confirm.html"),
         name='password_reset_confirm'),
