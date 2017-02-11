@@ -31,6 +31,8 @@ urlpatterns = [
     # user account and auth urls
     url(r'^', include('usersystem.urls')),
 
+    url(r'^api/v1/rest-auth/registration/', include('rest_auth.registration.urls')),
+
     # user password reset urls
     url(r'^page/users/password/edit$',
         TemplateView.as_view(template_name="password_reset_confirm.html"),

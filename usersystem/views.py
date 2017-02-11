@@ -1,3 +1,4 @@
+from allauth.account.utils import setup_user_email, send_email_confirmation
 from rest_framework.response import Response
 from usersystem.serializers import UserSerializer, UserRegisterSerializer
 from rest_framework.views import APIView
@@ -158,6 +159,9 @@ class RegisterView(APIView):
         )
         user.set_password(validated_data['password'])
         user.save()
+        print('LOG:', user)
+        setup_user_email(request, user, [])
+        send_email_confirmation(request, user, signup=True)
         return Response(status=HTTP_201_CREATED)
 
 

@@ -181,10 +181,11 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'config.urls'
 
+# We create a djangoapps/templates in order to storage waysily templates such as: email reset password, verify email, etc.
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['djangoapps/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -224,13 +225,10 @@ DATABASES = {
 }
 
 # TODO: Comment this block when you will work locally
-import dj_database_url
+#import dj_database_url
 
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'] = dj_database_url.config()
-
-# NOTE: To allow user resets password is necessary create a new 'Site' on Admin
-SITE_ID = 1
+#db_from_env = dj_database_url.config(conn_max_age=500)
+#DATABASES['default'] = dj_database_url.config()
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
@@ -279,6 +277,28 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'sergioruizdavila@gmail.com'
 EMAIL_HOST_PASSWORD = '.$Gratos2016$.'
 EMAIL_PORT = 587
+
+# NOTE: To allow user resets password is necessary create a new 'Site' on Admin
+SITE_ID = 1
+
+
+"""
+DJANGO-REST-AUTH CONFIGURATION
+Reference: https://django-allauth.readthedocs.io/en/latest/configuration.html
+"""
+
+# The user is required to hand over an e-mail address when signing up.
+# TODO: Validar si esto es necesario, ya que esto es una propiedad de django-rest-auth,
+# y yo no hago el register con ese plugin.
+ACCOUNT_EMAIL_REQUIRED = True
+
+# Choose “optional” or “none” to allow logins with an unverified e-mail address
+ACCOUNT_EMAIL_VERIFICATION = 'optional'
+
+# The default protocol used for when generating URLs
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'http'
+
+"""--------------------------------------"""
 
 #LOG
 LOGGING = {
