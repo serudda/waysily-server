@@ -298,6 +298,10 @@ ACCOUNT_EMAIL_VERIFICATION = 'optional'
 # The default protocol used for when generating URLs
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'http'
 
+# That adapters is to avoid a exception: add_message() argument must be an HttpRequest object
+# reference: http://tech.agilitynerd.com/django-rest-registration-with-django-rest-auth.html
+ACCOUNT_ADAPTER = 'main.adapters.MessageFreeAdapter'
+
 """--------------------------------------"""
 
 #LOG
