@@ -224,17 +224,17 @@ DATABASES = {
     }
 }
 
-# TODO: Comment this block when you will work locally
-#import dj_database_url
+# TODO: Comment this block when you will work LOCALLY
+import dj_database_url
 
-#db_from_env = dj_database_url.config(conn_max_age=500)
-#DATABASES['default'] = dj_database_url.config()
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'] = dj_database_url.config()
 
 # TODO: WARNING - Change environment
 LOCAL = 'http://localhost:8080'
 DEV = 'http://waysily-client-dev.herokuapp.com'
 PRD = 'http://www.waysily.com'
-DOMAIN = LOCAL
+DOMAIN = DEV
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
