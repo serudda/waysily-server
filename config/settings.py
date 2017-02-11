@@ -27,7 +27,7 @@ sys.path.insert(0, APPS_ROOT)
 SECRET_KEY = '$6(x*g_2g9l_*g8peb-@anl5^*8q!1w)k&e&2!i)t6$s8kia93'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 TEMPLATE_DEBUG = False
 #TODO: Probar quitando * y colocando mi host: www.waysily.com
@@ -272,13 +272,13 @@ STATIC_ROOT = 'static'
 STATIC_URL = '/static/'
 
 # Show in console when you send a email through app
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-#EMAIL_USE_TLS = True
-#EMAIL_HOST = 'smtp.gmail.com'
-#EMAIL_HOST_USER = 'sergioruizdavila@gmail.com'
-#EMAIL_HOST_PASSWORD = '.$Gratos2016$.'
-#EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'sergioruizdavila@gmail.com'
+EMAIL_HOST_PASSWORD = '.$Gratos2016$.'
+EMAIL_PORT = 587
 
 #LOG
 LOGGING = {
