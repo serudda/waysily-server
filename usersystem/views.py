@@ -159,7 +159,6 @@ class RegisterView(APIView):
         )
         user.set_password(validated_data['password'])
         user.save()
-        print('LOG:', user)
         setup_user_email(request, user, [])
         send_email_confirmation(request, user, signup=True)
         return Response(status=HTTP_201_CREATED)
