@@ -272,13 +272,13 @@ STATIC_ROOT = 'static'
 STATIC_URL = '/static/'
 
 # Show in console when you send a email through app
-#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'sergioruizdavila@gmail.com'
-EMAIL_HOST_PASSWORD = '.$Gratos2016$.'
-EMAIL_PORT = 587
+#EMAIL_USE_TLS = True
+#EMAIL_HOST = 'smtp.gmail.com'
+#EMAIL_HOST_USER = 'sergioruizdavila@gmail.com'
+#EMAIL_HOST_PASSWORD = '.$Gratos2016$.'
+#EMAIL_PORT = 587
 
 #LOG
 LOGGING = {
