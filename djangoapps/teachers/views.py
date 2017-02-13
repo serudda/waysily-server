@@ -1,10 +1,13 @@
+from django.contrib.auth.models import User
 from rest_framework import viewsets, status
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework.decorators import detail_route, list_route
 
-from teachers.models import Teacher, Experience, Education, Certificate, Immersion, Rating
-from teachers.serializers import TeacherSerializer, ExperienceSerializer, EducationSerializer, CertificateSerializer, ImmersionSerializer, RatingSerializer
+from djangoapps.teachers.models import Teacher, Experience, Education, Certificate, Immersion, Rating
+from djangoapps.teachers.serializers import TeacherSerializer, ExperienceSerializer, EducationSerializer, CertificateSerializer, ImmersionSerializer, RatingSerializer
+
+from djangoapps.teachers.serializers import UserSerializer
 
 
 class CertificateViewSet(viewsets.ModelViewSet):
@@ -47,6 +50,11 @@ class RatingViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         instance = serializer.save(author=self.request.user)
         return super(RatingViewSet, self).perform_create(serializer)
+
+
+class UserViewSet(viewsets.ModelViewSet):
+        queryset = User.objects.all()
+        serializer_class = UserSerializer
 
 
 class TeacherViewSet (viewsets.ModelViewSet):

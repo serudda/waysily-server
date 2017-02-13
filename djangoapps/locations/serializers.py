@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from locations.models import Location, Position
+from djangoapps.locations.models import Location, Position
 
 
 class PositionSerializer(serializers.ModelSerializer):

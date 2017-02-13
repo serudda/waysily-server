@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from countries.models import Country
+from djangoapps.countries.models import Country
 
 
 class CountrySerializer(serializers.ModelSerializer):

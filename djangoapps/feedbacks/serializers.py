@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from feedbacks.models import Feedback
+from djangoapps.feedbacks.models import Feedback
 
 
 class FeedbackSerializer(serializers.ModelSerializer):

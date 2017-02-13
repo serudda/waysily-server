@@ -1,6 +1,6 @@
 from rest_framework import viewsets
-from feedbacks.models import Feedback
-from feedbacks.serializers import FeedbackSerializer
+from djangoapps.feedbacks.models import Feedback
+from djangoapps.feedbacks.serializers import FeedbackSerializer
 
 
 class FeedbackViewSet (viewsets.ModelViewSet):

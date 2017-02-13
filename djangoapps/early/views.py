@@ -1,6 +1,6 @@
 from rest_framework import viewsets
-from early.models import Early
-from early.serializers import EarlySerializer
+from djangoapps.early.models import Early
+from djangoapps.early.serializers import EarlySerializer
 
 
 class EarlyViewSet (viewsets.ModelViewSet):
