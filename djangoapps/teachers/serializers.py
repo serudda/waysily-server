@@ -1,7 +1,7 @@
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 
-from djangoapps.teachers.models import Teacher, User, Language, Immersion, Experience, Education, Certificate, Price, \
+from djangoapps.teachers.models import Profile, Teacher, Language, Immersion, Experience, Education, Certificate, Price, \
     PrivatePriceDetail, GroupPriceDetail, Rating
 from djangoapps.locations.models import Location, Position
 from djangoapps.locations.serializers import LocationSerializer
@@ -158,13 +158,82 @@ class LanguageSerializer(serializers.ModelSerializer):
         read_only_fields = ('id',)
 
 
-class TeacherSerializer(serializers.ModelSerializer):
-    """ Serializer to represent the Teacher model """
-    # user_account = UserSerializer()
+class ProfileSerializer(serializers.ModelSerializer):
+    """ Serializer to represent the Profile model """
+
+    user_id = serializers.CharField(source='user.id', read_only=True)
     username = serializers.CharField(source='user.username', read_only=True)
     email = serializers.CharField(source='user.email')
     first_name = serializers.CharField(source='user.first_name')
     last_name = serializers.CharField(source='user.last_name')
+
+    class Meta:
+        model = Profile
+        fields = ('user_id',
+                  'username',
+                  'email',
+                  'first_name',
+                  'last_name',
+                  'phone_number',
+                  'gender',
+                  'birth_date',
+                  'born',
+                  'about',
+                  'avatar',
+                  'created_at',
+                  'updated_at',)
+
+        read_only_fields = ('created_at', 'updated_at',)
+
+    def update(self, instance, validated_data):
+
+        user_data = validated_data.pop('user', None)
+
+        user = instance.user
+
+        # Update User model
+        if user_data:
+            for attr, value in user_data.items():
+                setattr(user, attr, value)
+
+        # Update Profile model
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+
+        instance.save()
+        return instance
+
+    def create(self, validated_data):
+
+        # Save User object
+        user_data = validated_data.pop('user')
+        user = User.objects.create(**user_data)
+
+        profile = Profile.objects.create(user=user, **validated_data)
+        return profile
+
+
+class TeacherSerializer(serializers.ModelSerializer):
+    """ Serializer to represent the Teacher model """
+
+    """
+        Profile information
+    """
+    profile_id = serializers.CharField(source='profile.user_id')
+    # username = serializers.CharField(source='profile.user.username', read_only=True)
+    # email = serializers.CharField(source='profile.user.email')
+    # first_name = serializers.CharField(source='profile.user.first_name')
+    # last_name = serializers.CharField(source='profile.user.last_name')
+    # phone_number = serializers.CharField(source='profile.phone_number')
+    # gender = serializers.CharField(source='profile.gender')
+    # birth_date = serializers.DateField(source='profile.birth_date')
+    # born = serializers.CharField(source='profile.born')
+    # about = serializers.CharField(source='profile.about')
+    # avatar = serializers.CharField(source='profile.avatar', allow_blank=True)
+
+    """
+        Teacher information
+    """
     location = LocationSerializer()
     languages = LanguageSerializer()
     experiences = ExperienceSerializer(many=True, read_only=True, source='experience_set')
@@ -177,18 +246,8 @@ class TeacherSerializer(serializers.ModelSerializer):
     class Meta:
         model = Teacher
         fields = ('id',
-                  'uid',
-                  'username',
-                  'email',
-                  'first_name',
-                  'last_name',
+                  'profile_id',
                   'location',
-                  'phone_number',
-                  'sex',
-                  'birth_date',
-                  'born',
-                  'about',
-                  'avatar',
                   'languages',
                   'type',
                   'teacher_since',
@@ -208,46 +267,61 @@ class TeacherSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
 
-        # Save User object
-        user_data = validated_data.pop('user')
-        user = User.objects.create(**user_data)
+        # Save profileId
+        profile_data = validated_data.pop('profile')
+        if profile_data:
+            profile = Profile.objects.get(**profile_data)
+            validated_data['profile'] = profile
 
         # Save Location object
-        location_data = validated_data.pop('location')
+        location_data = validated_data.pop('location', None)
         if location_data:
-            Location.objects.create(**location_data)
 
             # Save Position object
-            position_data = location_data.pop('position')
+            position_data = location_data.pop('position', None)
+
             if position_data:
-                Position.objects.create(**position_data)
+                position = Position.objects.create(**position_data)
+                location_data['position'] = position
+
+            location = Location.objects.create(**location_data)
+            validated_data['location'] = location
 
         # Save Language object
-        languages_data = validated_data.pop('languages')
+        languages_data = validated_data.pop('languages', None)
         if languages_data:
-            Language.objects.create(**languages_data)
+            languages = Language.objects.create(**languages_data)
+            validated_data['languages'] = languages
 
         # Save Immersion object
-        immersion_data = validated_data.pop('immersion')
+        immersion_data = validated_data.pop('immersion', None)
         if immersion_data:
-            Immersion.objects.create(**immersion_data)
+            immersion = Immersion.objects.create(**immersion_data)
+            validated_data['immersion'] = immersion
 
         # Save Price object
-        price_data = validated_data.pop('price')
+        price_data = validated_data.pop('price', None)
         if price_data:
-            Price.objects.create(**price_data)
 
             # Save Private Class Price object
-            private_class_data = price_data.pop('private_class')
+            private_class_data = price_data.pop('private_class', None)
+
             if private_class_data:
-                PrivatePriceDetail.objects.create(**private_class_data)
+                private_class = PrivatePriceDetail.objects.create(**private_class_data)
+                price_data['private_class'] = private_class
 
             # Save Group Class Price object
-            group_class_data = price_data.pop('group_class')
-            if group_class_data:
-                GroupPriceDetail.objects.create(**group_class_data)
+            group_class_data = price_data.pop('group_class', None)
 
-        teacher = Teacher.objects.create(user=user, **validated_data)
+            if group_class_data:
+                group_class = GroupPriceDetail.objects.create(**group_class_data)
+                price_data['group_class'] = group_class
+
+            price = Price.objects.create(**price_data)
+            validated_data['price'] = price
+
+        # teacher = Teacher.objects.create(user=user, **validated_data)
+        teacher = Teacher.objects.create(**validated_data)
         return teacher
 
     # def create(self, validated_data):
@@ -303,7 +377,8 @@ class TeacherSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
 
-        user_data = validated_data.pop('user')
+        # user_data = validated_data.pop('user')
+        profile_data = validated_data.pop('profile')
         location_data = validated_data.pop('location')
         position_data = location_data.pop('position')
         languages_data = validated_data.pop('languages')
@@ -312,7 +387,7 @@ class TeacherSerializer(serializers.ModelSerializer):
         private_class_data = price_data.pop('private_class')
         group_class_data = price_data.pop('group_class')
 
-        user = instance.user
+        profile = instance.profile
         location = instance.location
         position = instance.location.position
         languages = instance.languages
@@ -321,49 +396,56 @@ class TeacherSerializer(serializers.ModelSerializer):
         private_class = instance.price.private_class
         group_class = instance.price.group_class
 
-        # Update User model
-        if user_data:
-            for attr, value in user_data.items():
-                setattr(user, attr, value)
-
-        # Update Teacher model
-        for attr, value in validated_data.items():
-            setattr(instance, attr, value)
+        # Update Profile model
+        if profile_data:
+            for attr, value in profile_data.items():
+                setattr(profile, attr, value)
 
         # Update Location model
         if location_data:
             for attr, value in location_data.items():
                 setattr(location, attr, value)
+            location.save()
 
         # Update Position model
         if position_data:
             for attr, value in position_data.items():
                 setattr(position, attr, value)
+            position.save()
 
         # Update Languages model
         if languages_data:
             for attr, value in languages_data.items():
                 setattr(languages, attr, value)
+            languages.save()
 
         # Update Immersion model
         if immersion_data:
             for attr, value in immersion_data.items():
                 setattr(immersion, attr, value)
+            immersion.save()
 
         # Update Price model
         if price_data:
             for attr, value in price_data.items():
                 setattr(price, attr, value)
+            price.save()
 
         # Update Private Classes Price model
         if private_class_data:
             for attr, value in private_class_data.items():
                 setattr(private_class, attr, value)
+            private_class.save()
 
         # Update Group Classes Price model
         if group_class_data:
             for attr, value in group_class_data.items():
                 setattr(group_class, attr, value)
+            group_class.save()
+
+        # Update Teacher model
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
 
         instance.save()
         return instance

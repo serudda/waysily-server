@@ -4,8 +4,8 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework.decorators import detail_route, list_route
 
-from djangoapps.teachers.models import Teacher, Experience, Education, Certificate, Immersion, Rating
-from djangoapps.teachers.serializers import TeacherSerializer, ExperienceSerializer, EducationSerializer, CertificateSerializer, ImmersionSerializer, RatingSerializer
+from djangoapps.teachers.models import Profile, Teacher, Experience, Education, Certificate, Rating
+from djangoapps.teachers.serializers import ProfileSerializer, TeacherSerializer, ExperienceSerializer, EducationSerializer, CertificateSerializer, ImmersionSerializer, RatingSerializer
 
 from djangoapps.teachers.serializers import UserSerializer
 
@@ -53,8 +53,15 @@ class RatingViewSet(viewsets.ModelViewSet):
 
 
 class UserViewSet(viewsets.ModelViewSet):
-        queryset = User.objects.all()
-        serializer_class = UserSerializer
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class ProfileViewSet(viewsets.ModelViewSet):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+    # TODO: Remover esto cuando termine de probar
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
 
 class TeacherViewSet (viewsets.ModelViewSet):
@@ -66,18 +73,16 @@ class TeacherViewSet (viewsets.ModelViewSet):
     def get_queryset(self):
         """ allow rest api to filter by validated """
         queryset = Teacher.objects.all()
+        profileId = self.request.query_params.get('profileId', None)
         status = self.request.query_params.get('status', None)
+
         if status is not None:
             queryset = queryset.filter(status=status)
 
+        if profileId is not None:
+            queryset = queryset.filter(profile_id=profileId)
+
         return queryset
-
-    """ Sirve para sobre escribir el metodo get, si se quiere agregar un filtro general o algo asi """
-    """def get_queryset(self):
-        queryset = Teacher.objects.all()
-        queryset = queryset.filter(validated=True)
-
-        return queryset"""
 
     @list_route(methods=['get'])
     def get_experience_list(self, request, pk=None):
