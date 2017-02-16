@@ -161,11 +161,11 @@ INSTALLED_APPS = [
     'oauth2_provider',
     'social.apps.django_app.default',
     'rest_framework_social_oauth2',
-    'early',
-    'teachers',
-    'locations',
-    'countries',
-    'feedbacks',
+    'djangoapps.early',
+    'djangoapps.teachers',
+    'djangoapps.locations',
+    'djangoapps.countries',
+    'djangoapps.feedbacks',
 ]
 
 MIDDLEWARE_CLASSES = (

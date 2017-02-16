@@ -1,25 +1,30 @@
 from __future__ import unicode_literals
 from django.contrib import admin
 
-from teachers.models import Teacher, Rating, Immersion, Experience, Education, Certificate, Price, PrivatePriceDetail, GroupPriceDetail
+from djangoapps.teachers.models import Profile, Teacher, Language, Experience, Education, Certificate, Immersion, Price, \
+    PrivatePriceDetail, GroupPriceDetail, Rating
 
 
-# Register your models here.
-class TeacherAdmin(admin.ModelAdmin):
+class ProfileAdmin(admin.ModelAdmin):
 
-    # The fields to be used in displaying the Teacher model.
-    list_display = ('id',
-                    'uid',
-                    'location',
-                    'email',
-                    'phone_number',
-                    'first_name',
-                    'last_name',
-                    'sex',
+    list_display = ('phone_number',
+                    'gender',
                     'birth_date',
                     'born',
                     'about',
                     'avatar',
+                    'created_at',
+                    'updated_at',)
+
+    search_fields = ('id',)
+
+    ordering = ('-created_at',)
+
+
+class TeacherAdmin(admin.ModelAdmin):
+
+    list_display = ('id',
+                    'location',
                     'languages',
                     'type',
                     'teacher_since',
@@ -31,18 +36,24 @@ class TeacherAdmin(admin.ModelAdmin):
                     'created_at',
                     'updated_at',)
 
-    search_fields = ('email',)
+    search_fields = ('id',)
 
-    # fieldsets = (
-    #     (None, {'fields': ('title', 'link')}),
-    #     (_('Writer'), {'fields': ('author')}),
-    # )
     ordering = ('-created_at',)
+
+
+class LanguageAdmin(admin.ModelAdmin):
+
+    list_display = ('id',
+                    'uid',
+                    'native',
+                    'teach',
+                    'learn',)
+
+    search_fields = ('id',)
 
 
 class RatingAdmin(admin.ModelAdmin):
 
-    # The fields to be used in displaying the Teacher model.
     list_display = ('id',
                     'uid',
                     'teacher',
@@ -56,10 +67,6 @@ class RatingAdmin(admin.ModelAdmin):
 
     search_fields = ('review',)
 
-    # fieldsets = (
-    #     (None, {'fields': ('title', 'link')}),
-    #     (_('Writer'), {'fields': ('author')}),
-    # )
     ordering = ('-created_at',)
 
 
@@ -145,8 +152,9 @@ class GroupPriceDetailAdmin(admin.ModelAdmin):
     search_fields = ('id',)
 
 
-# Now register the new Admin...
+admin.site.register(Profile, ProfileAdmin)
 admin.site.register(Teacher, TeacherAdmin)
+admin.site.register(Language, LanguageAdmin)
 admin.site.register(Immersion, ImmersionAdmin)
 admin.site.register(Experience, ExperienceAdmin)
 admin.site.register(Education, EducationAdmin)

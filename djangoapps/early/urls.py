@@ -2,7 +2,7 @@ from django.conf.urls import include, url
 from rest_framework.routers import DefaultRouter
 
 
-from early.views import EarlyViewSet
+from djangoapps.early.views import EarlyViewSet
 
 
 router = DefaultRouter(trailing_slash=False)

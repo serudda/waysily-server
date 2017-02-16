@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from early.models import Early
+from djangoapps.early.models import Early
 
 
 class EarlySerializer(serializers.ModelSerializer):

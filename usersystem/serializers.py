@@ -16,7 +16,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'first_name', 'last_name', 'groups')
+        fields = ('id', 'username', 'email', 'first_name', 'last_name', 'groups')
 
 
 class UserRegisterSerializer(serializers.ModelSerializer):
@@ -25,7 +25,7 @@ class UserRegisterSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = User
-        fields = ('username', 'email', 'password', 'first_name', 'last_name')
+        fields = ('id', 'username', 'email', 'password', 'first_name', 'last_name')
         extra_kwargs = {
             'username': {'required': True, 'max_length': settings.USERNAME_MAX_LENGTH,
                          'min_length': settings.USERNAME_MIN_LENGTH},
