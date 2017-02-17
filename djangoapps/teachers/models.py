@@ -77,9 +77,10 @@ class Profile(models.Model):
     user = models.OneToOneField(User, primary_key=True, related_name='user', on_delete=models.CASCADE)
     about = models.TextField(max_length=10000, default='', blank=True)
     phone_number = models.CharField(max_length=30, default='', blank=True)
-    gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default='', blank=True)
     birth_date = models.DateField(null=True, blank=True)
-    born = models.CharField(max_length=200, default='', blank=True)
+    born_country = models.CharField(max_length=2, blank=True)
+    born_city = models.CharField(max_length=110, blank=True)
     avatar = models.TextField(max_length=5000, default='', blank=True)
 
     created_at = models.DateTimeField(db_index=True, auto_now_add=True)
