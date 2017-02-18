@@ -7,7 +7,8 @@ from djangoapps.teachers.models import Profile, Teacher, Language, Experience, E
 
 class ProfileAdmin(admin.ModelAdmin):
 
-    list_display = ('phone_number',
+    list_display = ('user_id',
+                    'phone_number',
                     'gender',
                     'birth_date',
                     'born_country',
