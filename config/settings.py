@@ -40,7 +40,6 @@ CORS_ORIGIN_WHITELIST = (
     '127.0.0.1:8000',
     'localhost:8080',
     '127.0.0.1:8080',
-    'http://waysily-client-dev.herokuapp.com',
     'waysily-client-dev.herokuapp.com',
     'http://www.waysily.com',
     'https://waysily-server-dev.herokuapp.com',
@@ -206,13 +205,6 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.sqlite3',
-#        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#    }
-#}
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -308,7 +300,7 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'optional'
 
 # The default protocol used for when generating URLs
-ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'http'
+# ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'http'
 
 # Allow verify email after user press link only with a GET request in order to avoid more steps to the user.
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
