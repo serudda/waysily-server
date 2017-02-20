@@ -220,7 +220,8 @@ class TeacherSerializer(serializers.ModelSerializer):
     """
         Profile information
     """
-    profile_id = serializers.CharField(source='profile.user_id')
+    profile = ProfileSerializer()
+    # profile_id = serializers.CharField(source='profile.user_id')
     # username = serializers.CharField(source='profile.user.username', read_only=True)
     # email = serializers.CharField(source='profile.user.email')
     # first_name = serializers.CharField(source='profile.user.first_name')
@@ -247,7 +248,7 @@ class TeacherSerializer(serializers.ModelSerializer):
     class Meta:
         model = Teacher
         fields = ('id',
-                  'profile_id',
+                  'profile',
                   'location',
                   'languages',
                   'type',
@@ -268,10 +269,12 @@ class TeacherSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
 
-        # Save profileId
+        # Save Profile
         profile_data = validated_data.pop('profile')
         if profile_data:
-            profile = Profile.objects.get(**profile_data)
+            user_data = profile_data.pop('user')
+            user = User.objects.get(**user_data)
+            profile = Profile.objects.get(user_id=user.id)
             validated_data['profile'] = profile
 
         # Save Location object
@@ -378,8 +381,10 @@ class TeacherSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
 
-        # user_data = validated_data.pop('user')
+        # Remove profile information in order to manage it in Profile serializer
         profile_data = validated_data.pop('profile')
+        profile_data.pop('user')
+
         location_data = validated_data.pop('location')
         position_data = location_data.pop('position')
         languages_data = validated_data.pop('languages')
@@ -388,7 +393,8 @@ class TeacherSerializer(serializers.ModelSerializer):
         private_class_data = price_data.pop('private_class')
         group_class_data = price_data.pop('group_class')
 
-        profile = instance.profile
+        # profile = instance.profile
+        # user = instance.profile.user
         location = instance.location
         position = instance.location.position
         languages = instance.languages
@@ -398,9 +404,16 @@ class TeacherSerializer(serializers.ModelSerializer):
         group_class = instance.price.group_class
 
         # Update Profile model
-        if profile_data:
-            for attr, value in profile_data.items():
-                setattr(profile, attr, value)
+        # if profile_data:
+        #     for attr, value in profile_data.items():
+        #         setattr(profile, attr, value)
+        #    profile.save()
+
+        # Update User model
+        # if user_data:
+        #     for attr, value in user_data.items():
+        #         setattr(user, attr, value)
+        #     user.save()
 
         # Update Location model
         if location_data:
