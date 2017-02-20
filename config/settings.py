@@ -13,9 +13,9 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 import os
 from usersystem import secrets
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-#BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import sys
+import dj_database_url
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 APPS_ROOT = os.path.join(BASE_DIR, 'djangoapps')
 sys.path.insert(0, APPS_ROOT)
@@ -30,7 +30,7 @@ SECRET_KEY = '$6(x*g_2g9l_*g8peb-@anl5^*8q!1w)k&e&2!i)t6$s8kia93'
 DEBUG = True
 
 TEMPLATE_DEBUG = False
-#TODO: Probar quitando * y colocando mi host: www.waysily.com
+# TODO: Probar quitando * y colocando mi host: www.waysily.com
 ALLOWED_HOSTS = ['*']
 
 # A list of origin hostnames that are authorized to make a cross-site HTTP
@@ -225,16 +225,14 @@ DATABASES = {
 }
 
 # TODO: Comment this block when you will work LOCALLY
-# import dj_database_url
-
-# db_from_env = dj_database_url.config(conn_max_age=500)
-# DATABASES['default'] = dj_database_url.config()
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'] = dj_database_url.config()
 
 # TODO: WARNING - Change environment
 LOCAL = 'localhost:8080'
 DEV = 'waysily-client-dev.herokuapp.com'
 PRD = 'www.waysily.com'
-DOMAIN = LOCAL
+DOMAIN = DEV
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
