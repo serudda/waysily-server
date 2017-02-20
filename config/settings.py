@@ -231,9 +231,9 @@ DATABASES = {
 # DATABASES['default'] = dj_database_url.config()
 
 # TODO: WARNING - Change environment
-LOCAL = 'http://localhost:8080'
-DEV = 'http://waysily-client-dev.herokuapp.com'
-PRD = 'http://www.waysily.com'
+LOCAL = 'localhost:8080'
+DEV = 'waysily-client-dev.herokuapp.com'
+PRD = 'www.waysily.com'
 DOMAIN = LOCAL
 
 # Password validation
@@ -323,7 +323,8 @@ ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = DOMAIN
 # reference: http://tech.agilitynerd.com/django-rest-registration-with-django-rest-auth.html
 ACCOUNT_ADAPTER = 'main.adapters.MessageFreeAdapter'
 
-# NOTE: the email templates are here /lib/python3.5/site-packages/allauth/templates/
+# NOTE: the email template: 'email confirmation' is here: /lib/python3.5/site-packages/allauth/templates/
+# NOTE: the email template: 'reset password' is here: /lib/python3.5/site-packages/django/contrib/admin/templates/registration
 
 """--------------------------------------"""
 
