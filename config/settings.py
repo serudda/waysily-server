@@ -13,9 +13,9 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 import os
 from usersystem import secrets
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-#BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import sys
+import dj_database_url
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 APPS_ROOT = os.path.join(BASE_DIR, 'djangoapps')
 sys.path.insert(0, APPS_ROOT)
@@ -30,7 +30,7 @@ SECRET_KEY = '$6(x*g_2g9l_*g8peb-@anl5^*8q!1w)k&e&2!i)t6$s8kia93'
 DEBUG = True
 
 TEMPLATE_DEBUG = False
-#TODO: Probar quitando * y colocando mi host: www.waysily.com
+# TODO: Probar quitando * y colocando mi host: www.waysily.com
 ALLOWED_HOSTS = ['*']
 
 # A list of origin hostnames that are authorized to make a cross-site HTTP
@@ -225,15 +225,13 @@ DATABASES = {
 }
 
 # TODO: Comment this block when you will work LOCALLY
-import dj_database_url
-
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'] = dj_database_url.config()
 
 # TODO: WARNING - Change environment
-LOCAL = 'http://localhost:8080'
-DEV = 'http://waysily-client-dev.herokuapp.com'
-PRD = 'http://www.waysily.com'
+LOCAL = 'localhost:8080'
+DEV = 'waysily-client-dev.herokuapp.com'
+PRD = 'www.waysily.com'
 DOMAIN = DEV
 
 # Password validation
@@ -275,14 +273,22 @@ USE_TZ = True
 STATIC_ROOT = 'static'
 STATIC_URL = '/static/'
 
-# Show in console when you send a email through app
-#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# TODO: Show in console when you send a email through app
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+# TODO: Send test email using my gmail account
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'sergioruizdavila@gmail.com'
 EMAIL_HOST_PASSWORD = '.$Gratos2016$.'
 EMAIL_PORT = 587
+
+# TODO: Send email using my sparkpost - PRD
+# EMAIL_HOST = 'smtp.sparkpostmail.com'
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = 'SMTP_Injection'
+# EMAIL_HOST_PASSWORD = 'c1506170ad8110344c4ed7436888a74b4c1211aa'
+# EMAIL_USE_TLS = True
 
 # NOTE: To allow user resets password is necessary create a new 'Site' on Admin
 SITE_ID = 1
@@ -314,6 +320,9 @@ ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = DOMAIN
 # That adapters is to avoid a exception: add_message() argument must be an HttpRequest object
 # reference: http://tech.agilitynerd.com/django-rest-registration-with-django-rest-auth.html
 ACCOUNT_ADAPTER = 'main.adapters.MessageFreeAdapter'
+
+# NOTE: the email template: 'email confirmation' is here: /lib/python3.5/site-packages/allauth/templates/
+# NOTE: the email template: 'reset password' is here: /lib/python3.5/site-packages/django/contrib/admin/templates/registration
 
 """--------------------------------------"""
 
