@@ -225,16 +225,16 @@ DATABASES = {
 }
 
 # TODO: Comment this block when you will work LOCALLY
-import dj_database_url
+# import dj_database_url
 
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'] = dj_database_url.config()
+# db_from_env = dj_database_url.config(conn_max_age=500)
+# DATABASES['default'] = dj_database_url.config()
 
 # TODO: WARNING - Change environment
 LOCAL = 'http://localhost:8080'
 DEV = 'http://waysily-client-dev.herokuapp.com'
 PRD = 'http://www.waysily.com'
-DOMAIN = DEV
+DOMAIN = LOCAL
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
@@ -275,14 +275,22 @@ USE_TZ = True
 STATIC_ROOT = 'static'
 STATIC_URL = '/static/'
 
-# Show in console when you send a email through app
-#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# TODO: Show in console when you send a email through app
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+# TODO: Send test email using my gmail account
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'sergioruizdavila@gmail.com'
 EMAIL_HOST_PASSWORD = '.$Gratos2016$.'
 EMAIL_PORT = 587
+
+# TODO: Send email using my sparkpost - PRD
+# EMAIL_HOST = 'smtp.sparkpostmail.com'
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = 'SMTP_Injection'
+# EMAIL_HOST_PASSWORD = 'c1506170ad8110344c4ed7436888a74b4c1211aa'
+# EMAIL_USE_TLS = True
 
 # NOTE: To allow user resets password is necessary create a new 'Site' on Admin
 SITE_ID = 1
@@ -314,6 +322,8 @@ ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = DOMAIN
 # That adapters is to avoid a exception: add_message() argument must be an HttpRequest object
 # reference: http://tech.agilitynerd.com/django-rest-registration-with-django-rest-auth.html
 ACCOUNT_ADAPTER = 'main.adapters.MessageFreeAdapter'
+
+# NOTE: the email templates are here /lib/python3.5/site-packages/allauth/templates/
 
 """--------------------------------------"""
 
