@@ -303,7 +303,7 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'optional'
 
 # The default protocol used for when generating URLs
-ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'http'
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'on'
 DEFAULT_HTTP_PROTOCOL = 'http'
 
 # Allow verify email after user press link only with a GET request in order to avoid more steps to the user.
