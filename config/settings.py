@@ -26,9 +26,6 @@ sys.path.insert(0, APPS_ROOT)
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '$6(x*g_2g9l_*g8peb-@anl5^*8q!1w)k&e&2!i)t6$s8kia93'
 
-# DISABLE HTTPS for now
-os.environ['HTTPS'] = 'off'
-
 # SECURITY WARNING: don't run with debug turned on in production! It fine in develop
 DEBUG = True
 
@@ -43,7 +40,7 @@ CORS_ORIGIN_WHITELIST = (
     '127.0.0.1:8000',
     'localhost:8080',
     '127.0.0.1:8080',
-    'waysily-client-dev.herokuapp.com',
+    'http://waysily-client-dev.herokuapp.com',
     'http://www.waysily.com',
     'https://waysily-server-dev.herokuapp.com',
     'https://waysily-server.herokuapp.com',
@@ -224,9 +221,9 @@ db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'] = dj_database_url.config()
 
 # TODO: WARNING - Change environment
-LOCAL = 'localhost:8080'
-DEV = 'waysily-client-dev.herokuapp.com'
-PRD = 'www.waysily.com'
+LOCAL = 'http://localhost:8080'
+DEV = 'http://waysily-client-dev.herokuapp.com'
+PRD = 'http://www.waysily.com'
 DOMAIN = DEV
 
 # Password validation
@@ -304,7 +301,6 @@ ACCOUNT_EMAIL_VERIFICATION = 'optional'
 
 # The default protocol used for when generating URLs
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'http'
-DEFAULT_HTTP_PROTOCOL = 'http'
 
 # Allow verify email after user press link only with a GET request in order to avoid more steps to the user.
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
