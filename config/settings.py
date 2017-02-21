@@ -50,7 +50,7 @@ CORS_ORIGIN_WHITELIST = (
 OAUTH2_PROVIDER = {
     # The number of seconds an access token remains valid.
     # RFC6749 Section 4.1.2 recommends a 10 minutes (600 seconds) duration.
-    'ACCESS_TOKEN_EXPIRE_SECONDS': 600
+    'ACCESS_TOKEN_EXPIRE_SECONDS': 6000
 }
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = secrets.SOCIAL_AUTH_GOOGLE_OAUTH2_KEY
