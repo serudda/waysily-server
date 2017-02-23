@@ -162,6 +162,7 @@ INSTALLED_APPS = [
     'social.apps.django_app.default',
     'rest_framework_social_oauth2',
     'djangoapps.early',
+    'djangoapps.profiles',
     'djangoapps.teachers',
     'djangoapps.locations',
     'djangoapps.countries',

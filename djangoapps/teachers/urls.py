@@ -1,20 +1,8 @@
-from django.conf.urls import include, url
+from django.conf.urls import url
 from rest_framework.routers import DefaultRouter
 
-from djangoapps.teachers.views import ProfileViewSet, TeacherViewSet, ExperienceViewSet, EducationViewSet, CertificateViewSet, RatingViewSet
+from djangoapps.teachers.views import TeacherViewSet, ExperienceViewSet, EducationViewSet, CertificateViewSet, RatingViewSet
 
-
-user_list = ProfileViewSet.as_view({
-    'get': 'list',
-    'post': 'create'
-})
-
-user_detail = ProfileViewSet.as_view({
-    'get': 'retrieve',
-    'put': 'update',
-    'patch': 'partial_update',
-    'delete': 'destroy'
-})
 
 teacher_list = TeacherViewSet.as_view({
     'get': 'list',
@@ -74,8 +62,6 @@ router = DefaultRouter(trailing_slash=False)
 router.register(r'ratings', RatingViewSet, base_name='rating')
 
 urlpatterns = [
-    url(r'users/(?P<pk>[0-9]+)$', user_detail, name='user_detail'),
-    url(r'users$', user_list, name='user_list'),
     url(r'teachers$', teacher_list, name='teacher_list'),
     url(r'teachers/(?P<pk>[0-9]+)$', teacher_detail, name='teacher_detail'),
     url(r'teachers/(?P<pk>[0-9]+)/experiences$', experience_list, name='experience_list'),

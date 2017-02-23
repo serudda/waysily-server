@@ -25,6 +25,7 @@ urlpatterns = [
 
     # api urls
     url(r'^api/v1/', include('early.urls')),
+    url(r'^api/v1/', include('profiles.urls')),
     url(r'^api/v1/', include('teachers.urls')),
     url(r'^api/v1/', include('locations.urls')),
     url(r'^api/v1/', include('feedbacks.urls')),
