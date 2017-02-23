@@ -12,10 +12,6 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-        ('auth', '0009_auto_20170207_0331'),
-    ]
-
     operations = [
         migrations.CreateModel(
             name='Language',
