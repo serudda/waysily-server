@@ -1,13 +1,11 @@
-from django.contrib.auth.models import User
 from rest_framework import viewsets, status
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework.decorators import detail_route, list_route
 
-from djangoapps.teachers.models import Profile, Teacher, Experience, Education, Certificate, Rating
-from djangoapps.teachers.serializers import ProfileSerializer, TeacherSerializer, ExperienceSerializer, EducationSerializer, CertificateSerializer, ImmersionSerializer, RatingSerializer
-
-from djangoapps.teachers.serializers import UserSerializer
+from djangoapps.teachers.models import Teacher, Experience, Education, Certificate, Rating
+from djangoapps.teachers.serializers import TeacherSerializer, ExperienceSerializer, EducationSerializer, \
+    CertificateSerializer, RatingSerializer
 
 
 class CertificateViewSet(viewsets.ModelViewSet):
@@ -36,10 +34,10 @@ class ExperienceViewSet(viewsets.ModelViewSet):
         return Response(serializer.data, status=status.HTTP_200_OK)"""
 
 
-#class RatingViewSet(viewsets.ModelViewSet):
+# class RatingViewSet(viewsets.ModelViewSet):
     """ ViewSet for viewing and editing Rating objects """
-    #queryset = Rating.objects.all()
-    #serializer_class = RatingSerializer
+    # queryset = Rating.objects.all()
+    # serializer_class = RatingSerializer
 
 
 class RatingViewSet(viewsets.ModelViewSet):
@@ -52,18 +50,6 @@ class RatingViewSet(viewsets.ModelViewSet):
         return super(RatingViewSet, self).perform_create(serializer)
 
 
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-
-class ProfileViewSet(viewsets.ModelViewSet):
-    queryset = Profile.objects.all()
-    serializer_class = ProfileSerializer
-    # TODO: Remover esto cuando termine de probar
-    permission_classes = (IsAuthenticatedOrReadOnly,)
-
-
 class TeacherViewSet (viewsets.ModelViewSet):
     """ ViewSet for viewing and editing Teacher objects """
     queryset = Teacher.objects.all()
@@ -73,14 +59,14 @@ class TeacherViewSet (viewsets.ModelViewSet):
     def get_queryset(self):
         """ allow rest api to filter by validated """
         queryset = Teacher.objects.all()
-        profileId = self.request.query_params.get('profileId', None)
+        profile_id = self.request.query_params.get('profileId', None)
         status = self.request.query_params.get('status', None)
 
         if status is not None:
             queryset = queryset.filter(status=status)
 
-        if profileId is not None:
-            queryset = queryset.filter(profile_id=profileId)
+        if profile_id is not None:
+            queryset = queryset.filter(profile_id=profile_id)
 
         return queryset
 

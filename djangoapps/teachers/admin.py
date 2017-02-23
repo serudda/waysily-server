@@ -1,33 +1,14 @@
 from __future__ import unicode_literals
 from django.contrib import admin
 
-from djangoapps.teachers.models import Profile, Teacher, Language, Experience, Education, Certificate, Immersion, Price, \
+from djangoapps.teachers.models import Teacher, Experience, Education, Certificate, Immersion, Price, \
     PrivatePriceDetail, GroupPriceDetail, Rating
-
-
-class ProfileAdmin(admin.ModelAdmin):
-
-    list_display = ('user_id',
-                    'phone_number',
-                    'gender',
-                    'birth_date',
-                    'born_country',
-                    'born_city',
-                    'about',
-                    'avatar',
-                    'created_at',
-                    'updated_at',)
-
-    search_fields = ('id',)
-
-    ordering = ('-created_at',)
 
 
 class TeacherAdmin(admin.ModelAdmin):
 
     list_display = ('id',
                     'location',
-                    'languages',
                     'type',
                     'teacher_since',
                     'methodology',
@@ -41,17 +22,6 @@ class TeacherAdmin(admin.ModelAdmin):
     search_fields = ('id',)
 
     ordering = ('-created_at',)
-
-
-class LanguageAdmin(admin.ModelAdmin):
-
-    list_display = ('id',
-                    'uid',
-                    'native',
-                    'teach',
-                    'learn',)
-
-    search_fields = ('id',)
 
 
 class RatingAdmin(admin.ModelAdmin):
@@ -154,9 +124,7 @@ class GroupPriceDetailAdmin(admin.ModelAdmin):
     search_fields = ('id',)
 
 
-admin.site.register(Profile, ProfileAdmin)
 admin.site.register(Teacher, TeacherAdmin)
-admin.site.register(Language, LanguageAdmin)
 admin.site.register(Immersion, ImmersionAdmin)
 admin.site.register(Experience, ExperienceAdmin)
 admin.site.register(Education, EducationAdmin)

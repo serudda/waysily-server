@@ -162,6 +162,7 @@ INSTALLED_APPS = [
     'social.apps.django_app.default',
     'rest_framework_social_oauth2',
     'djangoapps.early',
+    'djangoapps.profiles',
     'djangoapps.teachers',
     'djangoapps.locations',
     'djangoapps.countries',
@@ -218,8 +219,8 @@ DATABASES = {
 }
 
 # TODO: Comment this block when you will work LOCALLY
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'] = dj_database_url.config()
+# db_from_env = dj_database_url.config(conn_max_age=500)
+# DATABASES['default'] = dj_database_url.config()
 
 # TODO: WARNING - Change environment
 LOCAL = 'http://localhost:8080'
