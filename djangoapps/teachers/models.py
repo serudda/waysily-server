@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.postgres.fields import ArrayField
 from django.core.validators import MaxValueValidator
 
-from djangoapps.locations.models import Location
 from djangoapps.early.models import Early
 from djangoapps.profiles.models import Profile
 
@@ -73,7 +72,6 @@ class Teacher(models.Model):
     recommended = models.IntegerField(null=True, default=0)
 
     """ Teacher Information """
-    location = models.OneToOneField(Location, related_name='location', on_delete=models.CASCADE, null=True)
     immersion = models.OneToOneField(Immersion, related_name='immersion', on_delete=models.CASCADE, null=True)
     price = models.OneToOneField(Price, related_name='price', on_delete=models.CASCADE, null=True)
     type = models.CharField(max_length=1, choices=TYPE_CHOICES, default='', blank=True)

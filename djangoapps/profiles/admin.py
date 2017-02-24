@@ -16,6 +16,7 @@ class ProfileAdmin(admin.ModelAdmin):
                     'about',
                     'avatar',
                     'languages',
+                    'location',
                     'created_at',
                     'updated_at',)
 

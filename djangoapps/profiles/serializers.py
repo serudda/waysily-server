@@ -3,6 +3,9 @@ from rest_framework import serializers
 
 from djangoapps.teachers.models import Profile
 from djangoapps.profiles.models import Language
+from djangoapps.locations.models import Location, Position
+
+from djangoapps.locations.serializers import LocationSerializer
 
 
 class GroupSerializer(serializers.ModelSerializer):
@@ -43,6 +46,7 @@ class ProfileSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField(source='user.first_name')
     last_name = serializers.CharField(source='user.last_name')
     languages = LanguageSerializer()
+    location = LocationSerializer()
 
     class Meta:
         model = Profile
@@ -59,6 +63,7 @@ class ProfileSerializer(serializers.ModelSerializer):
                   'about',
                   'avatar',
                   'languages',
+                  'location',
                   'created_at',
                   'updated_at',)
 
@@ -76,6 +81,20 @@ class ProfileSerializer(serializers.ModelSerializer):
             languages = Language.objects.create(**languages_data)
             validated_data['languages'] = languages
 
+        # Save Location object
+        location_data = validated_data.pop('location', None)
+        if location_data:
+
+            # Save Position object
+            position_data = location_data.pop('position', None)
+
+            if position_data:
+                position = Position.objects.create(**position_data)
+                location_data['position'] = position
+
+            location = Location.objects.create(**location_data)
+            validated_data['location'] = location
+
         profile = Profile.objects.create(user=user, **validated_data)
         return profile
 
@@ -83,9 +102,16 @@ class ProfileSerializer(serializers.ModelSerializer):
 
         user_data = validated_data.pop('user', None)
         languages_data = validated_data.pop('languages')
+        location_data = validated_data.pop('location')
+        position_data = location_data.pop('position')
 
         user = instance.user
         languages = instance.languages
+        location = instance.location
+        if location is not None:
+            position = instance.location.position
+        else:
+            position = None
 
         # Update User model
         if user_data:
@@ -101,6 +127,26 @@ class ProfileSerializer(serializers.ModelSerializer):
             else:
                 languages = Language.objects.create(**languages_data)
                 validated_data['languages'] = languages
+
+        # Update Position model
+        if position_data:
+            if position is not None:
+                for attr, value in position_data.items():
+                    setattr(position, attr, value)
+                position.save()
+            else:
+                position = Position.objects.create(**position_data)
+                location_data['position'] = position
+
+        # Update Location model
+        if location_data:
+            if location is not None:
+                for attr, value in location_data.items():
+                    setattr(location, attr, value)
+                location.save()
+            else:
+                location = Location.objects.create(**location_data)
+                validated_data['location'] = location
 
         # Update Profile model
         for attr, value in validated_data.items():

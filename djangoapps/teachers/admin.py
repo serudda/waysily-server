@@ -8,7 +8,6 @@ from djangoapps.teachers.models import Teacher, Experience, Education, Certifica
 class TeacherAdmin(admin.ModelAdmin):
 
     list_display = ('id',
-                    'location',
                     'type',
                     'teacher_since',
                     'methodology',
