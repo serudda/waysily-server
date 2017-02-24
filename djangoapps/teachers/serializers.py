@@ -4,9 +4,7 @@ from rest_framework import serializers
 from djangoapps.teachers.models import Teacher, Immersion, Experience, Education, Certificate, Price, \
     PrivatePriceDetail, GroupPriceDetail, Rating
 from djangoapps.profiles.models import Profile
-from djangoapps.locations.models import Location, Position
 from djangoapps.profiles.serializers import ProfileSerializer
-from djangoapps.locations.serializers import LocationSerializer
 from djangoapps.early.serializers import EarlySerializer
 
 
@@ -141,7 +139,6 @@ class TeacherSerializer(serializers.ModelSerializer):
     """
         Teacher information
     """
-    location = LocationSerializer()
     experiences = ExperienceSerializer(many=True, read_only=True, source='experience_set')
     educations = EducationSerializer(many=True, read_only=True, source='education_set')
     certificates = CertificateSerializer(many=True, read_only=True, source='certificate_set')
@@ -153,7 +150,6 @@ class TeacherSerializer(serializers.ModelSerializer):
         model = Teacher
         fields = ('id',
                   'profile',
-                  'location',
                   'type',
                   'teacher_since',
                   'methodology',
@@ -179,20 +175,6 @@ class TeacherSerializer(serializers.ModelSerializer):
             user = User.objects.get(**user_data)
             profile = Profile.objects.get(user_id=user.id)
             validated_data['profile'] = profile
-
-        # Save Location object
-        location_data = validated_data.pop('location', None)
-        if location_data:
-
-            # Save Position object
-            position_data = location_data.pop('position', None)
-
-            if position_data:
-                position = Position.objects.create(**position_data)
-                location_data['position'] = position
-
-            location = Location.objects.create(**location_data)
-            validated_data['location'] = location
 
         # Save Immersion object
         immersion_data = validated_data.pop('immersion', None)
@@ -230,31 +212,15 @@ class TeacherSerializer(serializers.ModelSerializer):
         profile_data = validated_data.pop('profile')
         profile_data.pop('user')
 
-        location_data = validated_data.pop('location')
-        position_data = location_data.pop('position')
         immersion_data = validated_data.pop('immersion')
         price_data = validated_data.pop('price')
         private_class_data = price_data.pop('private_class')
         group_class_data = price_data.pop('group_class')
 
-        location = instance.location
-        position = instance.location.position
         immersion = instance.immersion
         price = instance.price
         private_class = instance.price.private_class
         group_class = instance.price.group_class
-
-        # Update Location model
-        if location_data:
-            for attr, value in location_data.items():
-                setattr(location, attr, value)
-            location.save()
-
-        # Update Position model
-        if position_data:
-            for attr, value in position_data.items():
-                setattr(position, attr, value)
-            position.save()
 
         # Update Immersion model
         if immersion_data:

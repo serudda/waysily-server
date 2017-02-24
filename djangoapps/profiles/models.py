@@ -4,6 +4,8 @@ from django.contrib.postgres.fields import ArrayField
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+from djangoapps.locations.models import Location
+
 
 # LANGUAGE CLASS
 class Language(models.Model):
@@ -30,6 +32,7 @@ class Profile(models.Model):
     """ Profile Information """
     user = models.OneToOneField(User, primary_key=True, related_name='user', on_delete=models.CASCADE)
     languages = models.OneToOneField(Language, related_name='languages', on_delete=models.CASCADE, null=True)
+    location = models.OneToOneField(Location, related_name='location', on_delete=models.CASCADE, null=True)
     about = models.TextField(max_length=10000, default='', blank=True)
     phone_number = models.CharField(max_length=30, default='', blank=True)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default='', blank=True)
