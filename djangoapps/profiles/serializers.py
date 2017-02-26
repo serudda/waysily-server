@@ -100,7 +100,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
 
-        user_data = validated_data.pop('user', None)
+        user_data = validated_data.pop('user')
         languages_data = validated_data.pop('languages')
         location_data = validated_data.pop('location')
         position_data = location_data.pop('position')
@@ -117,6 +117,7 @@ class ProfileSerializer(serializers.ModelSerializer):
         if user_data:
             for attr, value in user_data.items():
                 setattr(user, attr, value)
+            user.save()
 
         # Update Languages model
         if languages_data:

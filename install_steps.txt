@@ -18,7 +18,7 @@ CONFIGURAR POSTGRESQL
 
 4. Si no existe la base de datos, la crearemos:
 
-    . CREATE DATABASE asanni_db;
+    . CREATE DATABASE waysily_db;
 
 5. Creamos el usuario que va a administrar la base de datos:
 
@@ -32,7 +32,7 @@ CONFIGURAR POSTGRESQL
 
 7. Dar todos los privilegios al superusuario sobre la base de datos (agregar registros, eliminar registros, permisos, etc):
 
-    . GRANT ALL PRIVILEGES ON DATABASE asanni_db TO sergioruizdavila;
+    . GRANT ALL PRIVILEGES ON DATABASE waysily_db TO sergioruizdavila;
 
 8. Salimos del shell de postgres:
 
