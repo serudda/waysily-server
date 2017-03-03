@@ -64,6 +64,7 @@ class ProfileSerializer(serializers.ModelSerializer):
                   'avatar',
                   'languages',
                   'location',
+                  'is_teacher',
                   'created_at',
                   'updated_at',)
 
