@@ -41,6 +41,8 @@ class Profile(models.Model):
     born_city = models.CharField(max_length=110, blank=True)
     avatar = models.TextField(max_length=5000, default='', blank=True)
 
+    is_teacher = models.BooleanField(default=False)
+
     created_at = models.DateTimeField(db_index=True, auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

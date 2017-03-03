@@ -174,6 +174,10 @@ class TeacherSerializer(serializers.ModelSerializer):
             user_data = profile_data.pop('user')
             user = User.objects.get(**user_data)
             profile = Profile.objects.get(user_id=user.id)
+            # Change 'is_teacher' to True
+            profile.is_teacher = True
+            profile.save()
+
             validated_data['profile'] = profile
 
         # Save Immersion object
