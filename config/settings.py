@@ -182,7 +182,7 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'config.urls'
 
-# We create a djangoapps/templates in order to storage waysily templates such as: email reset password, verify email, etc.
+# NOTE: We create a djangoapps/templates in order to storage waysily templates such as: email reset password, verify email, etc.
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -210,7 +210,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'asanni_db',
+        'NAME': 'waysily_db',
         'USER': 'sergioruizdavila',
         'PASSWORD': 'admin',
         'HOST': 'localhost',
