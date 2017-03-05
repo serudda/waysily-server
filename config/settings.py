@@ -224,7 +224,7 @@ DATABASES['default'] = dj_database_url.config()
 
 # TODO: WARNING - Change environment
 LOCAL = 'http://localhost:8080'
-DEV = 'http://waysily-client-dev.herokuapp.com'
+DEV = 'https://waysily-client-dev.herokuapp.com'
 PRD = 'http://www.waysily.com'
 DOMAIN = DEV
 
