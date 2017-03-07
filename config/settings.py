@@ -40,8 +40,12 @@ CORS_ORIGIN_WHITELIST = (
     '127.0.0.1:8000',
     'localhost:8080',
     '127.0.0.1:8080',
-    'http://waysily-client-dev.herokuapp.com',
     'waysily-client-dev.herokuapp.com',
+    'https://waysily-client-dev.herokuapp.com',
+    'waysily-client-staging.herokuapp.com',
+    'https://waysily-client-staging.herokuapp.com',
+    'waysily-client-production.herokuapp.com',
+    'https://waysily-client-production.herokuapp.com',
     'http://www.waysily.com',
     'www.waysily.com',
     'https://waysily-server-dev.herokuapp.com',
@@ -227,7 +231,9 @@ DATABASES['default'] = dj_database_url.config()
 # TODO: WARNING - Change environment
 LOCAL = 'http://localhost:8080'
 DEV = 'https://waysily-client-dev.herokuapp.com'
-PRD = 'http://www.waysily.com'
+# PRD = 'http://www.waysily.com'
+STAGING = 'https://waysily-client-staging.herokuapp.com'
+PRD = 'https://waysily-client-production.herokuapp.com'
 DOMAIN = PRD
 
 # Password validation
