@@ -1,26 +1,13 @@
 from __future__ import unicode_literals
 from django.contrib import admin
 
-from teachers.models import Teacher, Rating, Immersion, Experience, Education, Certificate, Price
+from djangoapps.teachers.models import Teacher, Experience, Education, Certificate, Immersion, Price, \
+    PrivatePriceDetail, GroupPriceDetail, Rating
 
 
-# Register your models here.
 class TeacherAdmin(admin.ModelAdmin):
 
-    # The fields to be used in displaying the Teacher model.
     list_display = ('id',
-                    'uid',
-                    'location',
-                    'email',
-                    'phone_number',
-                    'first_name',
-                    'last_name',
-                    'sex',
-                    'birth_date',
-                    'born',
-                    'about',
-                    'avatar',
-                    'languages',
                     'type',
                     'teacher_since',
                     'methodology',
@@ -31,18 +18,13 @@ class TeacherAdmin(admin.ModelAdmin):
                     'created_at',
                     'updated_at',)
 
-    search_fields = ('email',)
+    search_fields = ('id',)
 
-    # fieldsets = (
-    #     (None, {'fields': ('title', 'link')}),
-    #     (_('Writer'), {'fields': ('author')}),
-    # )
     ordering = ('-created_at',)
 
 
 class RatingAdmin(admin.ModelAdmin):
 
-    # The fields to be used in displaying the Teacher model.
     list_display = ('id',
                     'uid',
                     'teacher',
@@ -56,10 +38,6 @@ class RatingAdmin(admin.ModelAdmin):
 
     search_fields = ('review',)
 
-    # fieldsets = (
-    #     (None, {'fields': ('title', 'link')}),
-    #     (_('Writer'), {'fields': ('author')}),
-    # )
     ordering = ('-created_at',)
 
 
@@ -125,7 +103,26 @@ class PriceAdmin(admin.ModelAdmin):
     search_fields = ('id',)
 
 
-# Now register the new Admin...
+class PrivatePriceDetailAdmin(admin.ModelAdmin):
+
+    list_display = ('id',
+                    'uid',
+                    'active',
+                    'hour_price',)
+
+    search_fields = ('id',)
+
+
+class GroupPriceDetailAdmin(admin.ModelAdmin):
+
+    list_display = ('id',
+                    'uid',
+                    'active',
+                    'hour_price',)
+
+    search_fields = ('id',)
+
+
 admin.site.register(Teacher, TeacherAdmin)
 admin.site.register(Immersion, ImmersionAdmin)
 admin.site.register(Experience, ExperienceAdmin)
@@ -133,3 +130,5 @@ admin.site.register(Education, EducationAdmin)
 admin.site.register(Certificate, CertificateAdmin)
 admin.site.register(Rating, RatingAdmin)
 admin.site.register(Price, PriceAdmin)
+admin.site.register(PrivatePriceDetail, PrivatePriceDetailAdmin)
+admin.site.register(GroupPriceDetail, GroupPriceDetailAdmin)

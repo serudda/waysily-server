@@ -2,7 +2,7 @@ from django.conf.urls import include, url
 from rest_framework.routers import DefaultRouter
 
 
-from feedbacks.views import FeedbackViewSet
+from djangoapps.feedbacks.views import FeedbackViewSet
 
 
 router = DefaultRouter(trailing_slash=False)

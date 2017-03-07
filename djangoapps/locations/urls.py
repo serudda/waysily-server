@@ -1,8 +1,7 @@
 from django.conf.urls import include, url
 from rest_framework.routers import DefaultRouter
 
-
-from locations.views import LocationViewSet
+from djangoapps.locations.views import LocationViewSet
 
 
 router = DefaultRouter(trailing_slash=False)

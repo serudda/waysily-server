@@ -13,7 +13,7 @@ class Position(models.Model):
 
 class Location(models.Model):
     """ Location Model """
-    position = models.ForeignKey(Position, null=True, blank=True)
+    position = models.OneToOneField(Position, related_name='position', on_delete=models.CASCADE, null=True)
 
     uid = models.CharField(max_length=200)
     country = models.CharField(max_length=2, blank=True)

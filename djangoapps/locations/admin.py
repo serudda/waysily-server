@@ -1,13 +1,11 @@
 from __future__ import unicode_literals
 from django.contrib import admin
 
-from locations.models import Location
+from djangoapps.locations.models import Location
 
 
-# Register your models here.
 class LocationAdmin(admin.ModelAdmin):
 
-    # The fields to be used in displaying the Teacher model.
     list_display = ('id',
                     'uid',
                     'country',
@@ -24,5 +22,4 @@ class LocationAdmin(admin.ModelAdmin):
     ordering = ('-created_at',)
 
 
-# Now register the new Admin...
 admin.site.register(Location, LocationAdmin)

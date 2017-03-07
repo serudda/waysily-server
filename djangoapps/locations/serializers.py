@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from locations.models import Location, Position
+from djangoapps.locations.models import Location, Position
 
 
 class PositionSerializer(serializers.ModelSerializer):
@@ -7,10 +7,10 @@ class PositionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Position
-        field = ('id',
-                 'uid',
-                 'lng',
-                 'lat',)
+        fields = ('id',
+                  'uid',
+                  'lng',
+                  'lat',)
 
         read_only_fields = ('id',)
 

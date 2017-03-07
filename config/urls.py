@@ -1,51 +1,51 @@
-from django.conf.urls import include, url
+"""project URL Configuration
+
+The `urlpatterns` list routes URLs to views. For more information please see:
+    https://docs.djangoproject.com/en/1.10/topics/http/urls/
+Examples:
+Function views
+    1. Add an import:  from my_app import views
+    2. Add a URL to urlpatterns:  url(r'^$', views.home, name='home')
+Class-based views
+    1. Add an import:  from other_app.views import Home
+    2. Add a URL to urlpatterns:  url(r'^$', Home.as_view(), name='home')
+Including another URLconf
+    1. Import the include() function: from django.conf.urls import url, include
+    2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
+"""
+from allauth.account.views import confirm_email
+from django.conf.urls import url, include
+from django.views.generic import TemplateView
 from django.contrib import admin
-admin.autodiscover()
-
-# from rest_framework.routers import DefaultRouter
-
-# from config.views import api_root
-
-# from rest_framework_nested import routers
-#
-# from authentication.views import AccountViewSet, LoginView, LogoutView
-# from postsold.views import AccountPostsViewSet, PostViewSet
-# from config.views import IndexView
-#
-# router = routers.SimpleRouter()
-# router.register(r'accounts', AccountViewSet)
-# router.register(r'postsold', PostViewSet)
-#
-# accounts_router = routers.NestedSimpleRouter(
-#     router, r'accounts', lookup='authentication'
-# )
-# accounts_router.register(r'postsold', AccountPostsViewSet)
-
-# router = DefaultRouter()
 
 urlpatterns = [
-    url(r'', include('main.urls')),
-    # url(r'^api/v1/', api_root),
-    # url(r'^api/v1/', include(router.urls)),
-    url(r'^api/v1/', include('authentication.urls')),
-    url(r'^api/v1/', include('posts.urls')),
+    # admin site urls
+    url(r'^admin/', admin.site.urls),
+    url(r'^grappelli/', include('grappelli.urls')),
+
+    # api urls
     url(r'^api/v1/', include('early.urls')),
+    url(r'^api/v1/', include('profiles.urls')),
     url(r'^api/v1/', include('teachers.urls')),
     url(r'^api/v1/', include('locations.urls')),
     url(r'^api/v1/', include('feedbacks.urls')),
 
+    # user account and auth urls
+    url(r'^', include('usersystem.urls')),
 
-    # url(r'^api/v1/', include(router.urls)),
-    # url(r'^api/v1/', include(accounts_router.urls)),
-    # url(r'^api/v1/auth/login/$', LoginView.as_view(), name='login'),
-    # url(r'^api/v1/auth/logout/$', LogoutView.as_view(), name='logout'),
+    # urls to send verify email address
+    url(r'^api/v1/rest-auth/registration/', include('rest_auth.registration.urls')),
+    url(r'^accounts/', include('allauth.account.urls')),
+    url(r'^account-confirm-email/(?P<key>[-:\w]+)/$', confirm_email,
+        name='account_confirm_email'),
 
-    # url(r'^', include('myapp.urls')),
-    url(r'^grappelli/', include('grappelli.urls')), # grappelli URLS
-    url(r'^admin/', include(admin.site.urls)),
-    # url(r'^.*$', IndexView.as_view(), name='index'),
-    url(r'^api-auth/', include('rest_framework.urls',
-                               namespace='rest_framework')),
-
-    url(r'^.*', include('main.urls'))
+    # user password reset urls
+    url(r'^page/users/password/edit$',
+        TemplateView.as_view(template_name="password_reset_confirm.html"),
+        name='password-reset-confirm'),
+    # url to build reset password link
+    url(r'^page/users/password/edit/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})$',
+        TemplateView.as_view(template_name="password_reset_confirm.html"),
+        name='password_reset_confirm'),
+    url(r'^api/v1/rest-auth/', include('rest_auth.urls')),
 ]

@@ -1,7 +1,7 @@
-from django.conf.urls import include, url
+from django.conf.urls import url
 from rest_framework.routers import DefaultRouter
 
-from teachers.views import TeacherViewSet, ExperienceViewSet, EducationViewSet, CertificateViewSet, RatingViewSet
+from djangoapps.teachers.views import TeacherViewSet, ExperienceViewSet, EducationViewSet, CertificateViewSet, RatingViewSet
 
 
 teacher_list = TeacherViewSet.as_view({
@@ -55,6 +55,7 @@ rating_list = TeacherViewSet.as_view({
     'get': 'get_rating_list',
     'post': 'set_rating'
 })
+
 
 router = DefaultRouter(trailing_slash=False)
 
