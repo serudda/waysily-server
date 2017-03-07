@@ -59,6 +59,7 @@ class Immersion(models.Model):
         return "Immersion " + str(self.id)
 
 
+
 class Teacher(models.Model):
     """ Teacher Model """
     GENDER_CHOICES = (
