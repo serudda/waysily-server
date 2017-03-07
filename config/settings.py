@@ -27,7 +27,7 @@ sys.path.insert(0, APPS_ROOT)
 SECRET_KEY = '$6(x*g_2g9l_*g8peb-@anl5^*8q!1w)k&e&2!i)t6$s8kia93'
 
 # SECURITY WARNING: don't run with debug turned on in production! It fine in develop
-DEBUG = True
+DEBUG = False
 
 TEMPLATE_DEBUG = False
 # TODO: Probar quitando * y colocando mi host: www.waysily.com
@@ -43,7 +43,9 @@ CORS_ORIGIN_WHITELIST = (
     'http://waysily-client-dev.herokuapp.com',
     'waysily-client-dev.herokuapp.com',
     'http://www.waysily.com',
+    'www.waysily.com',
     'https://waysily-server-dev.herokuapp.com',
+    'https://waysily-server-production.herokuapp.com',
     'https://waysily-server.herokuapp.com',
 )
 
@@ -226,7 +228,7 @@ DATABASES['default'] = dj_database_url.config()
 LOCAL = 'http://localhost:8080'
 DEV = 'https://waysily-client-dev.herokuapp.com'
 PRD = 'http://www.waysily.com'
-DOMAIN = DEV
+DOMAIN = PRD
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
@@ -271,18 +273,18 @@ STATIC_URL = '/static/'
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # TODO: Send test email using my gmail account
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'sergioruizdavila@gmail.com'
-EMAIL_HOST_PASSWORD = '.$Gratos2016$.'
-EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_HOST_USER = 'sergioruizdavila@gmail.com'
+# EMAIL_HOST_PASSWORD = '.$Gratos2016$.'
+# EMAIL_PORT = 587
 
 # TODO: Send email using my sparkpost - PRD
-# EMAIL_HOST = 'smtp.sparkpostmail.com'
-# EMAIL_PORT = 587
-# EMAIL_HOST_USER = 'SMTP_Injection'
-# EMAIL_HOST_PASSWORD = 'c1506170ad8110344c4ed7436888a74b4c1211aa'
-# EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.sparkpostmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'SMTP_Injection'
+EMAIL_HOST_PASSWORD = 'c1506170ad8110344c4ed7436888a74b4c1211aa'
+EMAIL_USE_TLS = True
 
 # NOTE: To allow user resets password is necessary create a new 'Site' on Admin
 SITE_ID = 1
