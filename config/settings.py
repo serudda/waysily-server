@@ -290,7 +290,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.sparkpostmail.com'
-EMAIL_HOST_USER = 'help@waysily.com'
+EMAIL_HOST_USER = 'SMTP_Injection'
 EMAIL_HOST_PASSWORD = 'c1506170ad8110344c4ed7436888a74b4c1211aa'
 EMAIL_PORT = 587
 
