@@ -293,6 +293,7 @@ EMAIL_HOST = 'smtp.sparkpostmail.com'
 EMAIL_HOST_USER = 'SMTP_Injection'
 EMAIL_HOST_PASSWORD = 'c1506170ad8110344c4ed7436888a74b4c1211aa'
 EMAIL_PORT = 587
+DEFAULT_FROM_EMAIL = 'help@waysily.com'
 
 # NOTE: To allow user resets password is necessary create a new 'Site' on Admin
 SITE_ID = 1
