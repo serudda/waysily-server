@@ -281,8 +281,8 @@ STATIC_URL = '/static/'
 # TODO: Send test email using my gmail account
 # EMAIL_USE_TLS = True
 # EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_HOST_USER = 'help@waysily.com'
-# EMAIL_HOST_PASSWORD = '.$Waysily2017$.'
+# EMAIL_HOST_USER = 'sergioruizdavila@gmail.com'
+# EMAIL_HOST_PASSWORD = 'my-password'
 # EMAIL_PORT = 587
 
 # TODO: Send email using my sparkpost - PRD
