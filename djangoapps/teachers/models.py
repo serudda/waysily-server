@@ -82,7 +82,7 @@ class Teacher(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return "Profile " + str(self.profile_id)
+        return "User Id: " + str(self.profile.user_id)
 
 
 class Experience(models.Model):
