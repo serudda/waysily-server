@@ -56,4 +56,4 @@ class Profile(models.Model):
         instance.user.save()
 
     def __str__(self):
-        return self.user.first_name + ' ' + self.user.last_name
+        return 'user_id: ' + str(self.user.id) + ', ' + self.user.first_name + ' ' + self.user.last_name
