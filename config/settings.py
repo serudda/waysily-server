@@ -174,6 +174,7 @@ INSTALLED_APPS = [
     'djangoapps.schools',
     'djangoapps.countries',
     'djangoapps.feedbacks',
+    'djangoapps.globals.enums',
 ]
 
 MIDDLEWARE_CLASSES = (

@@ -1,44 +1,10 @@
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
 from django.core.validators import MaxValueValidator
-from enum import OrderedDict, unique
 from djangoapps.profiles.models import Profile
+from djangoapps.globals.enums.models import Day, PaymentMethodChoice, ImmersionCategories, AmenitiesSchoolCategories, \
+    AmenitiesAccommodationCategories, AccommodationCategories, WorkExchangesOptions
 from multiselectfield import MultiSelectField
-
-
-# COMMON ENUM
-class Day(OrderedDict):
-    MONDAY = 0
-    TUESDAY = 1
-    WEDNESDAY = 2
-    THURSDAY = 3
-    FRIDAY = 4
-    SATURDAY = 5
-    SUNDAY = 6
-
-    DAY_CHOICES = (
-        (MONDAY, 'Monday'),
-        (TUESDAY, 'Tuesday'),
-        (WEDNESDAY, 'Wednesday'),
-        (THURSDAY, 'Thursday'),
-        (FRIDAY, 'Friday'),
-        (SATURDAY, 'Saturday'),
-        (SUNDAY, 'Sunday'),
-    )
-
-
-class PaymentMethodChoice(OrderedDict):
-    VISA = 0
-    MASTERCARD = 1
-    PAYPAL = 2
-    CASH = 3
-
-    PAYMENT_METHOD_CHOICES = (
-        (VISA, 'Visa'),
-        (MASTERCARD, 'Mastercard'),
-        (PAYPAL, 'Paypal'),
-        (CASH, 'Cash'),
-    )
 
 
 # COMMON INFO CLASS
@@ -54,9 +20,12 @@ class CommonInfo(models.Model):
 
 
 # SCHOOL IMMERSION CLASS
-class Immersion(CommonInfo):
+class Immersion(models.Model):
     """ Immersion Model """
 
+    active = models.BooleanField(default=False, verbose_name='YES/NO')
+    option = MultiSelectField(choices=ImmersionCategories.IMMERSION_CHOICES,
+                              verbose_name='Immersion options')
     other_option = models.TextField(max_length=5000, blank=True, verbose_name='Other Immersion')
     rating = models.PositiveIntegerField(validators=[MaxValueValidator(5)], default=0, verbose_name='Rating')
 
@@ -75,9 +44,12 @@ class Tour(CommonInfo):
 
 
 # SCHOOL AMENITIES CLASS
-class Amenities(CommonInfo):
+class Amenities(models.Model):
     """ Amenities Model """
 
+    active = models.BooleanField(default=False, verbose_name='YES/NO')
+    option = MultiSelectField(choices=AmenitiesSchoolCategories.AMENITIES_SCHOOL_CHOICES,
+                              verbose_name='Amenities options')
     other_option = models.TextField(max_length=5000, blank=True, verbose_name='Other Amenities')
     rating = models.PositiveIntegerField(validators=[MaxValueValidator(5)], default=0, verbose_name='Rating')
 
@@ -93,9 +65,11 @@ class AccommodationOption(models.Model):
     """ Accommodation Option Model """
 
     active = models.BooleanField(default=False, verbose_name='YES/NO')
-    category = models.CharField(max_length=200, blank=True, verbose_name='Type of Accommodation')
+    category = MultiSelectField(choices=AccommodationCategories.ACCOMMODATION_CHOICES,
+                                verbose_name='Type of Accommodation')
     price = models.PositiveSmallIntegerField(default=0, verbose_name='Accommodation Price')
-    amenities = ArrayField(models.CharField(max_length=200), blank=True, verbose_name='Amenities')
+    amenities = MultiSelectField(choices=AmenitiesAccommodationCategories.AMENITIES_ACCOMMODATION_CHOICES,
+                                 verbose_name='Amenities options')
     other_amenities = models.TextField(max_length=5000, blank=True, verbose_name='Other Amenities')
 
     def __str__(self):
@@ -132,7 +106,8 @@ class WorkExchangeOption(models.Model):
     """ Work Exchange Option Model """
 
     active = models.BooleanField(default=False, verbose_name='YES/NO')
-    category = models.CharField(max_length=200, blank=True, verbose_name='Work Exchange Categories')
+    category = MultiSelectField(choices=WorkExchangesOptions.WORK_EXCHANGE_CHOICES,
+                                verbose_name='Work Exchange Categories')
     terms = models.TextField(max_length=5000, blank=True, verbose_name='Terms, Details or more information')
 
     def __str__(self):

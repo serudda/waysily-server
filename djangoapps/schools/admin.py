@@ -7,9 +7,6 @@ from djangoapps.schools.models import School, Immersion, Tour, Amenities, Accomm
 
 
 # INLINE BLOCKS
-class ImmersionInline(admin.StackedInline):
-    model = Immersion
-
 
 class AmenitiesInline(admin.StackedInline):
     model = Amenities
