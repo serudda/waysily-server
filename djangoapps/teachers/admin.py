@@ -5,7 +5,18 @@ from djangoapps.teachers.models import Teacher, Experience, Education, Certifica
     PrivatePriceDetail, GroupPriceDetail, Rating
 
 
+# INLINE BLOCKS
+class EducationInline(admin.StackedInline):
+    model = Education
+
+#########################################################
+
+
 class TeacherAdmin(admin.ModelAdmin):
+
+    inlines = [
+        EducationInline,
+    ]
 
     list_display = ('id',
                     'profile',
