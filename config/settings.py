@@ -235,10 +235,9 @@ DATABASES = {
 # TODO: WARNING - Change environment
 LOCAL = 'http://localhost:8080'
 DEV = 'https://waysily-client-dev.herokuapp.com'
-PRD = 'http://www.waysily.com'
 STAGING = 'https://waysily-client-staging.herokuapp.com'
-# PRD = 'https://waysily-client-production.herokuapp.com'
-DOMAIN = LOCAL
+PRD = 'http://www.waysily.com'
+DOMAIN = DEV
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
