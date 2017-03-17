@@ -81,8 +81,8 @@ class AccommodationOption(models.Model):
 
     active = models.BooleanField(default=False, verbose_name='YES/NO')
     accommodation = models.ForeignKey(Accommodation, verbose_name='Accommodation Options')
-    category = MultiSelectField(choices=AccommodationCategories.ACCOMMODATION_CHOICES,
-                                verbose_name='Type of Accommodation')
+    category = models.IntegerField(choices=AccommodationCategories.ACCOMMODATION_CHOICES, blank=True, default=1,
+                                   verbose_name='Type of Accommodation')
     price = models.PositiveSmallIntegerField(default=0, verbose_name='Accommodation Price per week (USD)')
     amenities = MultiSelectField(choices=AmenitiesAccommodationCategories.AMENITIES_ACCOMMODATION_CHOICES,
                                  verbose_name='Amenities options')
@@ -124,8 +124,8 @@ class WorkExchangeOption(models.Model):
 
     active = models.BooleanField(default=False, verbose_name='YES/NO')
     work_exchange = models.ForeignKey(WorkExchange, null=True, blank=True, verbose_name='Work Exchange Options')
-    category = MultiSelectField(choices=WorkExchangesOptions.WORK_EXCHANGE_CHOICES,
-                                verbose_name='Work Exchange Categories')
+    category = models.IntegerField(choices=WorkExchangesOptions.WORK_EXCHANGE_CHOICES, blank=True, default=1,
+                                   verbose_name='Work Exchange Categories')
     terms = models.TextField(max_length=5000, blank=True, verbose_name='Terms, Details or more information')
 
     def __str__(self):
@@ -219,10 +219,10 @@ class Price(models.Model):
     """ Price Model """
 
     active = models.BooleanField(default=False, verbose_name='YES/NO')
-    private = models.OneToOneField(PrivateClass, related_name='private', on_delete=models.CASCADE,
-                                   null=True, verbose_name='Private Classes')
-    group = models.OneToOneField(GroupClass, related_name='group', on_delete=models.CASCADE,
-                                 null=True, verbose_name='Group Classes')
+    private_class = models.OneToOneField(PrivateClass, related_name='private', on_delete=models.CASCADE,
+                                         null=True, verbose_name='Private Classes')
+    group_class = models.OneToOneField(GroupClass, related_name='group', on_delete=models.CASCADE,
+                                       null=True, verbose_name='Group Classes')
 
     def __str__(self):
         return "Price " + str(self.id)

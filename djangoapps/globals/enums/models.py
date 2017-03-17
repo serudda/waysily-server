@@ -719,7 +719,6 @@ class AccommodationCategories(OrderedDict):
 class WorkExchangesOptions(OrderedDict):
     ACCOMMODATION = 1
     DISCOUNTINCLASSES = 2
-
     HOSTEL = 3
     SHAREDAPARTMENT = 4
     PRIVATEAPARTMENT = 5

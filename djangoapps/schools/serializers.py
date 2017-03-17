@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
+from djangoapps.locations.serializers import LocationSerializer
 from djangoapps.schools.models import School, Immersion, Tour, Amenities, Accommodation, AccommodationOption, \
     Volunteering, WorkExchange, WorkExchangeOption, Price, PrivateClass, GroupClass, PrivateGeneralType, \
     PrivateIntensiveType, GroupGeneralType, GroupIntensiveType, Discount, Package, PackageOption, BookingFee, \
@@ -45,17 +46,6 @@ class AmenitiesSerializer(serializers.ModelSerializer):
         read_only_fields = ('id',)
 
 
-class AccommodationSerializer(serializers.ModelSerializer):
-    """ Serializer to represent the Accommodation model """
-
-    class Meta:
-        model = Accommodation
-        fields = ('id',
-                  'active',
-                  'rating',)
-        read_only_fields = ('id',)
-
-
 class AccommodationOptionSerializer(serializers.ModelSerializer):
     """ Serializer to represent the Accommodation Options model """
 
@@ -63,11 +53,25 @@ class AccommodationOptionSerializer(serializers.ModelSerializer):
         model = AccommodationOption
         fields = ('id',
                   'active',
-                  'accommodation',
                   'category',
                   'price',
                   'amenities',
                   'other_amenities',)
+        read_only_fields = ('id',)
+
+
+class AccommodationSerializer(serializers.ModelSerializer):
+    """ Serializer to represent the Accommodation model """
+
+    accommodation_option = AccommodationOptionSerializer(many=True, read_only=True, source='accommodationoption_set')
+
+    class Meta:
+        model = Accommodation
+        fields = ('id',
+                  'active',
+                  'accommodation_option',
+                  'rating',)
+
         read_only_fields = ('id',)
 
 
@@ -83,62 +87,30 @@ class VolunteeringSerializer(serializers.ModelSerializer):
         read_only_fields = ('id',)
 
 
-class WorkExchangeSerializer(serializers.ModelSerializer):
-    """ Serializer to represent the Work Exchange model """
-
-    class Meta:
-        model = WorkExchange
-        fields = ('id',
-                  'active',)
-        read_only_fields = ('id',)
-
-
 class WorkExchangeOptionSerializer(serializers.ModelSerializer):
     """ Serializer to represent the Work Exchange Option model """
 
     class Meta:
         model = WorkExchangeOption
         fields = ('id',
-                  'work_exchange',
                   'active',
                   'category',
                   'terms',)
+
         read_only_fields = ('id',)
 
 
-class PriceSerializer(serializers.ModelSerializer):
-    """ Serializer to represent the Price model """
+class WorkExchangeSerializer(serializers.ModelSerializer):
+    """ Serializer to represent the Work Exchange model """
+
+    work_exchange_option = WorkExchangeOptionSerializer(many=True, read_only=True, source='workexchangeoption_set')
 
     class Meta:
-        model = Price
+        model = WorkExchange
         fields = ('id',
                   'active',
-                  'private',
-                  'group',)
-        read_only_fields = ('id',)
+                  'work_exchange_option',)
 
-
-class PrivateClassSerializer(serializers.ModelSerializer):
-    """ Serializer to represent the Private Class model """
-
-    class Meta:
-        model = PrivateClass
-        fields = ('id',
-                  'active',
-                  'general_type',
-                  'intensive_type',)
-        read_only_fields = ('id',)
-
-
-class GroupClassSerializer(serializers.ModelSerializer):
-    """ Serializer to represent the Group Class model """
-
-    class Meta:
-        model = GroupClass
-        fields = ('id',
-                  'active',
-                  'general_type',
-                  'intensive_type',)
         read_only_fields = ('id',)
 
 
@@ -196,6 +168,48 @@ class GroupIntensiveTypeSerializer(serializers.ModelSerializer):
         read_only_fields = ('id',)
 
 
+class PrivateClassSerializer(serializers.ModelSerializer):
+    """ Serializer to represent the Private Class model """
+    general_type = PrivateGeneralTypeSerializer()
+    intensive_type = PrivateIntensiveTypeSerializer()
+
+    class Meta:
+        model = PrivateClass
+        fields = ('id',
+                  'active',
+                  'general_type',
+                  'intensive_type',)
+        read_only_fields = ('id',)
+
+
+class GroupClassSerializer(serializers.ModelSerializer):
+    """ Serializer to represent the Group Class model """
+    general_type = GroupGeneralTypeSerializer()
+    intensive_type = GroupIntensiveTypeSerializer()
+
+    class Meta:
+        model = GroupClass
+        fields = ('id',
+                  'active',
+                  'general_type',
+                  'intensive_type',)
+        read_only_fields = ('id',)
+
+
+class PriceSerializer(serializers.ModelSerializer):
+    """ Serializer to represent the Price model """
+    private_class = PrivateClassSerializer()
+    group_class = GroupClassSerializer()
+
+    class Meta:
+        model = Price
+        fields = ('id',
+                  'active',
+                  'private_class',
+                  'group_class',)
+        read_only_fields = ('id',)
+
+
 class DiscountSerializer(serializers.ModelSerializer):
     """ Serializer to represent the Discount model """
 
@@ -207,16 +221,6 @@ class DiscountSerializer(serializers.ModelSerializer):
         read_only_fields = ('id',)
 
 
-class PackageSerializer(serializers.ModelSerializer):
-    """ Serializer to represent the Package model """
-
-    class Meta:
-        model = Package
-        fields = ('id',
-                  'active',)
-        read_only_fields = ('id',)
-
-
 class PackageOptionSerializer(serializers.ModelSerializer):
     """ Serializer to represent the Package Option model """
 
@@ -224,10 +228,21 @@ class PackageOptionSerializer(serializers.ModelSerializer):
         model = PackageOption
         fields = ('id',
                   'active',
-                  'package',
                   'name',
                   'description',
                   'price',)
+        read_only_fields = ('id',)
+
+
+class PackageSerializer(serializers.ModelSerializer):
+    """ Serializer to represent the Package model """
+    package_option = PackageOptionSerializer(many=True, read_only=True, source='packageoption_set')
+
+    class Meta:
+        model = Package
+        fields = ('id',
+                  'active',
+                  'package_option',)
         read_only_fields = ('id',)
 
 
@@ -258,6 +273,7 @@ class PaymentMethodSerializer(serializers.ModelSerializer):
 class SchoolSerializer(serializers.ModelSerializer):
     """ Serializer to represent the School model """
 
+    location = LocationSerializer()
     immersion = ImmersionSerializer()
     tour = TourSerializer()
     amenities = AmenitiesSerializer()

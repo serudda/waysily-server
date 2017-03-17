@@ -183,8 +183,8 @@ class PriceAdmin(admin.ModelAdmin):
 
     list_display = ('id',
                     'active',
-                    'private',
-                    'group',)
+                    'private_class',
+                    'group_class',)
 
     search_fields = ('id',)
 
