@@ -1,17 +1,17 @@
 from __future__ import unicode_literals
 from django.contrib import admin
+from django import forms
 
+from djangoapps.globals.enums.models import LanguagesList
 from djangoapps.schools.models import School, Immersion, Tour, Amenities, Accommodation, AccommodationOption,\
     Volunteering, WorkExchange, WorkExchangeOption, Price, PrivateClass, PrivateGeneralType, PrivateIntensiveType,  \
     GroupClass, GroupGeneralType, GroupIntensiveType, Discount, Package, PackageOption, BookingFee, PaymentMethod
 
 
-# INLINE BLOCKS
+class LanguageListForm(forms.ModelForm):
 
-class AmenitiesInline(admin.StackedInline):
-    model = Amenities
-
-#########################################################
+    languages = forms.MultipleChoiceField(
+        widget=forms.SelectMultiple, choices=LanguagesList.LANGUAGE_CHOICES, initial="1")
 
 
 class SchoolAdmin(admin.ModelAdmin):
@@ -19,6 +19,8 @@ class SchoolAdmin(admin.ModelAdmin):
     list_display = ('id',
                     'user',
                     'name',
+                    'email',
+                    'phone_number',
                     'photo',
                     'about',
                     'language_teach',
@@ -26,9 +28,9 @@ class SchoolAdmin(admin.ModelAdmin):
                     'facebook',
                     'twitter',
                     'instagram',
-                    'email',
                     'facebook_group',
                     'meetup_group',
+                    'location',
                     'immersion',
                     'language_exchange',
                     'tour',
@@ -45,6 +47,34 @@ class SchoolAdmin(admin.ModelAdmin):
                     'payment_method',
                     'created_at',
                     'updated_at',)
+
+    fieldsets = (
+        ('Basic Information', {
+            'fields': ('user', ('name', 'email', 'phone_number'), ('photo', 'about',), 'language_teach', 'website',
+                       'location',)
+        }),
+        ('Social Networks', {
+            'fields': (('facebook', 'twitter', 'instagram'),)
+        }),
+        ('Groups', {
+            'fields': ('facebook_group', 'meetup_group')
+        }),
+        ('Immersion and Tours', {
+            'fields': (('immersion', 'tour',), 'language_exchange')
+        }),
+        ('Amenities', {
+            'fields': (('amenities', 'atmosphere',),)
+        }),
+        ('Accommodation', {
+            'fields': ('accommodation',)
+        }),
+        ('Volunteering', {
+            'fields': ('volunteering', 'work_exchange',)
+        }),
+        ('Price, Packages and Discounts', {
+            'fields': ('price', 'discount', 'package', 'booking_fee', 'classes_begin', 'payment_method',)
+        }),
+    )
 
     search_fields = ('id',)
 
@@ -83,24 +113,32 @@ class AmenitiesAdmin(admin.ModelAdmin):
     search_fields = ('id',)
 
 
-class AccommodationOptionAdmin(admin.ModelAdmin):
-
-    list_display = ('id',
-                    'active',
-                    'category',
-                    'price',
-                    'amenities',
-                    'other_amenities',)
-
-    search_fields = ('id',)
+class AccommodationOptionInline(admin.StackedInline):
+    model = AccommodationOption
 
 
 class AccommodationAdmin(admin.ModelAdmin):
 
+    inlines = [
+        AccommodationOptionInline,
+    ]
+
     list_display = ('id',
                     'active',
-                    'option',
                     'rating',)
+
+    search_fields = ('id',)
+
+
+class AccommodationOptionAdmin(admin.ModelAdmin):
+
+    list_display = ('id',
+                    'active',
+                    'accommodation',
+                    'category',
+                    'price',
+                    'amenities',
+                    'other_amenities',)
 
     search_fields = ('id',)
 
@@ -115,11 +153,17 @@ class VolunteeringAdmin(admin.ModelAdmin):
     search_fields = ('id',)
 
 
+class WorkExchangeOptionInline(admin.StackedInline):
+    model = WorkExchangeOption
+
+
 class WorkExchangeAdmin(admin.ModelAdmin):
+    inlines = [
+        WorkExchangeOptionInline,
+    ]
 
     list_display = ('id',
-                    'active',
-                    'option',)
+                    'active',)
 
     search_fields = ('id',)
 
@@ -127,6 +171,7 @@ class WorkExchangeAdmin(admin.ModelAdmin):
 class WorkExchangeOptionAdmin(admin.ModelAdmin):
 
     list_display = ('id',
+                    'work_exchange',
                     'active',
                     'category',
                     'terms',)
@@ -219,11 +264,17 @@ class DiscountAdmin(admin.ModelAdmin):
     search_fields = ('id',)
 
 
+class PackageOptionInline(admin.StackedInline):
+    model = PackageOption
+
+
 class PackageAdmin(admin.ModelAdmin):
+    inlines = [
+        PackageOptionInline,
+    ]
 
     list_display = ('id',
-                    'active',
-                    'option',)
+                    'active',)
 
     search_fields = ('id',)
 
@@ -232,6 +283,7 @@ class PackageOptionAdmin(admin.ModelAdmin):
 
     list_display = ('id',
                     'active',
+                    'package',
                     'name',
                     'description',
                     'price',)

@@ -52,7 +52,6 @@ class AccommodationSerializer(serializers.ModelSerializer):
         model = Accommodation
         fields = ('id',
                   'active',
-                  'option',
                   'rating',)
         read_only_fields = ('id',)
 
@@ -64,6 +63,7 @@ class AccommodationOptionSerializer(serializers.ModelSerializer):
         model = AccommodationOption
         fields = ('id',
                   'active',
+                  'accommodation',
                   'category',
                   'price',
                   'amenities',
@@ -89,8 +89,7 @@ class WorkExchangeSerializer(serializers.ModelSerializer):
     class Meta:
         model = WorkExchange
         fields = ('id',
-                  'active',
-                  'option',)
+                  'active',)
         read_only_fields = ('id',)
 
 
@@ -100,6 +99,7 @@ class WorkExchangeOptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = WorkExchangeOption
         fields = ('id',
+                  'work_exchange',
                   'active',
                   'category',
                   'terms',)
@@ -213,8 +213,7 @@ class PackageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Package
         fields = ('id',
-                  'active',
-                  'option',)
+                  'active',)
         read_only_fields = ('id',)
 
 
@@ -225,6 +224,7 @@ class PackageOptionSerializer(serializers.ModelSerializer):
         model = PackageOption
         fields = ('id',
                   'active',
+                  'package',
                   'name',
                   'description',
                   'price',)
@@ -277,6 +277,7 @@ class SchoolSerializer(serializers.ModelSerializer):
                   'name',
                   'photo',
                   'about',
+                  'phone_number',
                   'language_teach',
                   'website',
                   'facebook',
@@ -285,6 +286,7 @@ class SchoolSerializer(serializers.ModelSerializer):
                   'email',
                   'facebook_group',
                   'meetup_group',
+                  'location',
                   'immersion',
                   'language_exchange',
                   'tour',

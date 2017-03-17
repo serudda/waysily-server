@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 from django.contrib import admin
 
-from djangoapps.locations.models import Location
+from djangoapps.locations.models import Location, Position
 
 
 class LocationAdmin(admin.ModelAdmin):
@@ -22,4 +22,14 @@ class LocationAdmin(admin.ModelAdmin):
     ordering = ('-created_at',)
 
 
+class PositionAdmin(admin.ModelAdmin):
+
+    list_display = ('id',
+                    'uid',
+                    'lng',
+                    'lat',)
+
+    search_fields = ('id',)
+
 admin.site.register(Location, LocationAdmin)
+admin.site.register(Position, PositionAdmin)

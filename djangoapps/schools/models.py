@@ -2,8 +2,9 @@ from django.db import models
 from django.contrib.postgres.fields import ArrayField
 from django.core.validators import MaxValueValidator
 from djangoapps.profiles.models import Profile
+from djangoapps.locations.models import Location
 from djangoapps.globals.enums.models import Day, PaymentMethodChoice, ImmersionCategories, AmenitiesSchoolCategories, \
-    AmenitiesAccommodationCategories, AccommodationCategories, WorkExchangesOptions
+    AmenitiesAccommodationCategories, AccommodationCategories, WorkExchangesOptions, LanguagesList
 from multiselectfield import MultiSelectField
 
 
@@ -34,9 +35,12 @@ class Immersion(models.Model):
 
 
 # SCHOOL TOUR CLASS
-class Tour(CommonInfo):
+class Tour(models.Model):
     """ Immersion Model """
 
+    active = models.BooleanField(default=False, verbose_name='YES/NO')
+    option = ArrayField(models.CharField(max_length=200), blank=True, verbose_name='Tours Options',
+                        help_text='Write each tour option, separated by commas')
     city_tour = models.BooleanField(default=False, verbose_name='City Tour')
 
     def __str__(self):
@@ -60,14 +64,26 @@ class Amenities(models.Model):
 ################################################################################################
 
 
+# SCHOOL ACCOMMODATION CLASS
+class Accommodation(models.Model):
+    """ Accommodation Model """
+
+    active = models.BooleanField(default=False, verbose_name='YES/NO')
+    rating = models.PositiveIntegerField(validators=[MaxValueValidator(5)], default=0, verbose_name='Rating')
+
+    def __str__(self):
+        return "Accommodation " + str(self.id)
+
+
 # SCHOOL ACCOMMODATION OPTION CLASS
 class AccommodationOption(models.Model):
     """ Accommodation Option Model """
 
     active = models.BooleanField(default=False, verbose_name='YES/NO')
+    accommodation = models.ForeignKey(Accommodation, verbose_name='Accommodation Options')
     category = MultiSelectField(choices=AccommodationCategories.ACCOMMODATION_CHOICES,
                                 verbose_name='Type of Accommodation')
-    price = models.PositiveSmallIntegerField(default=0, verbose_name='Accommodation Price')
+    price = models.PositiveSmallIntegerField(default=0, verbose_name='Accommodation Price per week (USD)')
     amenities = MultiSelectField(choices=AmenitiesAccommodationCategories.AMENITIES_ACCOMMODATION_CHOICES,
                                  verbose_name='Amenities options')
     other_amenities = models.TextField(max_length=5000, blank=True, verbose_name='Other Amenities')
@@ -76,29 +92,30 @@ class AccommodationOption(models.Model):
         return "Accommodation Option " + str(self.id)
 
 
-# SCHOOL ACCOMMODATION CLASS
-class Accommodation(models.Model):
-    """ Accommodation Model """
-
-    active = models.BooleanField(default=False, verbose_name='YES/NO')
-    option = models.ForeignKey(AccommodationOption, verbose_name='Accommodation Options')
-    rating = models.PositiveIntegerField(validators=[MaxValueValidator(5)], default=0, verbose_name='Rating')
-
-    def __str__(self):
-        return "Accommodation " + str(self.id)
-
-
 ################################################################################################
 
 
 # SCHOOL VOLUNTEERING CLASS
-class Volunteering(CommonInfo):
+class Volunteering(models.Model):
     """ Volunteering Model """
 
+    active = models.BooleanField(default=False, verbose_name='YES/NO')
+    option = ArrayField(models.CharField(max_length=200), blank=True, verbose_name='Volunteering Options',
+                        help_text='Write each volunteering option, separated by commas')
     rating = models.PositiveIntegerField(validators=[MaxValueValidator(5)], default=0, verbose_name='Rating')
 
     def __str__(self):
         return "Volunteering " + str(self.id)
+
+
+# SCHOOL WORK EXCHANGE CLASS
+class WorkExchange(models.Model):
+    """ Work Exchange Model """
+
+    active = models.BooleanField(default=False, verbose_name='YES/NO')
+
+    def __str__(self):
+        return "Work Exchange " + str(self.id)
 
 
 # SCHOOL WORK EXCHANGE OPTION CLASS
@@ -106,6 +123,7 @@ class WorkExchangeOption(models.Model):
     """ Work Exchange Option Model """
 
     active = models.BooleanField(default=False, verbose_name='YES/NO')
+    work_exchange = models.ForeignKey(WorkExchange, null=True, blank=True, verbose_name='Work Exchange Options')
     category = MultiSelectField(choices=WorkExchangesOptions.WORK_EXCHANGE_CHOICES,
                                 verbose_name='Work Exchange Categories')
     terms = models.TextField(max_length=5000, blank=True, verbose_name='Terms, Details or more information')
@@ -114,25 +132,14 @@ class WorkExchangeOption(models.Model):
         return "Work Exchange Option " + str(self.id)
 
 
-# SCHOOL WORK EXCHANGE CLASS
-class WorkExchange(models.Model):
-    """ Work Exchange Model """
-
-    active = models.BooleanField(default=False, verbose_name='YES/NO')
-    option = models.ForeignKey(WorkExchangeOption, verbose_name='Work Exchange Options')
-
-    def __str__(self):
-        return "Work Exchange " + str(self.id)
-
-
 ################################################################################################
 
 
 # COMMON INFO TYPE PRICES CLASS
 class CommonInfoType(models.Model):
     active = models.BooleanField(default=False, verbose_name='YES/NO')
-    value = models.PositiveSmallIntegerField(default=0, verbose_name='Price (USD)')
-    hour = models.PositiveSmallIntegerField(default=0, verbose_name='Hours')
+    value = models.PositiveSmallIntegerField(default=0, verbose_name='Price (USD) per week')
+    hour = models.PositiveSmallIntegerField(default=0, verbose_name='Hours per week')
     terms = models.TextField(max_length=5000, blank=True, verbose_name='Terms, Details or more information')
 
     class Meta:
@@ -160,7 +167,8 @@ class GroupGeneralType(CommonInfoType):
     """ Group General Type Price Model """
 
     student = ArrayField(models.PositiveSmallIntegerField(default=0), blank=True,
-                         verbose_name='Amount of Student per Group')
+                         verbose_name='Amount of Student per Group',
+                         help_text='Use follow format: minimum value, maximum value', size=2)
 
     def __str__(self):
         return "Group General Type " + str(self.id)
@@ -171,7 +179,8 @@ class GroupIntensiveType(CommonInfoType):
     """ Group Intensive Type Price Model """
 
     student = ArrayField(models.PositiveSmallIntegerField(default=0), blank=True,
-                         verbose_name='Amount of Student per Group')
+                         verbose_name='Amount of Student per Group',
+                         help_text='Use follow format: minimum value, maximum value', size=2)
 
     def __str__(self):
         return "Group Intensive Type " + str(self.id)
@@ -223,8 +232,12 @@ class Price(models.Model):
 
 
 # SCHOOL DISCOUNT CLASS
-class Discount(CommonInfo):
+class Discount(models.Model):
     """ Discount Model """
+
+    active = models.BooleanField(default=False, verbose_name='YES/NO')
+    option = ArrayField(models.CharField(max_length=200), blank=True, verbose_name='Discount Options',
+                        help_text='Write each discount option, separated by commas')
 
     def __str__(self):
         return "Discount " + str(self.id)
@@ -232,28 +245,29 @@ class Discount(CommonInfo):
 
 ################################################################################################
 
-# SCHOOL PACKAGE OPTION CLASS
-class PackageOption(models.Model):
-    """ Package Option Model """
-
-    active = models.BooleanField(default=False, verbose_name='YES/NO')
-    name = models.CharField(max_length=100, default='', verbose_name='Package Name')
-    description = models.TextField(max_length=10000, default='', blank=True, verbose_name='Description')
-    price = models.PositiveSmallIntegerField(default=0, verbose_name='Package Price (USD)')
-
-    def __str__(self):
-        return "Package Option " + str(self.id)
-
 
 # SCHOOL PACKAGE CLASS
 class Package(models.Model):
     """ Package Model """
 
     active = models.BooleanField(default=False, verbose_name='YES/NO')
-    option = models.ForeignKey(PackageOption, verbose_name='Package Options')
 
     def __str__(self):
         return "Package " + str(self.id)
+
+
+# SCHOOL PACKAGE OPTION CLASS
+class PackageOption(models.Model):
+    """ Package Option Model """
+
+    active = models.BooleanField(default=False, verbose_name='YES/NO')
+    package = models.ForeignKey(Package, verbose_name='Package Options')
+    name = models.CharField(max_length=100, default='', verbose_name='Package Name')
+    description = models.TextField(max_length=10000, default='', blank=True, verbose_name='Description')
+    price = models.PositiveSmallIntegerField(default=0, verbose_name='Package Price (USD)')
+
+    def __str__(self):
+        return "Package Option " + str(self.id)
 
 
 ################################################################################################
@@ -280,8 +294,9 @@ class PaymentMethod(models.Model):
 
     active = models.BooleanField(default=False, verbose_name='YES/NO')
     methods = MultiSelectField(choices=PaymentMethodChoice.PAYMENT_METHOD_CHOICES,
-                               verbose_name='Payment Methods Accepted')
-    other = ArrayField(models.CharField(max_length=200), blank=True, verbose_name='Other Payment Methods')
+                               verbose_name='Payment Methods Accepted', )
+    other = ArrayField(models.CharField(max_length=200), blank=True, verbose_name='Other Payment Methods',
+                       help_text='Write each payment method, separated by commas')
 
     def __str__(self):
         return "Payment Method " + str(self.id)
@@ -298,7 +313,9 @@ class School(models.Model):
     photo = models.TextField(max_length=5000, default='', blank=True, verbose_name='School Photo')
     name = models.CharField(max_length=100, default='', verbose_name='School Name')
     about = models.TextField(max_length=10000, default='', blank=True, verbose_name='About School')
-    language_teach = ArrayField(models.CharField(max_length=200), blank=True, verbose_name='Languages Teach')
+    phone_number = models.CharField(max_length=30, default='', blank=True)
+    language_teach = MultiSelectField(choices=LanguagesList.LANGUAGE_CHOICES,
+                                      verbose_name='Languages Teach')
     website = models.CharField(max_length=200, default='', verbose_name='Website')
     facebook = models.CharField(max_length=200, default='', verbose_name='Facebook')
     twitter = models.CharField(max_length=200, default='', verbose_name='Twitter')
@@ -306,6 +323,9 @@ class School(models.Model):
     email = models.EmailField(max_length=50, verbose_name='Email')
     facebook_group = models.CharField(max_length=200, default='', verbose_name='Group on Facebook')
     meetup_group = models.CharField(max_length=200, default='', verbose_name='Group on Meetup.com')
+
+    location = models.OneToOneField(Location, related_name='school_location', on_delete=models.CASCADE, null=True,
+                                    verbose_name='School Location')
 
     immersion = models.OneToOneField(Immersion, related_name='immersion', on_delete=models.CASCADE, null=True,
                                      verbose_name='Immersion')
