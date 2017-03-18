@@ -19,7 +19,6 @@ __pycache__
 staticfiles/
 
 # Static
-static/
 
 # vrtualenv
 venv/
