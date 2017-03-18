@@ -27,7 +27,7 @@ sys.path.insert(0, APPS_ROOT)
 SECRET_KEY = '$6(x*g_2g9l_*g8peb-@anl5^*8q!1w)k&e&2!i)t6$s8kia93'
 
 # SECURITY WARNING: don't run with debug turned on in production! It fine in develop
-DEBUG = True
+DEBUG = False
 
 TEMPLATE_DEBUG = False
 # TODO: Probar quitando * y colocando mi host: www.waysily.com
