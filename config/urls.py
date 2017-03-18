@@ -20,8 +20,9 @@ from django.contrib import admin
 
 urlpatterns = [
     # admin site urls
+    url(r'^jet/', include('jet.urls', 'jet')),
     url(r'^admin/', admin.site.urls),
-    url(r'^grappelli/', include('grappelli.urls')),
+    # url(r'^grappelli/', include('grappelli.urls')),
 
     # api urls
     url(r'^api/v1/', include('early.urls')),

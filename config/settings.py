@@ -147,7 +147,7 @@ AUTHENTICATION_BACKENDS = (
 # Application definition
 
 INSTALLED_APPS = [
-    'grappelli',
+    'jet',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -209,6 +209,7 @@ TEMPLATES = [
     },
 ]
 
+
 WSGI_APPLICATION = 'config.wsgi.application'
 
 GRAPPELLI_ADMIN_TITLE = 'Waysily - Administrator'
@@ -229,8 +230,8 @@ DATABASES = {
 }
 
 # TODO: Comment this block when you will work LOCALLY
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'] = dj_database_url.config()
+# db_from_env = dj_database_url.config(conn_max_age=500)
+# DATABASES['default'] = dj_database_url.config()
 
 # TODO: WARNING - Change environment
 LOCAL = 'http://localhost:8080'
