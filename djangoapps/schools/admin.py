@@ -45,6 +45,7 @@ class SchoolAdmin(admin.ModelAdmin):
                     'booking_fee',
                     'classes_begin',
                     'payment_method',
+                    'active',
                     'created_at',
                     'updated_at',)
 

@@ -316,13 +316,13 @@ class School(models.Model):
     phone_number = models.CharField(max_length=30, default='', blank=True)
     language_teach = MultiSelectField(choices=LanguagesList.LANGUAGE_CHOICES,
                                       verbose_name='Languages Teach')
-    website = models.CharField(max_length=200, default='', verbose_name='Website')
-    facebook = models.CharField(max_length=200, default='', verbose_name='Facebook')
-    twitter = models.CharField(max_length=200, default='', verbose_name='Twitter')
-    instagram = models.CharField(max_length=200, default='', verbose_name='Instagram')
-    email = models.EmailField(max_length=50, verbose_name='Email')
-    facebook_group = models.CharField(max_length=200, default='', verbose_name='Group on Facebook')
-    meetup_group = models.CharField(max_length=200, default='', verbose_name='Group on Meetup.com')
+    website = models.CharField(max_length=200, default='', blank=True, verbose_name='Website')
+    facebook = models.CharField(max_length=200, default='', blank=True,verbose_name='Facebook')
+    twitter = models.CharField(max_length=200, default='', blank=True, verbose_name='Twitter')
+    instagram = models.CharField(max_length=200, default='', blank=True, verbose_name='Instagram')
+    email = models.EmailField(max_length=50, verbose_name='Email', default='', blank=True)
+    facebook_group = models.CharField(max_length=200, default='',  blank=True, verbose_name='Group on Facebook')
+    meetup_group = models.CharField(max_length=200, default='', blank=True, verbose_name='Group on Meetup.com')
 
     location = models.OneToOneField(Location, related_name='school_location', on_delete=models.CASCADE, null=True,
                                     verbose_name='School Location')
@@ -361,6 +361,8 @@ class School(models.Model):
 
     payment_method = models.OneToOneField(PaymentMethod, related_name='payment_method', on_delete=models.CASCADE,
                                           null=True, verbose_name='Payment Methods')
+
+    active = models.BooleanField(default=False, verbose_name='Active')
 
     created_at = models.DateTimeField(db_index=True, auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
