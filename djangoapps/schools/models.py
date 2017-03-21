@@ -88,6 +88,8 @@ class AccommodationOption(models.Model):
                                  verbose_name='Amenities options')
     other_amenities = models.TextField(max_length=5000, blank=True, verbose_name='Other Amenities')
 
+    terms = models.TextField(max_length=5000, blank=True, verbose_name='Terms, Details or more information')
+
     def __str__(self):
         return "Accommodation Option " + str(self.id)
 

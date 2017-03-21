@@ -139,7 +139,8 @@ class AccommodationOptionAdmin(admin.ModelAdmin):
                     'category',
                     'price',
                     'amenities',
-                    'other_amenities',)
+                    'other_amenities',
+                    'terms',)
 
     search_fields = ('id',)
 

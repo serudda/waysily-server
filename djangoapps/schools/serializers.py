@@ -56,7 +56,8 @@ class AccommodationOptionSerializer(serializers.ModelSerializer):
                   'category',
                   'price',
                   'amenities',
-                  'other_amenities',)
+                  'other_amenities',
+                  'terms',)
         read_only_fields = ('id',)
 
 
