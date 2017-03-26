@@ -719,12 +719,9 @@ class AccommodationCategories(OrderedDict):
 class WorkExchangesOptions(OrderedDict):
     ACCOMMODATION = 1
     DISCOUNTINCLASSES = 2
-    HOSTEL = 3
-    SHAREDAPARTMENT = 4
-    PRIVATEAPARTMENT = 5
-    BREAKFAST = 6
-    LUNCH = 7
-    DINNER = 8
+    BREAKFAST = 3
+    LUNCH = 4
+    DINNER = 5
 
     WORK_EXCHANGE_CHOICES = (
         (ACCOMMODATION, 'Accommodation'),
