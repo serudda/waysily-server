@@ -47,6 +47,7 @@ CORS_ORIGIN_WHITELIST = (
     'waysily-client-production.herokuapp.com',
     'https://waysily-client-production.herokuapp.com',
     'http://www.waysily.com',
+    'https://www.waysily.com',
     'www.waysily.com',
     'https://waysily-server-dev.herokuapp.com',
     'https://waysily-server-production.herokuapp.com',
@@ -212,7 +213,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-GRAPPELLI_ADMIN_TITLE = 'Waysily - Administrator'
+# GRAPPELLI_ADMIN_TITLE = 'Waysily - Administrator'
 
 
 # Database
@@ -237,8 +238,8 @@ DATABASES['default'] = dj_database_url.config()
 LOCAL = 'http://localhost:8080'
 DEV = 'https://waysily-client-dev.herokuapp.com'
 STAGING = 'https://waysily-client-staging.herokuapp.com'
-PRD = 'http://www.waysily.com'
-DOMAIN = STAGING
+PRD = 'https://www.waysily.com'
+DOMAIN = PRD
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
