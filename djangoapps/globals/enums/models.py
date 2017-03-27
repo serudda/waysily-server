@@ -588,12 +588,14 @@ class LanguagesList(OrderedDict):
 class PaymentMethodChoice(OrderedDict):
     VISA = 1
     MASTERCARD = 2
-    PAYPAL = 3
-    CASH = 4
+    AMERICANEXPRESS = 3
+    PAYPAL = 4
+    CASH = 5
 
     PAYMENT_METHOD_CHOICES = (
         (VISA, 'Visa'),
         (MASTERCARD, 'Mastercard'),
+        (AMERICANEXPRESS, 'American Express'),
         (PAYPAL, 'Paypal'),
         (CASH, 'Cash'),
     )
