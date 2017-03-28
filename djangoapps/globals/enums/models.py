@@ -641,6 +641,7 @@ class AmenitiesSchoolCategories(OrderedDict):
     COMPUTERSROOM = 13
     VIDEOPROJECTOR = 14
     LOUNGEAREA = 15
+    POOL = 16
 
     AMENITIES_SCHOOL_CHOICES = (
         (WIRELESSINTERNET, 'Wireless Internet'),
@@ -658,6 +659,7 @@ class AmenitiesSchoolCategories(OrderedDict):
         (COMPUTERSROOM, 'Computers room'),
         (VIDEOPROJECTOR, 'Video projector'),
         (LOUNGEAREA, 'Lounge area'),
+        (POOL, 'Pool'),
     )
 
 
@@ -679,6 +681,7 @@ class AmenitiesAccommodationCategories(OrderedDict):
     CABLETV = 13
     TV = 14
     KITCHEN = 15
+    POOL = 16
 
     AMENITIES_ACCOMMODATION_CHOICES = (
         (PRIVATEROOM, 'Private room'),
@@ -696,6 +699,7 @@ class AmenitiesAccommodationCategories(OrderedDict):
         (CABLETV, 'Cable TV'),
         (TV, 'TV'),
         (KITCHEN, 'Kitchen'),
+        (POOL, 'Pool'),
     )
 
 
