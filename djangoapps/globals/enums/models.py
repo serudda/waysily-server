@@ -613,6 +613,7 @@ class ImmersionCategories(OrderedDict):
     DANCECLASS = 7
     COOKINGLOCALFOOD = 8
     LOCALMOVIESNIGHT = 9
+    PRACTICELOCALSPORTS = 10
 
     IMMERSION_CHOICES = (
         (ACTIVITIESWITHLOCALS, 'Games and activities with local'),
@@ -624,6 +625,7 @@ class ImmersionCategories(OrderedDict):
         (DANCECLASS, 'Local dance class'),
         (COOKINGLOCALFOOD, 'Cooking Local Food'),
         (LOCALMOVIESNIGHT, 'Local Movies Night'),
+        (PRACTICELOCALSPORTS, 'Practice local sports'),
     )
 
 

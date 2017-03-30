@@ -319,7 +319,7 @@ class School(models.Model):
     language_teach = MultiSelectField(choices=LanguagesList.LANGUAGE_CHOICES,
                                       verbose_name='Languages Teach')
     website = models.CharField(max_length=200, default='', blank=True, verbose_name='Website')
-    facebook = models.CharField(max_length=200, default='', blank=True,verbose_name='Facebook')
+    facebook = models.CharField(max_length=200, default='', blank=True, verbose_name='Facebook')
     twitter = models.CharField(max_length=200, default='', blank=True, verbose_name='Twitter')
     instagram = models.CharField(max_length=200, default='', blank=True, verbose_name='Instagram')
     email = models.EmailField(max_length=50, verbose_name='Email', default='', blank=True)
@@ -359,7 +359,7 @@ class School(models.Model):
     booking_fee = models.OneToOneField(BookingFee, related_name='booking_fee', on_delete=models.CASCADE,
                                        null=True, verbose_name='Booking Fee')
 
-    classes_begin = MultiSelectField(choices=Day.DAY_CHOICES, verbose_name='Classes Begin')
+    classes_begin = MultiSelectField(choices=Day.DAY_CHOICES, verbose_name='Classes Begin', blank=True, default='')
 
     payment_method = models.OneToOneField(PaymentMethod, related_name='payment_method', on_delete=models.CASCADE,
                                           null=True, verbose_name='Payment Methods')
