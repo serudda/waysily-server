@@ -688,6 +688,7 @@ class AmenitiesAccommodationCategories(OrderedDict):
     TV = 14
     KITCHEN = 15
     POOL = 16
+    TWOBEDS = 17
 
     AMENITIES_ACCOMMODATION_CHOICES = (
         (PRIVATEROOM, 'Private room'),
@@ -706,6 +707,7 @@ class AmenitiesAccommodationCategories(OrderedDict):
         (TV, 'TV'),
         (KITCHEN, 'Kitchen'),
         (POOL, 'Pool'),
+        (TWOBEDS, '2 Beds'),
     )
 
 
