@@ -311,7 +311,18 @@ class PaymentMethod(models.Model):
 class School(models.Model):
     """ School Model """
 
+    NEW = 'NW'
+    VALIDATED = 'VA'
+    VERIFIED = 'VE'
+
+    STATUSES_CHOICES = (
+        (NEW, 'new'),
+        (VALIDATED, 'validated'),
+        (VERIFIED, 'verified'),
+    )
+
     user = models.ForeignKey(Profile, verbose_name='School Manager')
+    status = models.CharField(max_length=2, choices=STATUSES_CHOICES, default=VALIDATED)
     photo = models.TextField(max_length=5000, default='', blank=True, verbose_name='School Photo')
     name = models.CharField(max_length=100, default='', verbose_name='School Name')
     about = models.TextField(max_length=10000, default='', blank=True, verbose_name='About School')
