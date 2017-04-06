@@ -1,0 +1,41 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+	ignorecase = true
+	precomposeunicode = true
+[remote "origin"]
+	url = https://github.com/sergioruizdavila/waysily-server.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[gitflow "branch"]
+	master = master
+	develop = develop
+[gitflow "prefix"]
+	feature = feature/
+	release = release/
+	hotfix = hotfix/
+	support = support/
+	versiontag =
+[branch "develop"]
+	remote = origin
+	merge = refs/heads/develop
+[remote "dev"]
+	url = https://git.heroku.com/waysily-server-dev.git
+	fetch = +refs/heads/*:refs/remotes/dev/*
+[remote "staging"]
+	url = https://git.heroku.com/waysily-server-staging.git
+	fetch = +refs/heads/*:refs/remotes/staging/*
+	pushurl = https://git.heroku.com/waysily-server-staging.git
+[remote "production"]
+	url = https://git.heroku.com/waysily-server-production.git
+	fetch = +refs/heads/*:refs/remotes/production/*
+	pushurl = https://git.heroku.com/waysily-server-production.git
+[heroku]
+	remote = staging
+[branch "master"]
+	remote = staging
+	merge = refs/heads/master
+[branch "feature/Add_validate_system_school_#334"]
+	remote = origin
+	merge = "refs/heads/feature/Add_validate_system_school_#334"
