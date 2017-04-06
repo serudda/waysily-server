@@ -291,6 +291,7 @@ class SchoolSerializer(serializers.ModelSerializer):
         model = School
         fields = ('id',
                   'user',
+                  'status',
                   'name',
                   'photo',
                   'about',

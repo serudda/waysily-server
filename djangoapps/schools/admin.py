@@ -19,6 +19,7 @@ class SchoolAdmin(admin.ModelAdmin):
     list_display = ('id',
                     'user',
                     'name',
+                    'status',
                     'email',
                     'phone_number',
                     'photo',
@@ -51,8 +52,8 @@ class SchoolAdmin(admin.ModelAdmin):
 
     fieldsets = (
         ('Basic Information', {
-            'fields': ('user', ('name', 'email', 'phone_number'), ('photo', 'about',), 'language_teach', 'website',
-                       'location',)
+            'fields': ('user', 'status', ('name', 'email', 'phone_number',), ('photo', 'about',), 'language_teach',
+                       'website', 'location',)
         }),
         ('Social Networks', {
             'fields': (('facebook', 'twitter', 'instagram'),)
