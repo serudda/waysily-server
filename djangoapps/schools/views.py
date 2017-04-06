@@ -10,3 +10,13 @@ class SchoolViewSet(viewsets.ModelViewSet):
     queryset = School.objects.all()
     serializer_class = SchoolSerializer
     permission_classes = (IsAuthenticatedOrReadOnly,)
+
+    def get_queryset(self):
+        """ allow rest api to filter by validated """
+        queryset = School.objects.all()
+        status = self.request.query_params.get('status', None)
+
+        if status is not None:
+            queryset = queryset.filter(status=status)
+
+        return queryset
