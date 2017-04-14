@@ -10,6 +10,9 @@ class FeatureSerializer(serializers.ModelSerializer):
         fields = ('id',
                   'feature_en',
                   'feature_es',
+                  'description_en',
+                  'description_es',
+                  'active',
                   'created_at',
                   'updated_at',)
 
