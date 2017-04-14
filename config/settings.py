@@ -27,7 +27,7 @@ sys.path.insert(0, APPS_ROOT)
 SECRET_KEY = '$6(x*g_2g9l_*g8peb-@anl5^*8q!1w)k&e&2!i)t6$s8kia93'
 
 # SECURITY WARNING: don't run with debug turned on in production! It fine in develop
-DEBUG = True
+DEBUG = False
 
 TEMPLATE_DEBUG = False
 # TODO: Probar quitando * y colocando mi host: www.waysily.com
@@ -232,15 +232,15 @@ DATABASES = {
 }
 
 # TODO: Comment this block when you will work LOCALLY
-# db_from_env = dj_database_url.config(conn_max_age=500)
-# DATABASES['default'] = dj_database_url.config()
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'] = dj_database_url.config()
 
 # TODO: WARNING - Change environment
 LOCAL = 'http://localhost:8080'
 DEV = 'https://waysily-client-dev.herokuapp.com'
 STAGING = 'https://waysily-client-staging.herokuapp.com'
 PRD = 'https://www.waysily.com'
-DOMAIN = LOCAL
+DOMAIN = STAGING
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
