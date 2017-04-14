@@ -30,6 +30,7 @@ urlpatterns = [
     url(r'^api/v1/', include('teachers.urls')),
     url(r'^api/v1/', include('schools.urls')),
     url(r'^api/v1/', include('locations.urls')),
+    url(r'^api/v1/', include('features.urls')),
     url(r'^api/v1/', include('feedbacks.urls')),
 
     # user account and auth urls

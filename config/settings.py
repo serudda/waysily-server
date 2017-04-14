@@ -174,6 +174,7 @@ INSTALLED_APPS = [
     'djangoapps.teachers',
     'djangoapps.schools',
     'djangoapps.countries',
+    'djangoapps.features',
     'djangoapps.feedbacks',
     'djangoapps.globals.enums',
 ]
@@ -239,7 +240,7 @@ LOCAL = 'http://localhost:8080'
 DEV = 'https://waysily-client-dev.herokuapp.com'
 STAGING = 'https://waysily-client-staging.herokuapp.com'
 PRD = 'https://www.waysily.com'
-DOMAIN = PRD
+DOMAIN = STAGING
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
