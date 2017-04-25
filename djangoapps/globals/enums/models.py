@@ -721,6 +721,7 @@ class AccommodationCategories(OrderedDict):
     HOSTEL = 3
     SHAREDAPARTMENT = 4
     PRIVATEAPARTMENT = 5
+    ROOMATTHESCHOOL = 6
 
     ACCOMMODATION_CHOICES = (
         (HOMESTAY, 'Homestay'),
@@ -728,6 +729,7 @@ class AccommodationCategories(OrderedDict):
         (HOSTEL, 'Hostel'),
         (SHAREDAPARTMENT, 'Shared Apartment'),
         (PRIVATEAPARTMENT, 'Private Apartment'),
+        (ROOMATTHESCHOOL, 'Room at the school'),
     )
 
 
