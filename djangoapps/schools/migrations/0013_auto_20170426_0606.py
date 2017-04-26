@@ -10,7 +10,7 @@ from django.db import migrations
 def gen_uuid(apps, schema_editor):
     School = apps.get_model('schools', 'School')
     for row in School.objects.all():
-        row.alias_school = uuid.uuid4()
+        row.alias_school = row.name.replace(' ', '-').lower() + '-' + str(row.id)
         row.save()
 
 
