@@ -27,14 +27,14 @@ sys.path.insert(0, APPS_ROOT)
 SECRET_KEY = '$6(x*g_2g9l_*g8peb-@anl5^*8q!1w)k&e&2!i)t6$s8kia93'
 
 # SECURITY WARNING: don't run with debug turned on in production! It fine in develop
-DEBUG = False
+DEBUG = True
 
 # TODO: WARNING - Change environment
 LOCAL = 'http://localhost:8080'
 DEV = 'https://waysily-client-dev.herokuapp.com'
 STAGING = 'https://waysily-client-staging.herokuapp.com'
 PRD = 'https://www.waysily.com'
-DOMAIN = PRD
+DOMAIN = LOCAL
 
 
 TEMPLATE_DEBUG = False
@@ -164,6 +164,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'django.contrib.sitemaps',
     'rest_framework',
     'rest_framework.authtoken',
     'rest_auth',

@@ -1,6 +1,8 @@
+from django.contrib.sites.models import Site
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
 from django.core.validators import MaxValueValidator
+from django.core.urlresolvers import reverse
 from djangoapps.profiles.models import Profile
 from djangoapps.locations.models import Location
 from djangoapps.globals.enums.models import Day, PaymentMethodChoice, ImmersionCategories, AmenitiesSchoolCategories, \
@@ -389,6 +391,15 @@ class School(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return 'school/' + self.alias_school
+
+    # TODO: Eliminar despues de probar en PRD
+    # def get_full_absolute_url(self):
+    #    domain = Site.objects.get_current().domain
+
+    #    return 'https://%s%s' % (domain, self.get_absolute_url())
 
     class Meta:
         ordering = ['-created_at']
