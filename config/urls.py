@@ -17,12 +17,23 @@ from allauth.account.views import confirm_email
 from django.conf.urls import url, include
 from django.views.generic import TemplateView
 from django.contrib import admin
+from django.contrib.sitemaps.views import sitemap
+from djangoapps.globals.sitemaps.sitemaps import SchoolSitemap
+
+# Dictionary containing your sitemap classes
+sitemaps = {
+    'schools': SchoolSitemap()
+}
 
 urlpatterns = [
     # admin site urls
     url(r'^jet/', include('jet.urls', 'jet')),
     url(r'^admin/', admin.site.urls),
     # url(r'^grappelli/', include('grappelli.urls')),
+
+    # sitemap.xml generator url
+    url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps},
+        name='django.contrib.sitemaps.views.sitemap'),
 
     # api urls
     url(r'^api/v1/', include('early.urls')),
@@ -51,4 +62,5 @@ urlpatterns = [
         TemplateView.as_view(template_name="password_reset_confirm.html"),
         name='password_reset_confirm'),
     url(r'^api/v1/rest-auth/', include('rest_auth.urls')),
+
 ]
