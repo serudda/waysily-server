@@ -395,13 +395,11 @@ class School(models.Model):
     def get_absolute_url(self):
         return 'school/' + self.alias_school
 
-    #def get_absolute_url(self):
-    #    return reverse('school', kwargs={'alias_school': self.alias_school})
+    # TODO: Eliminar despues de probar en PRD
+    # def get_full_absolute_url(self):
+    #    domain = Site.objects.get_current().domain
 
-    def get_full_absolute_url(self):
-        domain = Site.objects.get_current().domain
-
-        return 'https://%s%s' % (domain, self.get_absolute_url())
+    #    return 'https://%s%s' % (domain, self.get_absolute_url())
 
     class Meta:
         ordering = ['-created_at']
