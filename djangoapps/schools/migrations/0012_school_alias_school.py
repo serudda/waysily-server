@@ -15,6 +15,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='school',
             name='alias_school',
-            field=models.CharField(default='', help_text='Example: "colombia-immersion-school-2" (name splitted by - and id)', max_length=250, unique=True, verbose_name='Alias School'),
+            field=models.CharField(default='', help_text='Example: "colombia-immersion-school-2" (name splitted by - and id)', max_length=250, null=True, verbose_name='Alias School'),
         ),
     ]
