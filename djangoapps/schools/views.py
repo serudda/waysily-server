@@ -1,5 +1,8 @@
-from rest_framework import viewsets
+from rest_framework.response import Response
+from rest_framework import viewsets, status
+from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.decorators import detail_route
 
 from djangoapps.schools.models import School
 from djangoapps.schools.serializers import SchoolSerializer
@@ -14,9 +17,18 @@ class SchoolViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         """ allow rest api to filter by validated """
         queryset = School.objects.all()
-        status = self.request.query_params.get('status', None)
+        status_school = self.request.query_params.get('status', None)
 
-        if status is not None:
-            queryset = queryset.filter(status=status)
+        if status_school is not None:
+            queryset = queryset.filter(status=status_school)
 
         return queryset
+
+    @detail_route(methods=['get'])
+    def get_by_username(self, request, alias_school=None):
+        queryset = School.objects.all()
+        school = get_object_or_404(queryset, alias_school=alias_school)
+        serializer = SchoolSerializer(school)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+

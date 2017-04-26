@@ -293,6 +293,7 @@ class SchoolSerializer(serializers.ModelSerializer):
                   'user',
                   'status',
                   'name',
+                  'alias_school',
                   'photo',
                   'about',
                   'phone_number',

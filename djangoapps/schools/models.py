@@ -322,6 +322,13 @@ class School(models.Model):
     )
 
     user = models.ForeignKey(Profile, verbose_name='School Manager')
+    alias_school = models.CharField(
+        default='',
+        max_length=250,
+        unique=True,
+        verbose_name='Alias School',
+        help_text='Example: "colombia-immersion-school-2" (name splitted by - and id)'
+    )
     status = models.CharField(max_length=2, choices=STATUSES_CHOICES, default=VALIDATED)
     photo = models.TextField(max_length=5000, default='', blank=True, verbose_name='School Photo')
     name = models.CharField(max_length=100, default='', verbose_name='School Name')
