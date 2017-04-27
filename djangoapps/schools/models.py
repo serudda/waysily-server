@@ -393,7 +393,7 @@ class School(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return 'school/' + self.alias_school
+        return 'page/school/' + self.alias_school
 
     def get_full_absolute_url(self):
         domain = Site.objects.get_current().domain
