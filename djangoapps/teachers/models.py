@@ -10,7 +10,7 @@ class PrivatePriceDetail(models.Model):
     """ Private Classes Price Detail Model """
     uid = models.CharField(max_length=200)
     active = models.BooleanField(default=False)
-    hour_price = models.DecimalField(max_digits=6, decimal_places=2)
+    hour_price = models.PositiveSmallIntegerField(default=0, verbose_name='Price (USD) per hour')
 
     def __str__(self):
         return "Private price " + str(self.id)
@@ -20,7 +20,7 @@ class GroupPriceDetail(models.Model):
     """ Group Classes Price Detail Model """
     uid = models.CharField(max_length=200)
     active = models.BooleanField(default=False)
-    hour_price = models.DecimalField(max_digits=6, decimal_places=2)
+    hour_price = models.PositiveSmallIntegerField(default=0, verbose_name='Price (USD) per hour')
 
     def __str__(self):
         return "Group price " + str(self.id)
