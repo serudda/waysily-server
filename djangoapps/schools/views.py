@@ -24,6 +24,7 @@ class SchoolViewSet(viewsets.ModelViewSet):
 
         return queryset
 
+    # TODO: Cambiar por get_by_alias cuando se pueda
     @detail_route(methods=['get'])
     def get_by_username(self, request, alias_school=None):
         queryset = School.objects.all()
