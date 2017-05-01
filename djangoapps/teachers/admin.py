@@ -14,6 +14,9 @@ class EducationInline(admin.StackedInline):
 
 class TeacherAdmin(admin.ModelAdmin):
 
+    # TODO: Organizar esto, ya que si esta Education Inline, deberia estar Experiences, Certificates, etc. Hacer lo
+    # mismo que se hizo con School
+
     inlines = [
         EducationInline,
     ]

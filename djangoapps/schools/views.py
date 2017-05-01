@@ -18,9 +18,13 @@ class SchoolViewSet(viewsets.ModelViewSet):
         """ allow rest api to filter by validated """
         queryset = School.objects.all()
         status_school = self.request.query_params.get('status', None)
+        country = self.request.query_params.get('country', None)
 
         if status_school is not None:
             queryset = queryset.filter(status=status_school)
+
+        if country is not None:
+            queryset = queryset.filter(country=country)
 
         return queryset
 
