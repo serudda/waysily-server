@@ -4,6 +4,7 @@ from django.core.validators import MaxValueValidator
 
 from djangoapps.early.models import Early
 from djangoapps.profiles.models import Profile
+from djangoapps.countries.models import Country
 
 
 class PrivatePriceDetail(models.Model):
@@ -68,6 +69,7 @@ class Teacher(models.Model):
     )
 
     profile = models.OneToOneField(Profile, related_name='profile', on_delete=models.CASCADE, null=True)
+    country = models.ForeignKey(Country, null=True, blank=True)
     status = models.CharField(max_length=2, choices=STATUSES_CHOICES, default=NEW)
     recommended = models.IntegerField(null=True, default=0)
 
