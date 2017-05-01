@@ -8,7 +8,13 @@ class CountrySerializer(serializers.ModelSerializer):
     class Meta:
         model = Country
         fields = ('id',
+                  'name_en',
+                  'name_es',
+                  'alias_country',
                   'code',
+                  'photo',
+                  'thumbnail',
+                  'active',
                   'created_at',
                   'updated_at',)
 

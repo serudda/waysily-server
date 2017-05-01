@@ -4,6 +4,7 @@ from django.contrib.postgres.fields import ArrayField
 from django.core.validators import MaxValueValidator
 from django.core.urlresolvers import reverse
 from djangoapps.profiles.models import Profile
+from djangoapps.countries.models import Country
 from djangoapps.locations.models import Location
 from djangoapps.globals.enums.models import Day, PaymentMethodChoice, ImmersionCategories, AmenitiesSchoolCategories, \
     AmenitiesAccommodationCategories, AccommodationCategories, WorkExchangesOptions, LanguagesList
@@ -324,6 +325,7 @@ class School(models.Model):
     )
 
     user = models.ForeignKey(Profile, verbose_name='School Manager')
+    country = models.ForeignKey(Country, null=True, blank=True)
     alias_school = models.CharField(
         default='',
         max_length=250,
