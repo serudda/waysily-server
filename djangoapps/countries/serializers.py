@@ -17,6 +17,8 @@ class CountrySerializer(serializers.ModelSerializer):
                   'currency_code',
                   'currency_name',
                   'code',
+                  'capital',
+                  'zone',
                   'photo',
                   'thumbnail',
                   'active',

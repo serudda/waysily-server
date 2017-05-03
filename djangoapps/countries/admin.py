@@ -17,6 +17,8 @@ class CountryAdmin(admin.ModelAdmin):
                     'currency_code',
                     'currency_name',
                     'code',
+                    'capital',
+                    'zone',
                     'photo',
                     'thumbnail',
                     'active',
@@ -25,8 +27,8 @@ class CountryAdmin(admin.ModelAdmin):
 
     fieldsets = (
         ('Basic Information', {
-            'fields': ('name_en', 'name_es', 'description_en', 'description_es', 'alias_country', 'code',
-                       'currency_code', 'currency_name', 'photo', 'thumbnail', 'recommend', 'active')
+            'fields': ('name_en', 'name_es', 'description_en', 'description_es', 'alias_country', 'code', 'capital',
+                       'zone', 'currency_code', 'currency_name', 'photo', 'thumbnail', 'recommend', 'active')
         }),
     )
 
