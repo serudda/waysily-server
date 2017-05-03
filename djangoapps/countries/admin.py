@@ -8,9 +8,14 @@ from djangoapps.countries.models import Country
 class CountryAdmin(admin.ModelAdmin):
 
     list_display = ('id',
+                    'alias_country',
                     'name_en',
                     'name_es',
-                    'alias_country',
+                    'description_en',
+                    'description_es',
+                    'recommend',
+                    'currency_code',
+                    'currency_name',
                     'code',
                     'photo',
                     'thumbnail',
@@ -20,7 +25,8 @@ class CountryAdmin(admin.ModelAdmin):
 
     fieldsets = (
         ('Basic Information', {
-            'fields': ('name_en', 'name_es', 'alias_country', 'code', 'photo', 'thumbnail', 'active')
+            'fields': ('name_en', 'name_es', 'description_en', 'description_es', 'alias_country', 'code',
+                       'currency_code', 'currency_name', 'photo', 'thumbnail', 'recommend', 'active')
         }),
     )
 

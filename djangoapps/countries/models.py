@@ -15,6 +15,11 @@ class Country(models.Model):
     code = models.CharField(max_length=2, blank=True, verbose_name='Country Code')
     name_es = models.CharField(max_length=200, default='', verbose_name='Country Spanish Name')
     name_en = models.CharField(max_length=200, default='', verbose_name='Country English Name')
+    description_en = models.TextField(max_length=3000, blank=True)
+    description_es = models.TextField(max_length=3000, blank=True)
+    recommend = models.PositiveSmallIntegerField(default=0, verbose_name='travellers recommend')
+    currency_code = models.CharField(max_length=3, blank=True, verbose_name='Currency Code')
+    currency_name = models.CharField(max_length=200, blank=True, verbose_name='Currency Name')
     photo = models.TextField(max_length=5000, default='', blank=True, verbose_name='Country Photo')
     thumbnail = models.TextField(max_length=5000, default='', blank=True, verbose_name='Country Thumbnail')
 
