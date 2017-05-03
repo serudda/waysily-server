@@ -18,11 +18,12 @@ from django.conf.urls import url, include
 from django.views.generic import TemplateView
 from django.contrib import admin
 from django.contrib.sitemaps.views import sitemap
-from djangoapps.globals.sitemaps.sitemaps import SchoolSitemap
+from djangoapps.globals.sitemaps.sitemaps import SchoolSitemap, CountrySitemap
 
 # Dictionary containing your sitemap classes
 sitemaps = {
-    'schools': SchoolSitemap()
+    'schools': SchoolSitemap(),
+    'countries': CountrySitemap()
 }
 
 urlpatterns = [
@@ -43,6 +44,7 @@ urlpatterns = [
     url(r'^api/v1/', include('locations.urls')),
     url(r'^api/v1/', include('features.urls')),
     url(r'^api/v1/', include('feedbacks.urls')),
+    url(r'^api/v1/', include('countries.urls')),
 
     # user account and auth urls
     url(r'^', include('usersystem.urls')),

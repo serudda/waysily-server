@@ -61,6 +61,7 @@ class TeacherViewSet (viewsets.ModelViewSet):
         queryset = Teacher.objects.all()
         profile_id = self.request.query_params.get('profileId', None)
         status = self.request.query_params.get('status', None)
+        country = self.request.query_params.get('country', None)
 
         if status is not None:
             queryset = queryset.filter(status=status)
@@ -68,8 +69,12 @@ class TeacherViewSet (viewsets.ModelViewSet):
         if profile_id is not None:
             queryset = queryset.filter(profile_id=profile_id)
 
+        if country is not None:
+            queryset = queryset.filter(country=country)
+
         return queryset
 
+    # FIXME: Revisar por que esta trayendo siempre todas las experiencias, no solo las asociadas a este teacher
     @list_route(methods=['get'])
     def get_experience_list(self, request, pk=None):
 
@@ -91,6 +96,7 @@ class TeacherViewSet (viewsets.ModelViewSet):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    # FIXME: Revisar por que esta trayendo siempre todas las educations, no solo las asociadas a este teacher
     @list_route(methods=['get'])
     def get_education_list(self, request, pk=None):
         # get educations list
@@ -111,6 +117,7 @@ class TeacherViewSet (viewsets.ModelViewSet):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    # FIXME: Revisar por que esta trayendo siempre todas las certificados, no solo las asociadas a este teacher
     @list_route(methods=['get'])
     def get_certificate_list(self, request, pk=None):
         # get certificates list
@@ -131,6 +138,7 @@ class TeacherViewSet (viewsets.ModelViewSet):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    # FIXME: Revisar por que esta trayendo siempre todas los ratings, no solo las asociadas a este teacher
     @list_route(methods=['get'])
     def get_rating_list(self, request, pk=None):
         # get ratings list
