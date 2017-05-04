@@ -24,17 +24,18 @@ sys.path.insert(0, APPS_ROOT)
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+# TODO: Estudiar como se usa esta llave
 SECRET_KEY = '$6(x*g_2g9l_*g8peb-@anl5^*8q!1w)k&e&2!i)t6$s8kia93'
 
 # SECURITY WARNING: don't run with debug turned on in production! It fine in develop
-DEBUG = False
+DEBUG = True
 
 # TODO: WARNING - Change environment
 LOCAL = 'http://localhost:8080'
 DEV = 'https://waysily-client-dev.herokuapp.com'
 STAGING = 'https://waysily-client-staging.herokuapp.com'
 PRD = 'https://www.waysily.com'
-DOMAIN = PRD
+DOMAIN = LOCAL
 
 
 TEMPLATE_DEBUG = False
