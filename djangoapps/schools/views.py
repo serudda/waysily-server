@@ -20,11 +20,11 @@ class SchoolViewSet(viewsets.ModelViewSet):
         status_school = self.request.query_params.get('status', None)
         country = self.request.query_params.get('country', None)
 
-        if status_school is not None:
-            queryset = queryset.filter(status=status_school)
-
         if country is not None:
             queryset = queryset.filter(country=country)
+
+        if status_school is not None:
+            queryset = queryset.filter(status=status_school)
 
         return queryset
 

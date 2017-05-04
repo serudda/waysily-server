@@ -55,7 +55,7 @@ class SchoolAdmin(admin.ModelAdmin):
     fieldsets = (
         ('Basic Information', {
             'fields': ('user', 'status', ('name', 'email', 'phone_number',), 'alias_school', ('photo', 'about',),
-                       'language_teach', 'website', 'location', 'country', 'active')
+                       'language_teach', 'other_language_teach', 'website', 'location', 'country', 'active')
         }),
         ('Social Networks', {
             'fields': (('facebook', 'twitter', 'instagram'),)

@@ -340,6 +340,9 @@ class School(models.Model):
     phone_number = models.CharField(max_length=30, default='', blank=True)
     language_teach = MultiSelectField(choices=LanguagesList.LANGUAGE_CHOICES,
                                       verbose_name='Languages Teach')
+    other_language_teach = ArrayField(models.CharField(max_length=200, default=''), null=True, blank=True,
+                                      verbose_name='Other Languages Teach',
+                                      help_text='Write each language, separated by commas')
     website = models.CharField(max_length=200, default='', blank=True, verbose_name='Website')
     facebook = models.CharField(max_length=200, default='', blank=True, verbose_name='Facebook')
     twitter = models.CharField(max_length=200, default='', blank=True, verbose_name='Twitter')

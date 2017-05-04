@@ -299,6 +299,7 @@ class SchoolSerializer(serializers.ModelSerializer):
                   'about',
                   'phone_number',
                   'language_teach',
+                  'other_language_teach',
                   'website',
                   'facebook',
                   'twitter',
