@@ -389,6 +389,8 @@ class School(models.Model):
     payment_method = models.OneToOneField(PaymentMethod, related_name='payment_method', on_delete=models.CASCADE,
                                           null=True, verbose_name='Payment Methods')
 
+    views = models.PositiveSmallIntegerField(default=0, verbose_name='It is have been viewed')
+
     active = models.BooleanField(default=False, verbose_name='Active')
 
     created_at = models.DateTimeField(db_index=True, auto_now_add=True)
