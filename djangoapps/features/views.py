@@ -15,6 +15,7 @@ class FeatureViewSet (viewsets.ModelViewSet):
         """ allow rest api to filter by validated """
         queryset = Feature.objects.all()
         min_id = self.request.query_params.get('minId', None)
+        queryset = queryset.filter(active=True)
 
         if min_id is not None:
             queryset = queryset.filter(pk__gt=min_id)
