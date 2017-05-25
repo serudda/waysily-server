@@ -6,7 +6,7 @@ from djangoapps.feedbacks.models import Feedback
 
 class FeedbackAdmin(admin.ModelAdmin):
 
-    list_display = ('next_country', 'next_feature', 'created_at')
+    list_display = ('next_country', 'next_feature', 'next_other_feature', 'created_at')
     search_fields = ('next_country',)
     
     ordering = ('-created_at',)

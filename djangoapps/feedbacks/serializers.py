@@ -10,6 +10,7 @@ class FeedbackSerializer(serializers.ModelSerializer):
         fields = ('id',
                   'next_country',
                   'next_feature',
+                  'next_other_feature',
                   'created_at',
                   'updated_at',)
 
