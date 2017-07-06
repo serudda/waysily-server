@@ -34,7 +34,7 @@ DEBUG = False
 LOCAL = 'http://localhost:8080'
 DEV = 'https://waysily-client-dev.herokuapp.com'
 STAGING = 'https://waysily-client-staging.herokuapp.com'
-PRD = 'https://www.waysily.com'
+PRD = 'http://www.waysily.com'
 DOMAIN = PRD
 
 

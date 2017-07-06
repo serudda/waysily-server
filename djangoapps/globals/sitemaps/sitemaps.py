@@ -7,7 +7,7 @@ from djangoapps.countries.models import Country
 class SchoolSitemap(Sitemap):
     changefreq = "daily"
     priority = 1
-    protocol = "https"
+    protocol = "http"
 
     def items(self):
         return School.objects.filter(active=True)
@@ -19,7 +19,7 @@ class SchoolSitemap(Sitemap):
 class CountrySitemap(Sitemap):
     changefreq = "daily"
     priority = 1
-    protocol = "https"
+    protocol = "http"
 
     def items(self):
         return Country.objects.filter(active=True)
