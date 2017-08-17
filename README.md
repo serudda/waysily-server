@@ -1,24 +1,8 @@
-# **Waysily BackEnd Structure**
+# Waysily Server project
 
-##Overview
+This real-world project of: http://www.waysily.com, a platform to join students with language teachers and language school. Feel free to use the code and the information from this project, if you have any question you could write us on Twitter: [@seruda](https://www.twitter.com/seruda) or [@rosa7082](https://www.twitter.com/rosa7082)
 
-It's a base structure (Full Stack Single Page Application) for the starter who want to start a web application.
-This repository has 2 separate modules: **Client** module and **Server** module.
-
-###Client
-
-Client side contains the following technologies:
-
-* [Angular 1.5.8](https://github.com/angular/angular.js)
-* [Typescript 1.8.10] (https://www.typescriptlang.org)
-* [Sass](http://sass-lang.com)
-* [Gulp](http://gulpjs.com)
-* [Bower](https://bower.io)
-* [npm 3.9.5] (https://www.npmjs.com)
-
-###Server
-
-Server side was made with the following technologies:
+## Tools used
 
 * [Python 3.5](https://www.python.org/downloads/)
 * [Django 1.10](https://www.djangoproject.com/)
@@ -36,7 +20,7 @@ You have to install previously:
 
 You have to git clone this repository:
 ```
-git clone https://github.com/sergioruizdavila/asanni-backend.git
+git clone https://github.com/sruda/waysily-server.git
 ```
 
 ### Installation for REST API Server Side
@@ -79,6 +63,17 @@ In order to test that all it's right, you should create a superuser in order to 
 Here if everything is OK, you should run server and go to localhost on browser, you should be able to see Django Rest Admin Page.
 
 - `python manage.py runserver`
+
+
+# Note:
+
+If you have any problem to run this project, feel free to ping us!
+
+P.S. You can find the client-side of this project here:
+
+[https://github.com/sruda/waysily-client](https://github.com/sruda/waysily-client)
+
+It's based on: AngularJS (1.5.8) + Typescript + Gulp + Sass
 
 
 **Reference:** [https://github.com/shalomeir/snippod-starter-demo-app-server](https://github.com/shalomeir/snippod-starter-demo-app-server)
