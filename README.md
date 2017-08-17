@@ -74,6 +74,3 @@ P.S. You can find the client-side of this project here:
 [https://github.com/sruda/waysily-client](https://github.com/sruda/waysily-client)
 
 It's based on: AngularJS (1.5.8) + Typescript + Gulp + Sass
-
-
-**Reference:** [https://github.com/shalomeir/snippod-starter-demo-app-server](https://github.com/shalomeir/snippod-starter-demo-app-server)
