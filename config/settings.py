@@ -304,9 +304,10 @@ if DOMAIN == PRD:
     EMAIL_USE_TLS = True
     EMAIL_HOST = 'smtp.sparkpostmail.com'
     EMAIL_HOST_USER = 'SMTP_Injection'
-    EMAIL_HOST_PASSWORD = 'c1506170ad8110344c4ed7436888a74b4c1211aa'
+    # EMAIL_HOST_PASSWORD = 'c1506170ad8110344c4ed7436888a74b4c1211aa'
+    EMAIL_HOST_PASSWORD = 'e57156b0c9495f4045346fc97fbc402489456271'
     EMAIL_PORT = 587
-    DEFAULT_FROM_EMAIL = 'help@waysily.com'
+    DEFAULT_FROM_EMAIL = 'sergioruizdavila@gmail.com'
 
 # NOTE: To allow user resets password is necessary create a new 'Site' on Admin
 SITE_ID = 1
